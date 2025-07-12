@@ -1,0 +1,34 @@
+# Environment variables
+.env
+.env.*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python/
+env/
+venv/
+*venv*/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.pytest_cache/
+htmlcov/
+.mypy_cache/
+.vscode/
+.ipynb_checkpoints/
+
+# Node.js
+node_modules/
+dist/
+build/
+.next/
+
+# Docker
+*.log
+*.tmp
+*.bak
+*.swp
