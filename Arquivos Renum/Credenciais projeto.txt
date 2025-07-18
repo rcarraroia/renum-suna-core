@@ -1,0 +1,16 @@
+Notion
+https://www.notion.so/2312be5cfa1b80ae98b7f0391b1d8734?v=2312be5cfa1b8059979a000c87de8bfb&source=copy_link
+
+APIKEY - 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
+
+SUPABASE
+ORGANIZAÇÃO: ostggxmbdngxfobslcka
+Senha BD: Sk15jnNmhqswMC8F
+
+NEXT_PUBLIC_SUPABASE_URL=https://uxxvoicxhkakpguvavba.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV4eHZvaWN4aGtha3BndXZhdmJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIzMzEzMDYsImV4cCI6MjA2NzkwNzMwNn0.5D4HDT35zNTuKO5R7HQODKZuSDN2YTilJdX07_wBsU0
+
+ID Projeto: uxxvoicxhkakpguvavba
+
+
+https://uxxvoicxhkakpguvavba.supabase.co/5432

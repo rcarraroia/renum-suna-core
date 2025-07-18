@@ -108,8 +108,8 @@ def parse_env_file(filepath):
 
 def load_existing_env_vars():
     """Loads existing environment variables from .env files."""
-    backend_env = parse_env_file(os.path.join("backend", ".env"))
-    frontend_env = parse_env_file(os.path.join("frontend", ".env.local"))
+    backend_env = parse_env_file(os.path.join("Suna backend", ".env"))
+    frontend_env = parse_env_file(os.path.join("Suna frontend", ".env.local"))
 
     # Organize the variables by category
     existing_vars = {
@@ -520,7 +520,7 @@ class SetupWizard:
     def check_suna_directory(self):
         """Checks if the script is run from the correct project root directory."""
         print_info("Verifying project structure...")
-        required_dirs = ["backend", "frontend"]
+        required_dirs = ["Suna backend", "Suna frontend"]
         required_files = ["README.md", "docker-compose.yaml"]
 
         for directory in required_dirs:

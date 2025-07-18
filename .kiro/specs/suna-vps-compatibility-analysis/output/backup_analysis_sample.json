@@ -1,0 +1,18 @@
+{
+  "has_cron_backup_jobs": true,
+  "has_backup_scripts": true,
+  "has_compose_backup_services": false,
+  "has_db_backup_config": true,
+  "has_supabase_backup": false,
+  "has_volume_backup": false,
+  "backup_methods": [
+    "Cron Jobs",
+    "Backup Scripts",
+    "Database Backup"
+  ],
+  "issues": [
+    "Supabase sem configuração de backup",
+    "Volumes Docker sem configuração de backup"
+  ],
+  "status": "WARNING"
+}

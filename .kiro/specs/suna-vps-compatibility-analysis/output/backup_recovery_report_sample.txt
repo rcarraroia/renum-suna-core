@@ -1,0 +1,38 @@
+=======================================================
+RELATÓRIO DE BACKUP E RECUPERAÇÃO - 17/07/2025 15:30:45
+=======================================================
+
+MÉTODOS DE BACKUP ENCONTRADOS:
+Cron Jobs, Backup Scripts
+
+Backup de banco de dados: ✅ Configurado
+Backup do Supabase: ❌ Não configurado
+Backup de volumes Docker: ❌ Não configurado
+
+Status: WARNING
+
+DETALHES DE JOBS DE CRON RELACIONADOS A BACKUP:
+
+Crontab do root:
+0 2 * * * /usr/local/bin/backup_postgres.sh
+
+SCRIPTS DE BACKUP ENCONTRADOS:
+- /usr/local/bin/backup_postgres.sh
+- /root/backup_scripts/db_backup.sh
+
+CONFIGURAÇÃO DE BACKUP DE BANCO DE DADOS:
+
+postgres (postgres):
+  Jobs de cron:
+  - 0 2 * * * pg_dump -U postgres -d mydb > /var/backups/postgres/mydb_$(date +%Y%m%d).sql
+
+PROBLEMAS DETECTADOS:
+- Supabase sem configuração de backup
+- Volumes Docker sem configuração de backup
+
+RECOMENDAÇÕES:
+- Implementar backup regular do Supabase
+- Configurar backup de volumes Docker para preservar dados persistentes
+- Documentar procedimentos de recuperação para cada tipo de backup
+- Testar regularmente a restauração de backups para garantir sua eficácia
+- Considerar o uso de ferramentas de backup automatizadas como restic, duplicity ou borgbackup
