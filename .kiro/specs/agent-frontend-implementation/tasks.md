@@ -13,7 +13,9 @@
 
 
 - [ ] 2. Implementar componentes de autenticação
-  - [ ] 2.1 Implementar página de login
+  - [x] 2.1 Implementar página de login
+
+
     - Criar formulário de login com validação
     - Implementar integração com API de autenticação
 
@@ -32,6 +34,8 @@
     - _Requirements: 5.3_
 
 
+
+
 - [ ] 3. Implementar componentes de navegação
   - [ ] 3.1 Implementar componente Sidebar
     - Criar estrutura de navegação
@@ -40,6 +44,8 @@
 
     - Implementar lógica de item ativo
     - Adicionar logo da Renum
+
+
     - _Requirements: 5.2_
   
 
@@ -48,6 +54,8 @@
     - Implementar responsividade para diferentes tamanhos de tela
 
     - _Requirements: 5.1, 5.2_
+
+
 
 
 
@@ -62,6 +70,8 @@
   
   - [x] 4.2 Implementar listagem de agentes
 
+
+
     - Criar componente AgentCard
     - Implementar filtro por status
     - Adicionar paginação para grandes listas
@@ -71,6 +81,8 @@
 - [ ] 5. Implementar criação de agentes
   - [ ] 5.1 Criar formulário de informações básicas
     - Implementar campos para nome e descrição
+
+
 
 
 
@@ -86,6 +98,8 @@
     - Criar dropdown de seleção de modelos
 
     - Implementar integração com API para obter modelos disponíveis
+
+
     - _Requirements: 1.1_
   
   - [x] 5.3 Implementar editor de prompt do sistema
@@ -96,6 +110,8 @@
     - Adicionar dicas e exemplos de prompts eficazes
     - _Requirements: 1.1_
   
+
+
 
   - [ ] 5.4 Implementar seleção de bases de conhecimento
 
@@ -110,26 +126,43 @@
     - _Requirements: 1.2_
 
   
-  - [ ] 5.5 Implementar seleção de ferramentas
+  - [x] 5.5 Implementar seleção de ferramentas
+
+
     - Criar lista de ferramentas disponíveis com checkboxes
+
+
 
 
 
 
     - Implementar integração com API para obter ferramentas disponíveis
     - _Requirements: 1.3_
+
+
   
-  - [ ] 5.6 Implementar submissão do formulário
+  - [x] 5.6 Implementar submissão do formulário
+
+
+
+
+
     - Criar lógica de validação completa
     - Implementar integração com API para criar agente
     - Adicionar feedback visual durante submissão
+
+
     - _Requirements: 1.4, 1.5, 1.6, 5.3_
 
 - [ ] 6. Implementar página de detalhes do agente
-  - [ ] 6.1 Criar visualização de informações do agente
+  - [x] 6.1 Criar visualização de informações do agente
+
+
     - Exibir dados básicos (nome, descrição, status)
     - Mostrar configurações (modelo, prompt, ferramentas)
     - Listar bases de conhecimento associadas
+
+
     - _Requirements: 4.1, 4.2_
   
   - [ ] 6.2 Implementar seção de métricas
