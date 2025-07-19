@@ -137,3 +137,47 @@ export function removeNullProperties<T>(obj: T): Partial<T> {
   
   return result;
 }
+
+/**
+ * Retorna a classe CSS para a cor de fundo do status do agente
+ * @param status - Status do agente
+ * @returns Classe CSS para a cor de fundo
+ */
+export function getAgentStatusColor(status: string): string {
+  switch (status.toLowerCase()) {
+    case 'active':
+    case 'ativo':
+      return 'bg-green-100 text-green-800';
+    case 'draft':
+    case 'rascunho':
+      return 'bg-yellow-100 text-yellow-800';
+    case 'inactive':
+    case 'inativo':
+      return 'bg-gray-100 text-gray-800';
+    case 'error':
+    case 'erro':
+      return 'bg-red-100 text-red-800';
+    default:
+      return 'bg-gray-100 text-gray-800';
+  }
+}
+
+/**
+ * Traduz o status do agente para português
+ * @param status - Status do agente em inglês
+ * @returns Status traduzido
+ */
+export function translateAgentStatus(status: string): string {
+  switch (status.toLowerCase()) {
+    case 'active':
+      return 'Ativo';
+    case 'draft':
+      return 'Rascunho';
+    case 'inactive':
+      return 'Inativo';
+    case 'error':
+      return 'Erro';
+    default:
+      return capitalize(status);
+  }
+}
