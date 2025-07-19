@@ -11,24 +11,37 @@ export const queryClient = new QueryClient({
   },
 });
 
-// Chaves de consulta para React Query
+// Chaves de consulta
 export const queryKeys = {
   agents: {
-    all: ['agents'] as const,
-    detail: (id: string) => ['agents', id] as const,
-    chat: (id: string) => ['agents', id, 'chat'] as const,
+    all: ['agents'],
+    detail: (id: string) => ['agents', id],
+    tools: ['agents', 'tools'],
+    models: ['agents', 'models'],
   },
   knowledgeBases: {
-    all: ['knowledgeBases'] as const,
-    detail: (id: string) => ['knowledgeBases', id] as const,
+    all: ['knowledgeBases'],
+    detail: (id: string) => ['knowledgeBases', id],
   },
-  tools: {
-    all: ['tools'] as const,
+  chat: {
+    messages: (agentId: string) => ['chat', 'messages', agentId],
   },
-  models: {
-    all: ['models'] as const,
+  auth: {
+    user: ['auth', 'user'],
   },
-  user: {
-    profile: ['user', 'profile'] as const,
+};
+
+// Funções de invalidação de cache
+export const invalidateQueries = {
+  agents: {
+    all: () => queryClient.invalidateQueries({ queryKey: queryKeys.agents.all }),
+    detail: (id: string) => queryClient.invalidateQueries({ queryKey: queryKeys.agents.detail(id) }),
+  },
+  knowledgeBases: {
+    all: () => queryClient.invalidateQueries({ queryKey: queryKeys.knowledgeBases.all }),
+    detail: (id: string) => queryClient.invalidateQueries({ queryKey: queryKeys.knowledgeBases.detail(id) }),
+  },
+  chat: {
+    messages: (agentId: string) => queryClient.invalidateQueries({ queryKey: queryKeys.chat.messages(agentId) }),
   },
 };

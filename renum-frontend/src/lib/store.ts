@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 /**
  * Interface para o usuário autenticado
@@ -23,6 +23,11 @@ interface AuthState {
 }
 
 /**
+ * Verifica se estamos em um ambiente de navegador
+ */
+const isBrowser = typeof window !== 'undefined';
+
+/**
  * Store para gerenciar o estado de autenticação
  */
 export const useAuthStore = create<AuthState>()(
@@ -31,11 +36,52 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       token: null,
       isAuthenticated: false,
-      setAuth: (user, token) => set({ user, token, isAuthenticated: true }),
-      clearAuth: () => set({ user: null, token: null, isAuthenticated: false }),
+      setAuth: (user, token) => {
+        // Salvar no localStorage manualmente para garantir
+        if (isBrowser) {
+          try {
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(user));
+          } catch (error) {
+            console.error('Erro ao salvar dados de autenticação:', error);
+          }
+        }
+        set({ user, token, isAuthenticated: true });
+      },
+      clearAuth: () => {
+        // Limpar do localStorage manualmente para garantir
+        if (isBrowser) {
+          try {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+          } catch (error) {
+            console.error('Erro ao limpar dados de autenticação:', error);
+          }
+        }
+        set({ user: null, token: null, isAuthenticated: false });
+      },
     }),
     {
       name: 'auth-storage',
+      storage: createJSONStorage(() => {
+        // Usar sessionStorage como fallback se localStorage não estiver disponível
+        if (isBrowser) {
+          try {
+            localStorage.getItem('test');
+            return localStorage;
+          } catch (e) {
+            console.warn('localStorage não disponível, usando sessionStorage');
+            return sessionStorage;
+          }
+        }
+        
+        // Fallback para quando não estamos no navegador (SSR)
+        return {
+          getItem: () => null,
+          setItem: () => {},
+          removeItem: () => {},
+        };
+      }),
     }
   )
 );
@@ -78,33 +124,59 @@ interface AgentState {
 /**
  * Store para gerenciar o estado de agentes
  */
-export const useAgentStore = create<AgentState>()((set) => ({
-  agents: [],
-  selectedAgent: null,
-  isLoading: false,
-  error: null,
-  setAgents: (agents) => set({ agents }),
-  setSelectedAgent: (selectedAgent) => set({ selectedAgent }),
-  addAgent: (agent) => set((state) => ({ agents: [...state.agents, agent] })),
-  updateAgent: (updatedAgent) =>
-    set((state) => ({
-      agents: state.agents.map((agent) =>
-        agent.id === updatedAgent.id ? updatedAgent : agent
-      ),
-      selectedAgent:
-        state.selectedAgent?.id === updatedAgent.id
-          ? updatedAgent
-          : state.selectedAgent,
-    })),
-  removeAgent: (agentId) =>
-    set((state) => ({
-      agents: state.agents.filter((agent) => agent.id !== agentId),
-      selectedAgent:
-        state.selectedAgent?.id === agentId ? null : state.selectedAgent,
-    })),
-  setLoading: (isLoading) => set({ isLoading }),
-  setError: (error) => set({ error }),
-}));
+export const useAgentStore = create<AgentState>()(
+  persist(
+    (set) => ({
+      agents: [],
+      selectedAgent: null,
+      isLoading: false,
+      error: null,
+      setAgents: (agents) => set({ agents }),
+      setSelectedAgent: (selectedAgent) => set({ selectedAgent }),
+      addAgent: (agent) => set((state) => ({ agents: [...state.agents, agent] })),
+      updateAgent: (updatedAgent) =>
+        set((state) => ({
+          agents: state.agents.map((agent) =>
+            agent.id === updatedAgent.id ? updatedAgent : agent
+          ),
+          selectedAgent:
+            state.selectedAgent?.id === updatedAgent.id
+              ? updatedAgent
+              : state.selectedAgent,
+        })),
+      removeAgent: (agentId) =>
+        set((state) => ({
+          agents: state.agents.filter((agent) => agent.id !== agentId),
+          selectedAgent:
+            state.selectedAgent?.id === agentId ? null : state.selectedAgent,
+        })),
+      setLoading: (isLoading) => set({ isLoading }),
+      setError: (error) => set({ error }),
+    }),
+    {
+      name: 'agent-storage',
+      storage: createJSONStorage(() => {
+        // Usar sessionStorage como fallback se localStorage não estiver disponível
+        if (isBrowser) {
+          try {
+            localStorage.getItem('test');
+            return localStorage;
+          } catch (e) {
+            console.warn('localStorage não disponível, usando sessionStorage');
+            return sessionStorage;
+          }
+        }
+        
+        // Fallback para quando não estamos no navegador (SSR)
+        return {
+          getItem: () => null,
+          setItem: () => {},
+          removeItem: () => {},
+        };
+      }),
+    }
+  )
+);
 
 /**
  * Interface para uma mensagem de chat

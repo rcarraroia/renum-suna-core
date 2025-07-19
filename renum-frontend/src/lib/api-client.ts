@@ -2,6 +2,7 @@
  * Cliente de API para comunicação com o backend Renum
  */
 
+// Definir a URL base da API com base no ambiente
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 /**
@@ -13,6 +14,61 @@ interface ApiOptions {
   headers?: Record<string, string>;
   requiresAuth?: boolean;
 }
+
+/**
+ * Verifica se estamos em um ambiente de navegador
+ */
+const isBrowser = typeof window !== 'undefined';
+
+/**
+ * Obtém o token de autenticação do localStorage
+ */
+const getAuthToken = (): string | null => {
+  if (!isBrowser) return null;
+  try {
+    return localStorage.getItem('token');
+  } catch (error) {
+    console.error('Erro ao acessar localStorage:', error);
+    return null;
+  }
+};
+
+/**
+ * Salva o token de autenticação no localStorage
+ */
+const setAuthToken = (token: string): void => {
+  if (!isBrowser) return;
+  try {
+    localStorage.setItem('token', token);
+  } catch (error) {
+    console.error('Erro ao salvar token no localStorage:', error);
+  }
+};
+
+/**
+ * Salva os dados do usuário no localStorage
+ */
+const setUserData = (user: any): void => {
+  if (!isBrowser) return;
+  try {
+    localStorage.setItem('user', JSON.stringify(user));
+  } catch (error) {
+    console.error('Erro ao salvar dados do usuário no localStorage:', error);
+  }
+};
+
+/**
+ * Remove os dados de autenticação do localStorage
+ */
+const clearAuthData = (): void => {
+  if (!isBrowser) return;
+  try {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  } catch (error) {
+    console.error('Erro ao remover dados de autenticação do localStorage:', error);
+  }
+};
 
 /**
  * Realiza uma requisição à API
@@ -36,10 +92,10 @@ export async function apiRequest<T = any>(endpoint: string, options: ApiOptions 
 
   // Adicionar token de autenticação se necessário
   if (requiresAuth) {
-    const token = localStorage.getItem('token');
+    const token = getAuthToken();
     if (token) {
       requestHeaders['Authorization'] = `Bearer ${token}`;
-    } else if (requiresAuth) {
+    } else if (requiresAuth && isBrowser) {
       // Redirecionar para login se não houver token
       window.location.href = '/login';
       throw new Error('Autenticação necessária');
@@ -72,9 +128,8 @@ export async function apiRequest<T = any>(endpoint: string, options: ApiOptions 
     // Verificar se a requisição foi bem-sucedida
     if (!response.ok) {
       // Tratar erro de autenticação
-      if (response.status === 401) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
+      if (response.status === 401 && isBrowser) {
+        clearAuthData();
         window.location.href = '/login';
       }
       
@@ -82,13 +137,19 @@ export async function apiRequest<T = any>(endpoint: string, options: ApiOptions 
       throw new Error(
         isJson && data.detail 
           ? data.detail 
-          : `Erro ${response.status}: ${response.statusText}`
+          : `Erro ${response.status}: ${response.statusText || 'Erro desconhecido'}`
       );
     }
 
     return data as T;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Erro na requisição à API:', error);
+    
+    // Verificar se é um erro de rede (CORS, conexão, etc.)
+    if (error.name === 'TypeError' && error.message === 'Failed to fetch') {
+      throw new Error('Erro de conexão com o servidor. Verifique sua conexão de internet ou tente novamente mais tarde.');
+    }
+    
     throw error;
   }
 }
@@ -104,11 +165,28 @@ export const authApi = {
    * @returns Dados do usuário e token
    */
   login: async (email: string, password: string) => {
-    return apiRequest<{ user: any; token: string }>('/api/auth/login', {
-      method: 'POST',
-      body: { email, password },
-      requiresAuth: false,
-    });
+    try {
+      const response = await apiRequest<{ user: any; token: string }>('/api/auth/login', {
+        method: 'POST',
+        body: { email, password },
+        requiresAuth: false,
+      });
+      
+      // Salvar token e dados do usuário
+      if (response.token) {
+        setAuthToken(response.token);
+      }
+      
+      if (response.user) {
+        setUserData(response.user);
+      }
+      
+      return response;
+    } catch (error) {
+      // Limpar dados de autenticação em caso de erro
+      clearAuthData();
+      throw error;
+    }
   },
 
   /**
@@ -130,9 +208,10 @@ export const authApi = {
    * Realiza logout na plataforma
    */
   logout: async () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    window.location.href = '/login';
+    clearAuthData();
+    if (isBrowser) {
+      window.location.href = '/login';
+    }
   },
 };
 
