@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
@@ -20,11 +20,29 @@ export default function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [debug, setDebug] = useState<string | null>(null);
   const setAuth = useAuthStore((state) => state.setAuth);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
+  // Verificar se o usuário já está autenticado
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/dashboard');
+    }
+  }, [isAuthenticated, router]);
+
+  // Verificar se há um erro de autenticação na URL
+  useEffect(() => {
+    const { error: errorParam } = router.query;
+    if (errorParam) {
+      setError(Array.isArray(errorParam) ? errorParam[0] : errorParam);
+    }
+  }, [router.query]);
 
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
     setError(null);
+    setDebug(null);
 
     try {
       // Tentar fazer login usando a API real
@@ -34,16 +52,28 @@ export default function Login() {
         // Armazenar dados de autenticação
         setAuth(response.user, response.token);
         
+        // Verificar se o token foi armazenado corretamente
+        const storedToken = localStorage.getItem('token');
+        if (!storedToken) {
+          setDebug('Aviso: Token não foi armazenado no localStorage. Isso pode causar problemas de autenticação.');
+        }
+        
         // Redirecionar para o dashboard
         router.push('/dashboard');
         return;
       } catch (apiError: any) {
-        console.warn('Falha ao fazer login via API, usando simulação:', apiError);
+        console.warn('Falha ao fazer login via API:', apiError);
         
         // Se o erro for específico de credenciais inválidas, mostrar o erro
-        if (apiError.message?.includes('credenciais') || apiError.message?.includes('credentials')) {
+        if (apiError.message?.includes('credenciais') || 
+            apiError.message?.includes('credentials') || 
+            apiError.message?.includes('inválido') || 
+            apiError.message?.includes('invalid')) {
           throw apiError;
         }
+        
+        // Se for um erro de conexão, tentar o modo de desenvolvimento
+        setDebug(`Tentando modo de desenvolvimento após erro: ${apiError.message}`);
       }
       
       // Simulação de login para desenvolvimento
@@ -62,6 +92,12 @@ export default function Login() {
         
         // Armazenar dados de autenticação
         setAuth(mockUser, mockToken);
+        
+        // Verificar se o token foi armazenado corretamente
+        const storedToken = localStorage.getItem('token');
+        if (!storedToken) {
+          setDebug('Aviso: Token não foi armazenado no localStorage. Isso pode causar problemas de autenticação.');
+        }
         
         // Redirecionar para o dashboard
         router.push('/dashboard');
@@ -110,6 +146,12 @@ export default function Login() {
           {error && (
             <Alert variant="error" className="mb-4">
               {error}
+            </Alert>
+          )}
+
+          {debug && (
+            <Alert variant="info" className="mb-4">
+              {debug}
             </Alert>
           )}
 
@@ -177,6 +219,33 @@ export default function Login() {
               </Button>
             </div>
           </form>
+
+          <div className="mt-6">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-gray-500">
+                  Ou continue com
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <Button
+                type="button"
+                fullWidth
+                variant="outline"
+                onClick={() => {
+                  setError(null);
+                  onSubmit({ email: 'demo@renum.com', password: 'password' });
+                }}
+              >
+                Conta de demonstração
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

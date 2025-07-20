@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { formatDate, getAgentStatusColor, translateAgentStatus, truncateText } from '../lib/utils';
-import { Bot, Info } from 'lucide-react';
+import { Bot, Info, Share2, Users } from 'lucide-react';
 
 interface Agent {
   id: string;
@@ -9,6 +9,10 @@ interface Agent {
   status: string;
   created_at: string;
   model?: string;
+  is_shared?: boolean;
+  shared_with_me?: boolean;
+  shared_by?: string;
+  permission_level?: string;
 }
 
 interface AgentCardProps {
@@ -30,11 +34,25 @@ const AgentCard = ({ agent }: AgentCardProps) => {
         </p>
         <div className="mt-3 flex items-center justify-between">
           <p className="text-xs text-gray-500">Criado em {formatDate(agent.created_at)}</p>
-          {agent.model && (
-            <span className="text-xs bg-indigo-50 text-indigo-700 px-2 py-1 rounded">
-              {agent.model}
-            </span>
-          )}
+          <div className="flex items-center space-x-2">
+            {agent.shared_with_me && (
+              <span className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded flex items-center">
+                <Share2 className="h-3 w-3 mr-1" />
+                Compartilhado comigo
+              </span>
+            )}
+            {agent.is_shared && (
+              <span className="text-xs bg-purple-50 text-purple-700 px-2 py-1 rounded flex items-center">
+                <Users className="h-3 w-3 mr-1" />
+                Compartilhado
+              </span>
+            )}
+            {agent.model && (
+              <span className="text-xs bg-indigo-50 text-indigo-700 px-2 py-1 rounded">
+                {agent.model}
+              </span>
+            )}
+          </div>
         </div>
       </div>
       <div className="bg-gray-50 px-5 py-3 flex justify-between">

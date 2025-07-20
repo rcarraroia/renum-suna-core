@@ -11,11 +11,14 @@ import {
   Tool, 
   MessageSquare,
   BarChart3,
-  RefreshCw
+  RefreshCw,
+  Share2
 } from 'lucide-react';
 import Layout from '../../../components/Layout';
 import Button from '../../../components/ui/Button';
 import Alert from '../../../components/ui/Alert';
+import ShareAgentModal from '../../../components/ShareAgentModal';
+import { useAgentSharing } from '../../../hooks/useAgentSharing';
 import { agentApi } from '../../../lib/api-client';
 import { useAgentStore } from '../../../lib/store';
 import { formatDate, getAgentStatusColor, translateAgentStatus } from '../../../lib/utils';
@@ -27,6 +30,7 @@ export default function AgentDetails() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const { isShareModalOpen, openShareModal, closeShareModal } = useAgentSharing(id as string);
 
   useEffect(() => {
     if (id) {
@@ -185,6 +189,13 @@ export default function AgentDetails() {
               Conversar
             </Button>
             <Button
+              variant="outline"
+              onClick={openShareModal}
+            >
+              <Share2 className="h-4 w-4 mr-2" />
+              Compartilhar
+            </Button>
+            <Button
               variant="destructive"
               onClick={() => setDeleteConfirmOpen(true)}
             >
@@ -218,6 +229,15 @@ export default function AgentDetails() {
               </div>
             </div>
           </div>
+        )}
+        
+        {/* Modal de compartilhamento */}
+        {isShareModalOpen && (
+          <ShareAgentModal
+            agentId={selectedAgent.id}
+            isOpen={isShareModalOpen}
+            onClose={closeShareModal}
+          />
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

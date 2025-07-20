@@ -1,434 +1,580 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 """
-Script para verificar a configuração de rede Docker na VPS.
-Este script analisa as redes Docker, a comunicação entre contêineres e a configuração de rede.
+Script para verificar a configuração de rede Docker.
+Este script lista as redes Docker disponíveis, analisa a configuração de rede
+dos contêineres e verifica a comunicação entre contêineres.
 """
 
 import os
 import sys
 import json
-import argparse
-import paramiko
-import getpass
-from pathlib import Path
+import logging
+import subprocess
+from typing import Dict, List, Tuple, Optional
 from datetime import datetime
+import traceback
 
-def parse_arguments():
-    """Parse command line arguments."""
-    parser = argparse.ArgumentParser(description='Check Docker network configuration')
-    parser.add_argument('--host', default='157.180.39.41', help='VPS hostname or IP address')
-    parser.add_argument('--port', type=int, default=22, help='SSH port')
-    parser.add_argument('--user', default='root', help='SSH username')
-    parser.add_argument('--key-file', help='Path to SSH private key file')
-    parser.add_argument('--output-dir', default='./output', help='Directory to save output files')
-    parser.add_argument('--containers-file', help='Path to containers JSON file (optional)')
-    return parser.parse_args()
+# Configurar logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(sys.stdout)
+    ]
+)
+logger = logging.getLogger("docker_network_check")
 
-def create_ssh_client(host, port, user, key_file=None):
-    """Create an SSH client connection."""
-    client = paramiko.SSHClient()
-    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+def run_command(command: str) -> Tuple[str, str, int]:
+    """
+    Executa um comando shell e retorna stdout, stderr e código de saída.
     
-    try:
-        if key_file:
-            key_path = os.path.expanduser(key_file)
-            if not os.path.exists(key_path):
-                print(f"Error: Key file {key_path} does not exist.")
-                sys.exit(1)
-            
-            try:
-                key = paramiko.RSAKey.from_private_key_file(key_path)
-                client.connect(host, port=port, username=user, pkey=key)
-            except paramiko.ssh_exception.PasswordRequiredException:
-                passphrase = getpass.getpass("Enter passphrase for key: ")
-                key = paramiko.RSAKey.from_private_key_file(key_path, password=passphrase)
-                client.connect(host, port=port, username=user, pkey=key)
-        else:
-            password = getpass.getpass(f"Enter password for {user}@{host}: ")
-            client.connect(host, port=port, username=user, password=password)
+    Args:
+        command: Comando a ser executado
         
-        return client
-    except Exception as e:
-        print(f"Error connecting to {host}: {str(e)}")
-        sys.exit(1)
+    Returns:
+        Tuple contendo stdout, stderr e código de saída
+    """
+    process = subprocess.Popen(
+        command,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        shell=True,
+        text=True
+    )
+    stdout, stderr = process.communicate()
+    return stdout, stderr, process.returncode
 
-def execute_command(client, command):
-    """Execute a command on the remote server."""
-    try:
-        stdin, stdout, stderr = client.exec_command(command)
-        output = stdout.read().decode('utf-8')
-        error = stderr.read().decode('utf-8')
-        
-        if error and not output:
-            print(f"Error executing command: {error}")
-        
-        return output
-    except Exception as e:
-        print(f"Error executing command: {str(e)}")
-        return None
-
-def get_docker_containers(client):
-    """Get list of Docker containers."""
-    output = execute_command(client, "docker ps -a --format '{{.ID}},{{.Names}},{{.Status}},{{.Image}}'")
-    containers = []
+def list_docker_networks() -> List[Dict]:
+    """
+    Lista as redes Docker disponíveis.
     
-    if output:
-        for line in output.strip().split('\n'):
-            if line:
-                parts = line.split(',')
-                if len(parts) >= 4:
-                    container_id, name, status, image = parts[0], parts[1], parts[2], parts[3]
-                    containers.append({
-                        'id': container_id,
-                        'name': name,
-                        'status': status,
-                        'image': image,
-                        'is_running': 'Up' in status
-                    })
+    Returns:
+        Lista de dicionários com informações das redes
+    """
+    stdout, stderr, returncode = run_command('docker network ls --format "{{json .}}"')
     
-    # Categorize containers
-    for container in containers:
-        if 'renum' in container['name'].lower() or 'renum' in container['image'].lower():
-            container['category'] = 'renum'
-        elif 'suna' in container['name'].lower() or 'suna' in container['image'].lower():
-            container['category'] = 'suna'
-        elif 'postgres' in container['name'].lower() or 'postgres' in container['image'].lower():
-            container['category'] = 'database'
-        elif 'redis' in container['name'].lower() or 'redis' in container['image'].lower():
-            container['category'] = 'cache'
-        elif 'rabbitmq' in container['name'].lower() or 'rabbitmq' in container['image'].lower():
-            container['category'] = 'message_queue'
-        else:
-            container['category'] = 'other'
+    if returncode != 0:
+        logger.error(f"Erro ao listar redes Docker: {stderr}")
+        return []
     
-    return containers
-
-def get_docker_networks(client):
-    """Get Docker networks."""
-    output = execute_command(client, "docker network ls --format '{{.ID}},{{.Name}},{{.Driver}},{{.Scope}}'")
     networks = []
-    
-    if output:
-        for line in output.strip().split('\n'):
-            if line:
-                parts = line.split(',')
-                if len(parts) >= 4:
-                    network_id, name, driver, scope = parts
-                    networks.append({
-                        'id': network_id,
-                        'name': name,
-                        'driver': driver,
-                        'scope': scope
-                    })
+    for line in stdout.splitlines():
+        if line.strip():
+            try:
+                network = json.loads(line)
+                networks.append(network)
+            except json.JSONDecodeError:
+                logger.error(f"Erro ao decodificar JSON: {line}")
     
     return networks
 
-def get_network_details(client, network_id):
-    """Get detailed information about a Docker network."""
-    output = execute_command(client, f"docker network inspect {network_id}")
+def get_network_details(network_id: str) -> Dict:
+    """
+    Obtém detalhes de uma rede Docker.
     
-    if output:
-        try:
-            return json.loads(output)
-        except json.JSONDecodeError as e:
-            print(f"Error parsing network details: {str(e)}")
-            return {}
-    
-    return {}
-
-def get_container_network_settings(client, container_id):
-    """Get network settings for a Docker container."""
-    output = execute_command(client, f"docker inspect -f '{{{{json .NetworkSettings}}}}' {container_id}")
-    
-    if output:
-        try:
-            # Clean the output (remove extra quotes)
-            output = output.strip().strip("'")
-            return json.loads(output)
-        except json.JSONDecodeError as e:
-            print(f"Error parsing network settings: {str(e)}")
-            return {}
-    
-    return {}
-
-def test_container_connectivity(client, source_container, target_container):
-    """Test connectivity between two containers."""
-    # First, get the IP address of the target container
-    output = execute_command(client, f"docker inspect -f '{{{{.NetworkSettings.IPAddress}}}}' {target_container}")
-    
-    if not output or output.strip() == '':
-        # Try to get IP from networks
-        output = execute_command(client, f"docker inspect -f '{{{{json .NetworkSettings.Networks}}}}' {target_container}")
+    Args:
+        network_id: ID da rede
         
-        if output:
-            try:
-                # Clean the output (remove extra quotes)
-                output = output.strip().strip("'")
-                networks = json.loads(output)
-                
-                # Get the first IP address found
-                for network in networks.values():
-                    if 'IPAddress' in network and network['IPAddress']:
-                        target_ip = network['IPAddress']
-                        break
-                else:
-                    print(f"Could not find IP address for container {target_container}")
-                    return False, "No IP address found"
-            except json.JSONDecodeError as e:
-                print(f"Error parsing network settings: {str(e)}")
-                return False, "Error parsing network settings"
+    Returns:
+        Dicionário com detalhes da rede
+    """
+    stdout, stderr, returncode = run_command(f'docker network inspect {network_id}')
+    
+    if returncode != 0:
+        logger.error(f"Erro ao inspecionar rede {network_id}: {stderr}")
+        return {}
+    
+    try:
+        details = json.loads(stdout)
+        return details[0] if details else {}
+    except json.JSONDecodeError:
+        logger.error(f"Erro ao decodificar JSON para rede {network_id}")
+        return {}
+
+def get_container_ids(service_pattern: str = "") -> List[Dict[str, str]]:
+    """
+    Obtém IDs e nomes dos contêineres que correspondem ao padrão.
+    
+    Args:
+        service_pattern: Padrão para filtrar contêineres (opcional)
+        
+    Returns:
+        Lista de dicionários com ID e nome dos contêineres
+    """
+    filter_arg = f'--filter "name={service_pattern}"' if service_pattern else ""
+    stdout, stderr, returncode = run_command(f'docker ps -a {filter_arg} --format "{{{{.ID}}}}|{{{{.Names}}}}"')
+    
+    if returncode != 0:
+        logger.error(f"Erro ao listar contêineres: {stderr}")
+        return []
+    
+    containers = []
+    for line in stdout.splitlines():
+        if not line.strip():
+            continue
+        parts = line.split("|")
+        if len(parts) == 2:
+            containers.append({"id": parts[0], "name": parts[1]})
+    
+    return containers
+
+def get_container_networks(container_id: str) -> Dict:
+    """
+    Obtém as redes às quais um contêiner está conectado.
+    
+    Args:
+        container_id: ID do contêiner
+        
+    Returns:
+        Dicionário com informações das redes
+    """
+    stdout, stderr, returncode = run_command(f'docker inspect --format "{{{{json .NetworkSettings.Networks}}}}" {container_id}')
+    
+    if returncode != 0:
+        logger.error(f"Erro ao inspecionar redes do contêiner {container_id}: {stderr}")
+        return {}
+    
+    try:
+        networks = json.loads(stdout)
+        return networks
+    except json.JSONDecodeError:
+        logger.error(f"Erro ao decodificar JSON para o contêiner {container_id}")
+        return {}
+
+def test_container_communication(source_id: str, target_id: str, target_name: str) -> Dict:
+    """
+    Testa a comunicação entre dois contêineres usando ping.
+    
+    Args:
+        source_id: ID do contêiner de origem
+        target_id: ID do contêiner de destino
+        target_name: Nome do contêiner de destino
+        
+    Returns:
+        Dicionário com resultados do teste
+    """
+    # Obter endereço IP do contêiner de destino
+    stdout, stderr, returncode = run_command(f'docker inspect --format "{{{{.NetworkSettings.IPAddress}}}}" {target_id}')
+    
+    if returncode != 0 or not stdout.strip():
+        # Tentar obter IP de redes específicas
+        stdout, stderr, returncode = run_command(f'docker inspect --format "{{{{json .NetworkSettings.Networks}}}}" {target_id}')
+        
+        if returncode != 0:
+            logger.error(f"Erro ao obter IP do contêiner {target_id}: {stderr}")
+            return {
+                "success": False,
+                "message": f"Não foi possível obter o IP do contêiner {target_name}"
+            }
+        
+        try:
+            networks = json.loads(stdout)
+            target_ip = None
+            
+            # Tentar encontrar um IP em qualquer rede
+            for network_name, network_info in networks.items():
+                if "IPAddress" in network_info and network_info["IPAddress"]:
+                    target_ip = network_info["IPAddress"]
+                    break
+            
+            if not target_ip:
+                return {
+                    "success": False,
+                    "message": f"Contêiner {target_name} não tem um IP atribuído"
+                }
+        except json.JSONDecodeError:
+            logger.error(f"Erro ao decodificar JSON para o contêiner {target_id}")
+            return {
+                "success": False,
+                "message": f"Erro ao obter informações de rede do contêiner {target_name}"
+            }
+    else:
+        target_ip = stdout.strip()
+        
+        if not target_ip:
+            return {
+                "success": False,
+                "message": f"Contêiner {target_name} não tem um IP atribuído"
+            }
+    
+    # Testar ping
+    stdout, stderr, returncode = run_command(f'docker exec {source_id} ping -c 3 -W 2 {target_ip}')
+    
+    if returncode == 0:
+        return {
+            "success": True,
+            "message": f"Comunicação bem-sucedida com {target_name} ({target_ip})",
+            "details": stdout
+        }
+    else:
+        # Tentar ping pelo nome do contêiner
+        stdout, stderr, returncode = run_command(f'docker exec {source_id} ping -c 3 -W 2 {target_name}')
+        
+        if returncode == 0:
+            return {
+                "success": True,
+                "message": f"Comunicação bem-sucedida com {target_name} pelo nome",
+                "details": stdout
+            }
         else:
-            print(f"Could not find IP address for container {target_container}")
-            return False, "No IP address found"
-    else:
-        target_ip = output.strip()
-    
-    # Test connectivity using ping
-    ping_output = execute_command(client, f"docker exec {source_container} ping -c 3 {target_ip}")
-    
-    if ping_output and "bytes from" in ping_output:
-        return True, ping_output
-    
-    # If ping fails, try to use wget or curl
-    wget_output = execute_command(client, f"docker exec {source_container} wget -q -O - http://{target_ip}:80 || echo 'Connection failed'")
-    
-    if wget_output and "Connection failed" not in wget_output:
-        return True, wget_output
-    
-    curl_output = execute_command(client, f"docker exec {source_container} curl -s http://{target_ip}:80 || echo 'Connection failed'")
-    
-    if curl_output and "Connection failed" not in curl_output:
-        return True, curl_output
-    
-    return False, "All connection attempts failed"
+            return {
+                "success": False,
+                "message": f"Falha na comunicação com {target_name} ({target_ip})",
+                "details": stderr
+            }
 
-def analyze_network_configuration(networks, containers):
-    """Analyze Docker network configuration."""
-    analysis = {
-        'total_networks': len(networks),
-        'network_types': {},
-        'containers_without_network': [],
-        'isolated_containers': [],
-        'issues': [],
-        'status': 'OK'
-    }
+def test_dns_resolution(container_id: str, target_name: str) -> Dict:
+    """
+    Testa a resolução DNS de um nome de contêiner.
     
-    # Count network types
-    for network in networks:
-        driver = network['driver']
-        if driver not in analysis['network_types']:
-            analysis['network_types'][driver] = 0
-        analysis['network_types'][driver] += 1
+    Args:
+        container_id: ID do contêiner
+        target_name: Nome do contêiner a ser resolvido
+        
+    Returns:
+        Dicionário com resultados do teste
+    """
+    # Verificar se o contêiner tem o comando nslookup
+    stdout, stderr, returncode = run_command(f'docker exec {container_id} which nslookup')
     
-    # Check for containers without network
-    container_networks = {}
-    for container in containers:
-        if container['is_running']:
-            container_networks[container['name']] = []
+    if returncode != 0:
+        # Tentar instalar dnsutils ou busybox
+        logger.info(f"nslookup não encontrado no contêiner {container_id}, tentando instalar ferramentas DNS...")
+        
+        # Verificar se é uma imagem baseada em Debian/Ubuntu
+        stdout, stderr, returncode = run_command(f'docker exec {container_id} which apt-get')
+        
+        if returncode == 0:
+            run_command(f'docker exec {container_id} apt-get update -qq && apt-get install -y dnsutils')
+        else:
+            # Verificar se é uma imagem baseada em Alpine
+            stdout, stderr, returncode = run_command(f'docker exec {container_id} which apk')
+            
+            if returncode == 0:
+                run_command(f'docker exec {container_id} apk add --no-cache bind-tools')
     
-    # Map containers to networks
-    for network in networks:
-        if 'containers' in network:
-            for container_name in network['containers']:
-                if container_name in container_networks:
-                    container_networks[container_name].append(network['name'])
+    # Testar resolução DNS
+    stdout, stderr, returncode = run_command(f'docker exec {container_id} nslookup {target_name}')
     
-    # Check for containers without network
-    for container_name, container_nets in container_networks.items():
-        if not container_nets:
-            analysis['containers_without_network'].append(container_name)
-            analysis['issues'].append(f"Container {container_name} não está conectado a nenhuma rede")
-    
-    # Check for isolated containers (only connected to default bridge)
-    for container_name, container_nets in container_networks.items():
-        if len(container_nets) == 1 and container_nets[0] == 'bridge':
-            analysis['isolated_containers'].append(container_name)
-            analysis['issues'].append(f"Container {container_name} está isolado na rede bridge padrão")
-    
-    # Check for network issues
-    if not any(network['driver'] == 'bridge' for network in networks):
-        analysis['issues'].append("Nenhuma rede bridge personalizada encontrada")
-    
-    if analysis['issues']:
-        analysis['status'] = 'WARNING'
-    
-    return analysis
-
-def save_to_file(data, filename):
-    """Save data to a file."""
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
-    
-    if isinstance(data, (dict, list)):
-        with open(filename, 'w') as f:
-            json.dump(data, f, indent=2)
+    if returncode == 0:
+        return {
+            "success": True,
+            "message": f"Resolução DNS bem-sucedida para {target_name}",
+            "details": stdout
+        }
     else:
-        with open(filename, 'w') as f:
-            f.write(data if isinstance(data, str) else '\n'.join(data))
+        # Tentar com o comando host
+        stdout, stderr, returncode = run_command(f'docker exec {container_id} host {target_name}')
+        
+        if returncode == 0:
+            return {
+                "success": True,
+                "message": f"Resolução DNS bem-sucedida para {target_name} usando host",
+                "details": stdout
+            }
+        else:
+            return {
+                "success": False,
+                "message": f"Falha na resolução DNS para {target_name}",
+                "details": stderr
+            }
+
+def generate_report(results: Dict) -> str:
+    """
+    Gera um relatório formatado com os resultados da análise.
+    
+    Args:
+        results: Dicionário com resultados da análise
+        
+    Returns:
+        Relatório formatado em Markdown
+    """
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    report = [
+        "# Relatório de Configuração de Rede Docker",
+        f"Data: {now}\n",
+        "## Resumo",
+    ]
+    
+    # Adicionar resumo
+    networks_count = len(results["networks"])
+    containers_count = len(results["containers"])
+    
+    report.extend([
+        f"- Total de redes Docker: {networks_count}",
+        f"- Total de contêineres analisados: {containers_count}\n"
+    ])
+    
+    # Adicionar informações sobre redes
+    report.append("## Redes Docker")
+    
+    for network in results["networks"]:
+        network_id = network["id"]
+        network_name = network["name"]
+        network_driver = network["driver"]
+        
+        report.append(f"\n### Rede: {network_name}")
+        report.append(f"- **ID**: {network_id}")
+        report.append(f"- **Driver**: {network_driver}")
+        
+        # Adicionar detalhes da rede
+        network_details = network["details"]
+        
+        if network_details:
+            # IPAM Config
+            if "IPAM" in network_details and "Config" in network_details["IPAM"]:
+                ipam_config = network_details["IPAM"]["Config"]
+                if ipam_config:
+                    report.append("- **Configuração IPAM**:")
+                    for config in ipam_config:
+                        subnet = config.get("Subnet", "N/A")
+                        gateway = config.get("Gateway", "N/A")
+                        report.append(f"  - Subnet: {subnet}, Gateway: {gateway}")
+            
+            # Contêineres conectados
+            if "Containers" in network_details:
+                containers = network_details["Containers"]
+                if containers:
+                    report.append("- **Contêineres conectados**:")
+                    for container_id, container_info in containers.items():
+                        name = container_info.get("Name", "N/A")
+                        ip = container_info.get("IPv4Address", "N/A")
+                        report.append(f"  - {name}: {ip}")
+    
+    # Adicionar informações sobre contêineres
+    report.append("\n## Contêineres")
+    
+    for container in results["containers"]:
+        container_id = container["id"]
+        container_name = container["name"]
+        
+        report.append(f"\n### Contêiner: {container_name}")
+        report.append(f"- **ID**: {container_id[:12]}")
+        
+        # Redes do contêiner
+        container_networks = container["networks"]
+        if container_networks:
+            report.append("- **Redes**:")
+            for network_name, network_info in container_networks.items():
+                ip = network_info.get("IPAddress", "N/A")
+                mac = network_info.get("MacAddress", "N/A")
+                gateway = network_info.get("Gateway", "N/A")
+                report.append(f"  - {network_name}: IP: {ip}, MAC: {mac}, Gateway: {gateway}")
+        else:
+            report.append("- **Redes**: Nenhuma rede encontrada")
+    
+    # Adicionar resultados dos testes de comunicação
+    report.append("\n## Testes de Comunicação")
+    
+    communication_tests = results.get("communication_tests", [])
+    if communication_tests:
+        for test in communication_tests:
+            source = test["source"]
+            target = test["target"]
+            result = test["result"]
+            
+            status = "✅ Sucesso" if result["success"] else "❌ Falha"
+            report.append(f"\n### {source} → {target}: {status}")
+            report.append(f"- **Mensagem**: {result['message']}")
+            
+            if "details" in result and result["details"]:
+                details = result["details"].strip()
+                if details:
+                    report.append("- **Detalhes**:")
+                    report.append("```")
+                    report.append(details)
+                    report.append("```")
+    else:
+        report.append("\nNenhum teste de comunicação realizado.")
+    
+    # Adicionar resultados dos testes de DNS
+    report.append("\n## Testes de Resolução DNS")
+    
+    dns_tests = results.get("dns_tests", [])
+    if dns_tests:
+        for test in dns_tests:
+            source = test["source"]
+            target = test["target"]
+            result = test["result"]
+            
+            status = "✅ Sucesso" if result["success"] else "❌ Falha"
+            report.append(f"\n### {source} → {target}: {status}")
+            report.append(f"- **Mensagem**: {result['message']}")
+            
+            if "details" in result and result["details"]:
+                details = result["details"].strip()
+                if details:
+                    report.append("- **Detalhes**:")
+                    report.append("```")
+                    report.append(details)
+                    report.append("```")
+    else:
+        report.append("\nNenhum teste de resolução DNS realizado.")
+    
+    # Adicionar recomendações
+    report.append("\n## Recomendações")
+    
+    # Verificar se há problemas de comunicação
+    communication_failures = sum(1 for test in results.get("communication_tests", []) if not test["result"]["success"])
+    dns_failures = sum(1 for test in results.get("dns_tests", []) if not test["result"]["success"])
+    
+    if communication_failures > 0 or dns_failures > 0:
+        report.append("\nForam detectados problemas na configuração de rede Docker:")
+        
+        if communication_failures > 0:
+            report.append("\n### Problemas de Comunicação")
+            report.append("1. **Verifique se os contêineres estão na mesma rede** - Contêineres em redes diferentes não podem se comunicar diretamente")
+            report.append("2. **Verifique as regras de firewall** - Certifique-se de que não há regras bloqueando a comunicação")
+            report.append("3. **Verifique a configuração de rede dos contêineres** - Certifique-se de que os contêineres têm IPs atribuídos")
+        
+        if dns_failures > 0:
+            report.append("\n### Problemas de Resolução DNS")
+            report.append("1. **Verifique a configuração DNS dos contêineres** - Certifique-se de que os contêineres estão usando o DNS do Docker")
+            report.append("2. **Verifique se os nomes dos contêineres estão corretos** - Os nomes devem ser únicos e sem caracteres especiais")
+            report.append("3. **Considere usar aliases de rede** - Defina aliases para os contêineres para facilitar a resolução DNS")
+    else:
+        report.append("\n✅ A configuração de rede Docker parece estar correta. Todos os testes de comunicação e resolução DNS foram bem-sucedidos.")
+    
+    return "\n".join(report)
 
 def main():
-    """Main function."""
-    args = parse_arguments()
+    """Função principal do script."""
+    logger.info("Verificando configuração de rede Docker...")
     
-    # Create output directory
-    os.makedirs(args.output_dir, exist_ok=True)
+    results = {
+        "networks": [],
+        "containers": [],
+        "communication_tests": [],
+        "dns_tests": []
+    }
     
-    # Load containers from file if provided
-    containers = None
-    if args.containers_file and os.path.exists(args.containers_file):
-        try:
-            with open(args.containers_file, 'r') as f:
-                containers = json.load(f)
-            print(f"Carregados {len(containers)} contêineres do arquivo {args.containers_file}")
-        except Exception as e:
-            print(f"Erro ao carregar contêineres do arquivo: {str(e)}")
-            containers = None
+    # Listar redes Docker
+    logger.info("Listando redes Docker...")
+    networks = list_docker_networks()
     
-    # Connect to SSH
-    print(f"Conectando a {args.user}@{args.host}:{args.port}...")
-    client = create_ssh_client(args.host, args.port, args.user, args.key_file)
-    
-    if not client:
-        print("❌ Falha ao estabelecer conexão SSH")
-        sys.exit(1)
-    
-    print("✅ Conexão SSH estabelecida")
-    
-    # Get containers if not loaded from file
-    if not containers:
-        containers = get_docker_containers(client)
-        save_to_file(containers, os.path.join(args.output_dir, 'containers.json'))
-    
-    # Get Docker networks
-    print("Obtendo redes Docker...")
-    networks = get_docker_networks(client)
-    save_to_file(networks, os.path.join(args.output_dir, 'networks.json'))
-    
-    # Get detailed information for each network
-    network_details = {}
     for network in networks:
-        network_id = network['id']
-        network_name = network['name']
-        print(f"Obtendo detalhes da rede: {network_name} ({network_id})")
+        network_id = network["ID"]
+        network_details = get_network_details(network_id)
         
-        details = get_network_details(client, network_id)
-        network_details[network_name] = details
-        save_to_file(details, os.path.join(args.output_dir, f'network_{network_name}_details.json'))
+        results["networks"].append({
+            "id": network_id,
+            "name": network["Name"],
+            "driver": network["Driver"],
+            "details": network_details
+        })
     
-    # Get network settings for each container
-    container_networks = {}
-    for container in containers:
-        if container['is_running']:
-            container_id = container['id']
-            container_name = container['name']
-            print(f"Obtendo configurações de rede do contêiner: {container_name}")
-            
-            settings = get_container_network_settings(client, container_id)
-            container_networks[container_name] = settings
-            save_to_file(settings, os.path.join(args.output_dir, f'{container_name}_network_settings.json'))
+    # Obter contêineres Renum e Suna
+    logger.info("Obtendo contêineres Renum e Suna...")
+    renum_containers = get_container_ids("renum")
+    suna_containers = get_container_ids("suna")
     
-    # Test connectivity between key containers
-    print("Testando conectividade entre contêineres...")
-    connectivity_tests = {}
+    all_containers = renum_containers + suna_containers
     
-    # Find Renum and Suna containers
-    renum_containers = [c for c in containers if c['is_running'] and c.get('category') == 'renum']
-    suna_containers = [c for c in containers if c['is_running'] and c.get('category') == 'suna']
-    db_containers = [c for c in containers if c['is_running'] and c.get('category') == 'database']
+    if not all_containers:
+        logger.warning("Nenhum contêiner Renum ou Suna encontrado.")
+        return
     
-    # Test Renum -> Suna connectivity
+    # Analisar cada contêiner
+    for container in all_containers:
+        container_id = container["id"]
+        container_name = container["name"]
+        
+        logger.info(f"Analisando contêiner: {container_name} ({container_id[:12]})")
+        
+        # Obter redes do contêiner
+        container_networks = get_container_networks(container_id)
+        
+        results["containers"].append({
+            "id": container_id,
+            "name": container_name,
+            "networks": container_networks
+        })
+    
+    # Testar comunicação entre contêineres
+    logger.info("Testando comunicação entre contêineres...")
+    
+    # Separar contêineres por tipo
+    renum_names = [c["name"] for c in renum_containers]
+    suna_names = [c["name"] for c in suna_containers]
+    
+    # Testar comunicação de Renum para Suna
     for renum in renum_containers:
         for suna in suna_containers:
-            test_name = f"{renum['name']} -> {suna['name']}"
-            print(f"Testando conectividade: {test_name}")
+            logger.info(f"Testando comunicação de {renum['name']} para {suna['name']}...")
+            result = test_container_communication(renum["id"], suna["id"], suna["name"])
             
-            success, output = test_container_connectivity(client, renum['id'], suna['id'])
-            connectivity_tests[test_name] = {
-                'success': success,
-                'output': output
-            }
+            results["communication_tests"].append({
+                "source": renum["name"],
+                "target": suna["name"],
+                "result": result
+            })
     
-    # Test Suna -> Renum connectivity
+    # Testar comunicação de Suna para Renum
     for suna in suna_containers:
         for renum in renum_containers:
-            test_name = f"{suna['name']} -> {renum['name']}"
-            print(f"Testando conectividade: {test_name}")
+            logger.info(f"Testando comunicação de {suna['name']} para {renum['name']}...")
+            result = test_container_communication(suna["id"], renum["id"], renum["name"])
             
-            success, output = test_container_connectivity(client, suna['id'], renum['id'])
-            connectivity_tests[test_name] = {
-                'success': success,
-                'output': output
-            }
+            results["communication_tests"].append({
+                "source": suna["name"],
+                "target": renum["name"],
+                "result": result
+            })
     
-    # Test connectivity to database
-    for container in renum_containers + suna_containers:
-        for db in db_containers:
-            test_name = f"{container['name']} -> {db['name']}"
-            print(f"Testando conectividade: {test_name}")
+    # Testar resolução DNS
+    logger.info("Testando resolução DNS...")
+    
+    # Testar resolução DNS de Renum para Suna
+    for renum in renum_containers:
+        for suna_name in suna_names:
+            logger.info(f"Testando resolução DNS de {renum['name']} para {suna_name}...")
+            result = test_dns_resolution(renum["id"], suna_name)
             
-            success, output = test_container_connectivity(client, container['id'], db['id'])
-            connectivity_tests[test_name] = {
-                'success': success,
-                'output': output
-            }
+            results["dns_tests"].append({
+                "source": renum["name"],
+                "target": suna_name,
+                "result": result
+            })
     
-    save_to_file(connectivity_tests, os.path.join(args.output_dir, 'connectivity_tests.json'))
-    
-    # Analyze network configuration
-    print("Analisando configuração de rede...")
-    
-    # Enhance networks with container information
-    for network in networks:
-        network_name = network['name']
-        if network_name in network_details:
-            details = network_details[network_name]
-            if isinstance(details, list) and len(details) > 0:
-                details = details[0]  # Docker inspect returns a list
+    # Testar resolução DNS de Suna para Renum
+    for suna in suna_containers:
+        for renum_name in renum_names:
+            logger.info(f"Testando resolução DNS de {suna['name']} para {renum_name}...")
+            result = test_dns_resolution(suna["id"], renum_name)
             
-            if 'Containers' in details:
-                network['containers'] = list(details['Containers'].keys())
-            else:
-                network['containers'] = []
+            results["dns_tests"].append({
+                "source": suna["name"],
+                "target": renum_name,
+                "result": result
+            })
     
-    analysis = analyze_network_configuration(networks, containers)
-    save_to_file(analysis, os.path.join(args.output_dir, 'network_analysis.json'))
+    # Gerar relatório
+    report = generate_report(results)
     
-    # Generate report
-    report = f"""
-=======================================================
-RELATÓRIO DE CONFIGURAÇÃO DE REDE DOCKER - {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}
-=======================================================
-
-Total de redes: {analysis['total_networks']}
-Tipos de rede: {json.dumps(analysis['network_types'], indent=2)}
-
-Redes disponíveis:
-"""
+    # Salvar relatório em arquivo
+    report_path = os.path.join(os.path.dirname(__file__), "..", "reports")
+    os.makedirs(report_path, exist_ok=True)
     
-    for network in networks:
-        report += f"- {network['name']} ({network['driver']})\n"
-        if 'containers' in network:
-            for container in network['containers']:
-                report += f"  - {container}\n"
+    report_file = os.path.join(report_path, "docker_network_report.md")
+    with open(report_file, "w", encoding="utf-8") as f:
+        f.write(report)
     
-    report += "\nTestes de conectividade:\n"
+    logger.info(f"Relatório salvo em: {report_file}")
     
-    for test_name, test_result in connectivity_tests.items():
-        status = "✅ Sucesso" if test_result['success'] else "❌ Falha"
-        report += f"- {test_name}: {status}\n"
+    # Exibir resumo
+    communication_failures = sum(1 for test in results["communication_tests"] if not test["result"]["success"])
+    dns_failures = sum(1 for test in results["dns_tests"] if not test["result"]["success"])
     
-    if analysis['issues']:
-        report += "\nPROBLEMAS DETECTADOS:\n"
-        for issue in analysis['issues']:
-            report += f"- {issue}\n"
+    if communication_failures > 0 or dns_failures > 0:
+        logger.warning(f"⚠️ Foram detectados problemas na configuração de rede Docker:")
+        logger.warning(f"- Falhas de comunicação: {communication_failures}/{len(results['communication_tests'])}")
+        logger.warning(f"- Falhas de resolução DNS: {dns_failures}/{len(results['dns_tests'])}")
+        logger.info(f"Para mais detalhes, consulte o relatório: {report_file}")
     else:
-        report += "\nNenhum problema de rede detectado.\n"
-    
-    save_to_file(report, os.path.join(args.output_dir, 'network_report.txt'))
-    print(report)
-    
-    client.close()
-    print("Conexão SSH encerrada")
-    print(f"Análise de rede concluída. Resultados salvos em {args.output_dir}")
+        logger.info("✅ A configuração de rede Docker parece estar correta. Todos os testes foram bem-sucedidos.")
 
 if __name__ == "__main__":
     main()

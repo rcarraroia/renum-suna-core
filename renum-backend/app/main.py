@@ -18,6 +18,7 @@ from app.api.routes import suna_router
 from app.api.routes import auth_router
 from app.api.routes import proxy_router
 from app.api.routes.agent import router as agent_router
+from app.api.routes.agent_share import router as agent_share_router
 
 
 @asynccontextmanager
@@ -62,6 +63,7 @@ app.include_router(suna_router, prefix="/api/v2/suna")
 app.include_router(auth_router, prefix="/api/v2/auth")
 app.include_router(proxy_router, prefix="/api/v2/proxy")
 app.include_router(agent_router, prefix="/api/v2/agents")
+app.include_router(agent_share_router, prefix="/api/v2/agents")
 
 
 @app.get("/health")

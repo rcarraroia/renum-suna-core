@@ -193,7 +193,8 @@
     - Exibir informações sobre ferramentas utilizadas pelo agente
     - _Requirements: 3.4_
   
-  - [ ] 7.4 Implementar tratamento de erros
+  - [x] 7.4 Implementar tratamento de erros
+
     - Adicionar exibição de mensagens de erro
     - Implementar opções para tentar novamente
     - _Requirements: 3.5_
