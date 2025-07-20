@@ -5,18 +5,21 @@
 /**
  * Formata uma data para exibição
  * @param dateString - String de data ISO
+ * @param options - Opções de formatação (opcional)
  * @returns Data formatada
  */
-export function formatDate(dateString: string): string {
+export function formatDate(dateString: string, options?: Intl.DateTimeFormatOptions): string {
   try {
     const date = new Date(dateString);
-    return new Intl.DateTimeFormat('pt-BR', {
+    const defaultOptions: Intl.DateTimeFormatOptions = {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric',
       hour: '2-digit',
       minute: '2-digit'
-    }).format(date);
+    };
+    
+    return new Intl.DateTimeFormat('pt-BR', options || defaultOptions).format(date);
   } catch (error) {
     console.error('Erro ao formatar data:', error);
     return dateString;
