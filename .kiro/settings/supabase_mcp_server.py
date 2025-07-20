@@ -166,14 +166,32 @@ async def main():
             request = json.loads(line)
             request_id = request.get("id")
             
-            if "method" in request and request["method"] == "execute":
-                params = request.get("params", {})
-                tool_call = params.get("tool_call", {})
-                
-                response = await handle_request(tool_call)
-                print(json.dumps({"jsonrpc": "2.0", "result": response, "id": request_id}))
+            if "method" in request:
+                if request["method"] == "execute":
+                    params = request.get("params", {})
+                    tool_call = params.get("tool_call", {})
+                    
+                    response = await handle_request(tool_call)
+                    print(json.dumps({"jsonrpc": "2.0", "result": response, "id": request_id}))
+                elif request["method"] == "initialize":
+                    # Responder ao método initialize
+                    print(json.dumps({
+                        "jsonrpc": "2.0", 
+                        "result": {
+                            "tools": tools,
+                            "protocolVersion": "2024-11-05",
+                            "serverInfo": {
+                                "name": "Supabase MCP Server",
+                                "version": "1.0.0"
+                            },
+                            "capabilities": {}
+                        }, 
+                        "id": request_id
+                    }))
+                else:
+                    print(json.dumps({"jsonrpc": "2.0", "error": {"code": -32601, "message": "Method not found"}, "id": request_id}))
             else:
-                print(json.dumps({"jsonrpc": "2.0", "error": {"code": -32601, "message": "Method not found"}, "id": request_id}))
+                print(json.dumps({"jsonrpc": "2.0", "error": {"code": -32600, "message": "Invalid request"}, "id": request_id}))
             
             sys.stdout.flush()
         except json.JSONDecodeError:

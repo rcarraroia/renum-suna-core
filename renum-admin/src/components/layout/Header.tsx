@@ -1,20 +1,24 @@
 import React from 'react';
 import { Bell, Search, Menu } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
-import { getInitials } from '../../lib/utils';
 
 const Header: React.FC = () => {
   const { user } = useAuth();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
   return (
     <header className="bg-white shadow-sm z-10">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center md:hidden">
-            <button className="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500">
+            <button 
+              className="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
               <Menu size={24} />
             </button>
           </div>
+          
           <div className="flex-1 flex items-center justify-center md:justify-start">
             <div className="max-w-lg w-full lg:max-w-xs">
               <label htmlFor="search" className="sr-only">
@@ -34,10 +38,12 @@ const Header: React.FC = () => {
               </div>
             </div>
           </div>
+          
           <div className="flex items-center">
             <button className="p-2 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
               <Bell size={20} />
             </button>
+            
             <div className="ml-3 relative">
               <div className="flex items-center">
                 <div className="ml-3">
@@ -47,7 +53,7 @@ const Header: React.FC = () => {
                   <div className="text-xs text-gray-500">{user?.email}</div>
                 </div>
                 <div className="ml-3 h-8 w-8 rounded-full bg-primary-600 flex items-center justify-center text-white">
-                  {getInitials(user?.name || 'A')}
+                  {user?.name?.charAt(0) || 'A'}
                 </div>
               </div>
             </div>

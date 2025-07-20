@@ -71,6 +71,7 @@ const Sidebar: React.FC = () => {
       <div className="h-16 flex items-center px-6">
         <h1 className="text-xl font-bold">Renum Admin</h1>
       </div>
+      
       <div className="px-3 py-4 space-y-1">
         <NavItem
           href="/"
@@ -78,36 +79,42 @@ const Sidebar: React.FC = () => {
           text="Dashboard"
           active={isActive('/')}
         />
+        
         <NavItem
           href="/clients"
           icon={<Building size={20} />}
           text="Clientes"
           active={isActiveGroup(['/clients'])}
         />
+        
         <NavItem
           href="/users"
           icon={<Users size={20} />}
           text="Usuários"
           active={isActiveGroup(['/users'])}
         />
+        
         <NavItem
           href="/agents"
           icon={<Bot size={20} />}
           text="Agentes"
           active={isActiveGroup(['/agents'])}
         />
+        
         <NavItem
           href="/credentials"
           icon={<Key size={20} />}
           text="Credenciais"
           active={isActiveGroup(['/credentials'])}
         />
+        
         <NavItem
           href="/billing"
           icon={<CreditCard size={20} />}
           text="Faturamento"
           active={isActiveGroup(['/billing'])}
         />
+        
         <NavItem
           href="/settings"
           icon={<Settings size={20} />}
@@ -117,6 +124,7 @@ const Sidebar: React.FC = () => {
           open={settingsOpen}
           onClick={() => setSettingsOpen(!settingsOpen)}
         />
+        
         {settingsOpen && (
           <div className="pl-10 space-y-1">
             <NavItem
@@ -139,12 +147,14 @@ const Sidebar: React.FC = () => {
             />
           </div>
         )}
+        
         <NavItem
           href="/audit"
           icon={<FileText size={20} />}
           text="Auditoria"
           active={isActiveGroup(['/audit'])}
         />
+        
         <div className="pt-4 mt-4 border-t border-primary-800">
           <button
             onClick={logout}

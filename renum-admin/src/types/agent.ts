@@ -1,38 +1,49 @@
 export interface Agent {
   id: string;
-  client_id?: string; // Opcional para agentes administrativos
+  client_id: string;
+  client_name?: string; // Adicionado para exibir o nome do cliente na listagem
+  created_by: string;
   name: string;
   description?: string;
-  type: 'chat' | 'assistant' | 'admin' | 'custom';
-  status: 'active' | 'inactive' | 'draft';
-  configuration: AgentConfiguration;
-  usage_stats: AgentUsageStats;
-  created_at: Date;
-  updated_at: Date;
-}
-
-export interface AgentConfiguration {
+  system_prompt?: string;
   model: string;
   temperature: number;
   max_tokens: number;
-  tools: AgentTool[];
-  system_prompt?: string;
-  knowledge_base_ids?: string[];
-  [key: string]: any;
+  is_active: boolean;
+  is_public: boolean;
+  created_at: string;
+  updated_at: string;
+  metadata?: Record<string, any>;
 }
 
-export interface AgentTool {
-  id: string;
+export interface AgentFormData {
+  client_id: string;
   name: string;
   description?: string;
-  type: 'function' | 'retrieval' | 'web' | 'custom';
-  configuration: Record<string, any>;
+  system_prompt?: string;
+  model: string;
+  temperature: number;
+  max_tokens: number;
+  is_active: boolean;
+  is_public: boolean;
 }
 
 export interface AgentUsageStats {
+  agent_id: string;
   total_conversations: number;
   total_messages: number;
   total_tokens: number;
   avg_response_time: number;
-  last_used?: Date;
+  last_used?: string;
+  users_count: number;
+  feedback_score?: number;
+}
+
+export interface AgentModel {
+  id: string;
+  name: string;
+  provider: string;
+  max_tokens: number;
+  cost_per_1k_tokens: number;
+  is_available: boolean;
 }

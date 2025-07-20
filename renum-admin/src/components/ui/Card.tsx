@@ -10,7 +10,10 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
     return (
       <div
         ref={ref}
-        className={cn('bg-white rounded-lg shadow overflow-hidden', className)}
+        className={cn(
+          'bg-white rounded-lg shadow overflow-hidden',
+          className
+        )}
         {...props}
       >
         {children}

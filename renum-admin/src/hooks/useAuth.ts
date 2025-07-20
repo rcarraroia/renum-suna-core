@@ -2,9 +2,17 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { createClient } from '@supabase/supabase-js';
 import { create } from 'zustand';
-import { Admin } from '../types/admin';
 
 // Tipos
+export interface Admin {
+  id: string;
+  name: string;
+  email: string;
+  role: 'admin' | 'superadmin';
+  is_active: boolean;
+  last_login?: Date;
+}
+
 interface AuthState {
   user: Admin | null;
   isLoading: boolean;
@@ -15,11 +23,9 @@ interface AuthState {
 }
 
 // Criar cliente Supabase
-const getSupabaseClient = () => {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-  return createClient(supabaseUrl, supabaseKey);
-};
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Store Zustand
 const useAuthStore = create<AuthState>((set) => ({
@@ -29,7 +35,6 @@ const useAuthStore = create<AuthState>((set) => ({
   login: async (email, password) => {
     try {
       set({ isLoading: true, error: null });
-      const supabase = getSupabaseClient();
       
       // Autenticar com Supabase
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -52,35 +57,30 @@ const useAuthStore = create<AuthState>((set) => ({
         throw new Error('Acesso não autorizado. Apenas administradores podem acessar este painel.');
       }
       
-      // Definir usuário
-      set({
-        user: {
-          id: adminData.id,
-          user_id: data.user.id,
-          name: adminData.name,
-          email: data.user.email || '',
-          role: adminData.role,
-          is_active: adminData.is_active,
-          last_login: adminData.last_login,
-          created_at: adminData.created_at,
-          updated_at: adminData.updated_at,
-        },
-        isLoading: false,
-      });
-      
       // Atualizar último login
       await supabase
         .from('renum_admins')
         .update({ last_login: new Date().toISOString() })
         .eq('id', adminData.id);
-        
+      
+      // Definir usuário
+      set({
+        user: {
+          id: adminData.id,
+          name: adminData.name,
+          email: data.user.email || '',
+          role: adminData.role,
+          is_active: adminData.is_active,
+          last_login: new Date(),
+        },
+        isLoading: false,
+      });
     } catch (error: any) {
       set({ error: error.message, isLoading: false });
     }
   },
   logout: async () => {
     try {
-      const supabase = getSupabaseClient();
       await supabase.auth.signOut();
       set({ user: null });
     } catch (error: any) {
@@ -98,8 +98,6 @@ export const useAuth = () => {
   useEffect(() => {
     const checkUser = async () => {
       try {
-        const supabase = getSupabaseClient();
-        
         // Verificar sessão atual
         const { data } = await supabase.auth.getSession();
         
@@ -114,14 +112,11 @@ export const useAuth = () => {
           if (!adminError && adminData) {
             setUser({
               id: adminData.id,
-              user_id: data.session.user.id,
               name: adminData.name,
               email: data.session.user.email || '',
               role: adminData.role,
               is_active: adminData.is_active,
-              last_login: adminData.last_login,
-              created_at: adminData.created_at,
-              updated_at: adminData.updated_at,
+              last_login: adminData.last_login ? new Date(adminData.last_login) : undefined,
             });
           } else {
             setUser(null);
@@ -137,7 +132,6 @@ export const useAuth = () => {
     checkUser();
     
     // Configurar listener para mudanças de autenticação
-    const supabase = getSupabaseClient();
     const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_IN' && session?.user) {
         // Verificar se o usuário é administrador
@@ -150,22 +144,12 @@ export const useAuth = () => {
         if (!adminError && adminData) {
           setUser({
             id: adminData.id,
-            user_id: session.user.id,
             name: adminData.name,
             email: session.user.email || '',
             role: adminData.role,
             is_active: adminData.is_active,
-            last_login: adminData.last_login,
-            created_at: adminData.created_at,
-            updated_at: adminData.updated_at,
+            last_login: adminData.last_login ? new Date(adminData.last_login) : undefined,
           });
-          
-          // Atualizar último login
-          await supabase
-            .from('renum_admins')
-            .update({ last_login: new Date().toISOString() })
-            .eq('id', adminData.id);
-            
         } else {
           setUser(null);
           router.push('/login');

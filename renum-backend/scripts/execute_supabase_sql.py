@@ -26,7 +26,7 @@ def execute_sql(supabase_url, supabase_key, sql_content):
         
         # Executar SQL
         print("Executando SQL no Supabase...")
-        result = supabase.rpc('execute_sql', {'query': sql_content}).execute()
+        result = supabase.rpc('exec_sql', {'sql': sql_content}).execute()
         
         # Verificar resultado
         if hasattr(result, 'error') and result.error:

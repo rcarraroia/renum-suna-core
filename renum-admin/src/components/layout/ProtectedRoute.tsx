@@ -4,19 +4,39 @@ import { useAuth } from '../../hooks/useAuth';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
+  requiredRole?: 'admin' | 'superadmin';
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ 
+  children, 
+  requiredRole 
+}) => {
   const { user, isLoading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoading && !user && router.pathname !== '/login') {
-      router.push('/login');
-    }
-  }, [user, isLoading, router]);
+    if (!isLoading) {
+      // Verificar se o usuário está autenticado
+      if (!user) {
+        router.push('/login');
+        return;
+      }
 
-  // Mostrar tela de carregamento enquanto verifica autenticação
+      // Verificar se o usuário está ativo
+      if (!user.is_active) {
+        router.push('/login');
+        return;
+      }
+
+      // Verificar se o usuário tem o papel necessário
+      if (requiredRole && user.role !== requiredRole && !(requiredRole === 'admin' && user.role === 'superadmin')) {
+        router.push('/unauthorized');
+        return;
+      }
+    }
+  }, [user, isLoading, router, requiredRole]);
+
+  // Mostrar tela de carregamento enquanto verifica a autenticação
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -25,13 +45,12 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     );
   }
 
-  // Se não estiver autenticado e não estiver na página de login, não renderiza nada
-  // (será redirecionado pelo useEffect)
-  if (!user && router.pathname !== '/login') {
+  // Se não estiver autenticado ou não tiver permissão, não renderiza nada
+  if (!user || !user.is_active || (requiredRole && user.role !== requiredRole && !(requiredRole === 'admin' && user.role === 'superadmin'))) {
     return null;
   }
 
-  // Se estiver autenticado ou na página de login, renderiza o conteúdo
+  // Se estiver autenticado e tiver permissão, renderiza os filhos
   return <>{children}</>;
 };
 

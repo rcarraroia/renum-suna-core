@@ -6,24 +6,34 @@ interface MetricsCardProps {
   value: string | number;
   change?: number;
   icon: React.ReactNode;
+  className?: string;
 }
 
-const MetricsCard: React.FC<MetricsCardProps> = ({ title, value, change, icon }) => {
+const MetricsCard: React.FC<MetricsCardProps> = ({
+  title,
+  value,
+  change,
+  icon,
+  className,
+}) => {
   return (
-    <Card className="p-6">
+    <Card className={`p-6 ${className}`}>
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm font-medium text-gray-500">{title}</p>
           <p className="text-2xl font-bold mt-1">{value}</p>
           {change !== undefined && (
-            <p className={`text-xs mt-1 ${change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-              {change >= 0 ? '+' : ''}{change}% desde o último período
+            <p
+              className={`text-xs mt-1 ${
+                change >= 0 ? 'text-green-500' : 'text-red-500'
+              }`}
+            >
+              {change >= 0 ? '+' : ''}
+              {change}% desde o último período
             </p>
           )}
         </div>
-        <div className="p-3 bg-primary-100 rounded-full">
-          {icon}
-        </div>
+        <div className="p-3 bg-primary-100 rounded-full">{icon}</div>
       </div>
     </Card>
   );

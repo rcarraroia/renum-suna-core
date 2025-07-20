@@ -3,7 +3,7 @@ import { cn } from '../../lib/utils';
 
 interface Column<T> {
   header: string;
-  accessor: keyof T | ((item: T) => React.ReactNode);
+  accessor: keyof T | ((row: T) => React.ReactNode);
   className?: string;
 }
 
@@ -44,29 +44,39 @@ function Table<T>({
         <tbody className="bg-white divide-y divide-gray-200">
           {isLoading ? (
             <tr>
-              <td colSpan={columns.length} className="px-6 py-4 text-center">
-                <div className="flex justify-center">
-                  <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-primary-600"></div>
+              <td
+                colSpan={columns.length}
+                className="px-6 py-4 text-center text-sm text-gray-500"
+              >
+                <div className="flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-primary-600 mr-2"></div>
+                  Carregando...
                 </div>
               </td>
             </tr>
           ) : data.length === 0 ? (
             <tr>
-              <td colSpan={columns.length} className="px-6 py-4 text-center text-gray-500">
+              <td
+                colSpan={columns.length}
+                className="px-6 py-4 text-center text-sm text-gray-500"
+              >
                 {emptyMessage}
               </td>
             </tr>
           ) : (
-            data.map((item, rowIndex) => (
+            data.map((row, rowIndex) => (
               <tr key={rowIndex} className="hover:bg-gray-50">
                 {columns.map((column, colIndex) => (
                   <td
                     key={colIndex}
-                    className={cn('px-6 py-4 whitespace-nowrap text-sm text-gray-500', column.className)}
+                    className={cn(
+                      'px-6 py-4 whitespace-nowrap text-sm text-gray-500',
+                      column.className
+                    )}
                   >
                     {typeof column.accessor === 'function'
-                      ? column.accessor(item)
-                      : (item[column.accessor] as React.ReactNode)}
+                      ? column.accessor(row)
+                      : row[column.accessor] as React.ReactNode}
                   </td>
                 ))}
               </tr>
