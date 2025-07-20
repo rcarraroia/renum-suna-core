@@ -6,6 +6,8 @@
 
 
 
+
+
   - Criar estrutura do projeto Next.js
   - Configurar TailwindCSS e dependências
   - Configurar ESLint e Prettier
@@ -15,7 +17,14 @@
 - [x] 2. Implementar sistema de autenticação
 
 
+
+
+
+
+
   - [x] 2.1 Criar hook de autenticação (useAuth)
+
+
 
 
     - Implementar integração com Supabase Auth
@@ -26,6 +35,7 @@
   - [x] 2.2 Criar página de login
 
 
+
     - Implementar formulário de login com validação
     - Adicionar tratamento de erros
     - Implementar redirecionamento após autenticação
@@ -34,14 +44,18 @@
   - [x] 2.3 Implementar proteção de rotas
 
 
+
     - Criar componente de proteção de rotas
     - Implementar redirecionamento para login quando não autenticado
+
     - _Requisitos: 1.4_
 
-- [x] 3. Implementar componentes de layout
+- [-] 3. Implementar componentes de layout
+
 
 
   - [x] 3.1 Criar componente Layout principal
+
 
 
     - Implementar estrutura básica do layout
@@ -49,6 +63,7 @@
     - _Requisitos: 1.4, 1.5_
   
   - [x] 3.2 Implementar Sidebar
+
 
 
     - Criar menu de navegação com links para todas as seções
@@ -65,6 +80,7 @@
     - _Requisitos: 1.5_
   
   - [x] 3.4 Implementar Footer
+
 
 
     - Criar rodapé com informações de versão e copyright
@@ -86,6 +102,8 @@
 
     - Implementar Table com ordenação e paginação
     - Implementar Modal para formulários e confirmações
+
+
     - Implementar Card para agrupamento de informações
     - Implementar Alert para mensagens de feedback
     - _Requisitos: 2.1, 3.1, 4.1, 5.1, 6.1_
@@ -131,7 +149,8 @@
     - Integrar com API para obter dados
     - _Requisitos: 2.5_
 
-- [-] 6. Implementar gerenciamento de clientes
+- [ ] 6. Implementar gerenciamento de clientes
+
 
   - [x] 6.1 Criar página de listagem de clientes
 
@@ -165,165 +184,165 @@
     - Atualizar UI após desativação
     - _Requisitos: 3.5_
 
-- [ ] 7. Implementar gerenciamento de usuários
-  - [ ] 7.1 Criar página de listagem de usuários
+- [x] 7. Implementar gerenciamento de usuários
+  - [x] 7.1 Criar página de listagem de usuários
     - Implementar tabela de usuários com filtros e busca
     - Adicionar paginação e ordenação
     - Implementar ações (visualizar, editar, desativar)
     - _Requisitos: 4.1_
   
-  - [ ] 7.2 Criar página de detalhes do usuário
+  - [x] 7.2 Criar página de detalhes do usuário
     - Implementar visualização de informações do usuário
     - Exibir cliente associado e permissões
     - _Requisitos: 4.2_
   
-  - [ ] 7.3 Implementar formulário de usuário
+  - [x] 7.3 Implementar formulário de usuário
     - Criar formulário para criação e edição de usuários
     - Implementar validação de campos
     - Integrar com API para salvar dados
     - _Requisitos: 4.3, 4.4_
   
-  - [ ] 7.4 Implementar funcionalidade de desativação
+  - [x] 7.4 Implementar funcionalidade de desativação
     - Criar modal de confirmação
     - Integrar com API para desativar usuário
     - Atualizar UI após desativação
     - _Requisitos: 4.5_
   
-  - [ ] 7.5 Implementar atribuição de usuário a cliente
+  - [x] 7.5 Implementar atribuição de usuário a cliente
     - Adicionar seletor de cliente no formulário de usuário
     - Integrar com API para obter lista de clientes
     - Salvar relação entre usuário e cliente
     - _Requisitos: 4.6_
   
-  - [ ] 7.6 Implementar gerenciamento de permissões
+  - [x] 7.6 Implementar gerenciamento de permissões
     - Criar interface para definir permissões do usuário
     - Integrar com API para salvar permissões
     - _Requisitos: 4.7_
 
-- [ ] 8. Implementar gerenciamento de agentes
-  - [ ] 8.1 Criar página de listagem de agentes
+- [x] 8. Implementar gerenciamento de agentes
+  - [x] 8.1 Criar página de listagem de agentes
     - Implementar tabela de agentes com filtros e busca
     - Adicionar paginação e ordenação
     - Implementar ações (visualizar, editar, desativar)
     - _Requisitos: 5.1_
   
-  - [ ] 8.2 Criar página de detalhes do agente
+  - [x] 8.2 Criar página de detalhes do agente
     - Implementar visualização de informações do agente
     - Exibir métricas de uso e performance
     - _Requisitos: 5.2, 5.6_
   
-  - [ ] 8.3 Implementar formulário de agente
+  - [x] 8.3 Implementar formulário de agente
     - Criar formulário para criação e edição de agentes
     - Implementar validação de campos
     - Integrar com API para salvar dados
     - _Requisitos: 5.3, 5.4_
   
-  - [ ] 8.4 Implementar funcionalidade de desativação
+  - [x] 8.4 Implementar funcionalidade de desativação
     - Criar modal de confirmação
     - Integrar com API para desativar agente
     - Atualizar UI após desativação
     - _Requisitos: 5.5_
 
-- [ ] 9. Implementar gerenciamento de credenciais
-  - [ ] 9.1 Criar página de listagem de credenciais
+- [x] 9. Implementar gerenciamento de credenciais
+  - [x] 9.1 Criar página de listagem de credenciais
     - Implementar tabela de credenciais
     - Adicionar ações (visualizar, editar, excluir)
     - _Requisitos: 6.1_
   
-  - [ ] 9.2 Implementar formulário de credencial
+  - [x] 9.2 Implementar formulário de credencial
     - Criar formulário para adição e edição de credenciais
     - Implementar validação de campos
     - Integrar com API para salvar dados de forma segura
     - _Requisitos: 6.2, 6.3_
   
-  - [ ] 9.3 Implementar exclusão de credencial
+  - [x] 9.3 Implementar exclusão de credencial
     - Criar modal de confirmação
     - Integrar com API para excluir credencial
     - Atualizar UI após exclusão
     - _Requisitos: 6.4_
   
-  - [ ] 9.4 Implementar visualização segura de credenciais
+  - [x] 9.4 Implementar visualização segura de credenciais
     - Exibir apenas metadados da credencial
     - Implementar mascaramento de valores sensíveis
     - _Requisitos: 6.5_
   
-  - [ ] 9.5 Implementar monitoramento de uso de credenciais
+  - [x] 9.5 Implementar monitoramento de uso de credenciais
     - Exibir data do último uso
     - Mostrar alertas para credenciais próximas da expiração
     - _Requisitos: 6.6, 6.7_
 
-- [ ] 10. Implementar faturamento e relatórios
-  - [ ] 10.1 Criar página de visão geral de faturamento
+- [x] 10. Implementar faturamento e relatórios
+  - [x] 10.1 Criar página de visão geral de faturamento
     - Implementar cards com métricas de faturamento
     - Exibir gráficos de uso por cliente
     - _Requisitos: 7.1_
   
-  - [ ] 10.2 Implementar relatórios detalhados
+  - [x] 10.2 Implementar relatórios detalhados
     - Criar interface para seleção de período
     - Implementar tabelas de consumo detalhado
     - Integrar com API para obter dados
     - _Requisitos: 7.2_
   
-  - [ ] 10.3 Implementar configuração de limites
+  - [x] 10.3 Implementar configuração de limites
     - Criar interface para definir limites de uso
     - Integrar com API para salvar limites
     - _Requisitos: 7.3_
   
-  - [ ] 10.4 Implementar exportação de relatórios
+  - [x] 10.4 Implementar exportação de relatórios
     - Adicionar opções de formato (CSV, PDF)
     - Integrar com API para gerar relatórios
     - _Requisitos: 7.4_
   
-  - [ ] 10.5 Implementar sistema de notificações
+  - [x] 10.5 Implementar sistema de notificações
     - Criar componente para exibir notificações
     - Integrar com API para obter alertas de limites
     - _Requisitos: 7.5_
   
-  - [ ] 10.6 Implementar visualização de histórico
+  - [x] 10.6 Implementar visualização de histórico
     - Criar gráficos comparativos entre períodos
     - Exibir tendências de uso
     - _Requisitos: 7.6_
 
-- [ ] 11. Implementar configurações do sistema
-  - [ ] 11.1 Criar página de configurações gerais
+- [x] 11. Implementar configurações do sistema
+  - [x] 11.1 Criar página de configurações gerais
     - Implementar formulário para configurações globais
     - Integrar com API para salvar configurações
     - _Requisitos: 8.1, 8.2_
   
-  - [ ] 11.2 Implementar configurações de segurança
+  - [x] 11.2 Implementar configurações de segurança
     - Criar interface para configurações de segurança
     - Implementar validações específicas
     - Integrar com API para salvar configurações
     - _Requisitos: 8.3, 8.5_
   
-  - [ ] 11.3 Implementar configurações de integrações
+  - [x] 11.3 Implementar configurações de integrações
     - Criar interface para configurar serviços externos
     - Implementar testes de conexão
     - Integrar com API para salvar configurações
     - _Requisitos: 8.4_
   
-  - [ ] 11.4 Implementar registro de alterações
+  - [x] 11.4 Implementar registro de alterações
     - Adicionar registro de quem alterou cada configuração
     - Integrar com sistema de auditoria
     - _Requisitos: 8.6_
 
-- [ ] 12. Implementar sistema de auditoria
-  - [ ] 12.1 Criar página de logs de auditoria
+- [x] 12. Implementar sistema de auditoria
+  - [x] 12.1 Criar página de logs de auditoria
     - Implementar tabela de eventos com filtros avançados
     - Adicionar paginação e ordenação
     - _Requisitos: 9.1, 9.3_
   
-  - [ ] 12.2 Criar página de detalhes do evento
+  - [x] 12.2 Criar página de detalhes do evento
     - Implementar visualização detalhada de um evento
     - Exibir todas as informações relevantes
     - _Requisitos: 9.2_
   
-  - [ ] 12.3 Implementar exportação de logs
+  - [x] 12.3 Implementar exportação de logs
     - Adicionar funcionalidade para exportar logs filtrados
     - Integrar com API para gerar arquivo de exportação
     - _Requisitos: 9.4_
   
-  - [ ] 12.4 Implementar configuração de alertas
+  - [x] 12.4 Implementar configuração de alertas
     - Criar interface para definir regras de alerta
     - Integrar com sistema de notificações
     - _Requisitos: 9.5, 9.6_
@@ -372,18 +391,29 @@
     - Criar guia de uso para administradores
     - _Requisitos: Todos_
 
-- [ ] 15. Implementar gerenciamento de frases da página inicial
+- [x] 15. Implementar gerenciamento de frases da página inicial
+
+
+
+
+
   - [ ] 15.1 Criar modelo de dados para frases
     - Definir estrutura para armazenar frases com efeito de máquina de escrever
     - Implementar campos para texto, ordem e status (ativo/inativo)
+
+
     - _Requisitos: 8.1_
   
   - [ ] 15.2 Criar interface de gerenciamento de frases
     - Implementar listagem de frases existentes
     - Criar formulário para adicionar/editar frases
+
+
     - Implementar funcionalidade de reordenação
     - Adicionar opção para ativar/desativar frases
     - _Requisitos: 8.1, 8.2_
+
+
   
   - [ ] 15.3 Implementar API para gerenciamento de frases
     - Criar endpoints para listar, adicionar, editar e excluir frases
