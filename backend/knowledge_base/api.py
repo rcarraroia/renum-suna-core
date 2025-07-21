@@ -8,13 +8,7 @@ from knowledge_base.file_processor import FileProcessor
 from utils.logger import logger
 from flags.flags import is_enabled
 
-# Import the agent RAG integration router
-from knowledge_base.agent_rag_integration import router as agent_rag_router
-
 router = APIRouter(prefix="/knowledge-base", tags=["knowledge-base"])
-
-# Include the agent RAG integration router
-router.include_router(agent_rag_router)
 
 class KnowledgeBaseEntry(BaseModel):
     entry_id: Optional[str] = None
