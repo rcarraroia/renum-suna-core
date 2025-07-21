@@ -161,7 +161,7 @@ const ChatInterface = ({ messages, isLoading, error, onSendMessage, onRetry }: C
             type="submit"
             disabled={!inputValue.trim() || isLoading}
             className="h-10 w-10 p-0"
-            size="sm"
+            size="icon"
           >
             {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5" />}
           </Button>

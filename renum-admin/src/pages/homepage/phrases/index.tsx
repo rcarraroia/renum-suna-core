@@ -96,25 +96,25 @@ export default function HomepagePhrases() {
 
   const handleMovePhrase = async (index: number, direction: 'up' | 'down') => {
     if (!phrases) return;
-    
+
     // Create a copy of the phrases array sorted by display_order
     const sortedPhrases = [...phrases].sort((a, b) => a.display_order - b.display_order);
-    
+
     // Can't move the first item up or the last item down
-    if ((direction === 'up' && index === 0) || 
-        (direction === 'down' && index === sortedPhrases.length - 1)) {
+    if ((direction === 'up' && index === 0) ||
+      (direction === 'down' && index === sortedPhrases.length - 1)) {
       return;
     }
-    
+
     // Swap the display_order values
     const newPhrases = [...sortedPhrases];
     const targetIndex = direction === 'up' ? index - 1 : index + 1;
-    
+
     // Create a new array with the updated order
     const reorderedIds = newPhrases.map(phrase => phrase.id);
     // Swap the positions in the array
     [reorderedIds[index], reorderedIds[targetIndex]] = [reorderedIds[targetIndex], reorderedIds[index]];
-    
+
     try {
       await reorderPhrases(reorderedIds);
     } catch (error) {
@@ -125,8 +125,8 @@ export default function HomepagePhrases() {
   const columns = [
     { header: 'Texto', accessor: 'text' },
     { header: 'Ordem', accessor: 'display_order' },
-    { 
-      header: 'Status', 
+    {
+      header: 'Status',
       accessor: (row: TypewriterPhrase) => (
         <span
           className={`px-2 py-1 rounded-full text-xs ${row.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
@@ -142,7 +142,7 @@ export default function HomepagePhrases() {
       accessor: (row: TypewriterPhrase, index: number) => {
         const sortedPhrases = phrases ? [...phrases].sort((a, b) => a.display_order - b.display_order) : [];
         const sortedIndex = sortedPhrases.findIndex(p => p.id === row.id);
-        
+
         return (
           <div className="flex space-x-2">
             <button
@@ -253,10 +253,10 @@ export default function HomepagePhrases() {
             defaultValues={
               selectedPhrase
                 ? {
-                    text: selectedPhrase.text,
-                    display_order: selectedPhrase.display_order,
-                    is_active: selectedPhrase.is_active,
-                  }
+                  text: selectedPhrase.text,
+                  display_order: selectedPhrase.display_order,
+                  is_active: selectedPhrase.is_active,
+                }
                 : undefined
             }
             onSubmit={handleSubmitPhrase}

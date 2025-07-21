@@ -45,8 +45,8 @@ jobs:
       - name: Build and push Backend image
         uses: docker/build-push-action@v5
         with:
-          context: ./Suna backend
-          file: ./Suna backend/Dockerfile
+          context: ./backend
+          file: ./backend/Dockerfile
           push: true
           platforms: linux/amd64
           tags: ghcr.io/${{ github.repository }}/suna-backend:${{ steps.get_tag_name.outputs.branch }}

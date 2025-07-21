@@ -288,7 +288,7 @@ O relatório final de análise será estruturado da seguinte forma:
 graph TD
     VPS[VPS Hetzner] --> Docker[Docker]
     Docker --> Renum[Renum Backend]
-    Docker --> Suna[Suna Backend]
+    Docker --> Suna[Backend]
     Renum --> Supabase[(Supabase)]
     Suna --> Supabase
     Renum --> API[APIs REST]

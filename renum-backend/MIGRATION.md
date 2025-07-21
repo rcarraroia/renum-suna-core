@@ -53,7 +53,7 @@ renum-backend/
 
 ## Principais Alterações
 
-1. **Estrutura de Diretórios**: O módulo RAG foi movido do diretório `Suna backend/knowledge_base/rag` para `renum-backend/app/rag`.
+1. **Estrutura de Diretórios**: O módulo RAG foi movido do diretório `backend/knowledge_base/rag` para `renum-backend/app/rag`.
 
 2. **Namespace**: As importações foram atualizadas para refletir a nova estrutura de diretórios, por exemplo:
    - De: `from knowledge_base.rag.services.retrieval_service import RetrievalService`

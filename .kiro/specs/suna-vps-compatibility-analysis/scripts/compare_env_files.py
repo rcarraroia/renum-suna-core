@@ -188,7 +188,7 @@ def main():
     
     # Caminhos para os arquivos .env
     renum_env_path = "renum-backend/.env"
-    suna_env_path = "Suna backend/.env"
+    suna_env_path = "backend/.env"
     
     # Ler variáveis dos arquivos .env
     renum_file_vars = parse_env_file(renum_env_path)

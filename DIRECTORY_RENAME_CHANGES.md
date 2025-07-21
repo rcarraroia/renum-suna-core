@@ -1,21 +1,21 @@
 # Mudanças de Diretório
 
-Este documento registra as alterações feitas para refletir a renomeação dos diretórios `backend` para `Suna backend` e `frontend` para `Suna frontend`.
+Este documento registra as alterações feitas para refletir a renomeação dos diretórios `backend` para `backend` e `frontend` para `Suna frontend`.
 
 ## Arquivos Atualizados
 
 1. **docker-compose.yaml**
-   - Atualizado todos os caminhos de `./backend` para `./Suna backend`
+   - Atualizado todos os caminhos de `./backend` para `./backend`
    - Atualizado todos os caminhos de `./frontend` para `./Suna frontend`
 
 2. **start.py**
    - Atualizado instruções de inicialização manual para usar os novos nomes de diretórios
    - Alterado `cd frontend` para `cd "Suna frontend"`
-   - Alterado `cd backend` para `cd "Suna backend"`
+   - Alterado `cd backend` para `cd "backend"`
 
 3. **.github/workflows/docker-build.yml**
-   - Atualizado o contexto de build de `./backend` para `./Suna backend`
-   - Atualizado o caminho do Dockerfile de `./backend/Dockerfile` para `./Suna backend/Dockerfile`
+   - Atualizado o contexto de build de `./backend` para `./backend`
+   - Atualizado o caminho do Dockerfile de `./backend/Dockerfile` para `./backend/Dockerfile`
 
 ## Verificações Adicionais
 
