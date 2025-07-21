@@ -14,7 +14,13 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
-python -c "import sys; print('Python ' + '.'.join(map(str, sys.version_info[:3])) + ' detectado'); exit(0 if sys.version_info >= (3, 11) else 1)"
+echo Verificando se Python 3.11+ esta instalado...
+py -3.11 --version 2>NUL
+if %errorlevel% equ 0 (
+    echo Python 3.11+ encontrado. Usando esta versao.
+    set PYTHON_CMD=py -3.11
+) else (
+    python -c "import sys; print('Python ' + '.'.join(map(str, sys.version_info[:3])) + ' detectado'); exit(0 if sys.version_info >= (3, 11) else 1)"
 if %errorlevel% neq 0 (
     echo.
     echo ATENCAO: A versao do Python instalada e inferior a 3.11
@@ -26,25 +32,12 @@ if %errorlevel% neq 0 (
     echo Apos a instalacao, execute este script novamente.
     exit /b 1
 )
+)
 
 echo.
-echo [2/5] Verificando se o uv esta instalado...
-pip show uv >NUL 2>&1
-if %errorlevel% neq 0 (
-    echo Instalando uv...
-    pip install uv
-    if %errorlevel% neq 0 (
-        echo Falha ao instalar uv. Tentando com --user...
-        pip install --user uv
-        if %errorlevel% neq 0 (
-            echo Falha ao instalar uv. Por favor, instale manualmente:
-            echo pip install uv
-            exit /b 1
-        )
-    )
-) else (
-    echo uv ja esta instalado.
-)
+echo [2/5] Verificando se o pip esta atualizado...
+%PYTHON_CMD% -m pip install --upgrade pip
+echo.
 
 echo.
 echo [3/5] Criando ambiente virtual...
@@ -56,7 +49,7 @@ if exist backend\venv (
         rmdir /s /q backend\venv
         echo Criando novo ambiente virtual...
         cd backend
-        python -m venv venv
+        %PYTHON_CMD% -m venv venv
         cd ..
     ) else (
         echo Mantendo ambiente virtual existente.
@@ -64,7 +57,7 @@ if exist backend\venv (
 ) else (
     echo Criando ambiente virtual...
     cd backend
-    python -m venv venv
+    %PYTHON_CMD% -m venv venv
     cd ..
 )
 
@@ -76,16 +69,12 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
-echo Instalando dependencias com uv...
+echo Instalando dependencias com pip...
 cd backend
-uv pip install -e .
+pip install -e .
 if %errorlevel% neq 0 (
-    echo Falha ao instalar dependencias com uv. Tentando com pip...
-    pip install -e .
-    if %errorlevel% neq 0 (
-        echo Falha ao instalar dependencias.
-        exit /b 1
-    )
+    echo Falha ao instalar dependencias.
+    exit /b 1
 )
 cd ..
 
@@ -120,7 +109,7 @@ echo   call backend\venv\Scripts\activate.bat
 echo.
 echo Para executar o backend:
 echo   cd backend
-echo   uv run api.py
+echo   python api.py
 echo.
 echo Para executar os testes:
 echo   cd backend
