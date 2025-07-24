@@ -1,3 +1,5 @@
 """
-Pacote principal da aplicação Renum Backend.
+Pacote principal do Backend Renum.
+
+Este pacote contém os módulos do Backend Renum.
 """

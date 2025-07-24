@@ -1,76 +1,112 @@
 """
-Módulo de configuração para a aplicação Renum Backend.
+Configurações da aplicação.
 
-Este módulo carrega as variáveis de ambiente e fornece uma interface
-para acessá-las de forma segura e tipada.
+Este módulo define as configurações da aplicação, incluindo variáveis de ambiente,
+configurações de segurança e outras configurações globais.
 """
 
 import os
-import logging
 from typing import Optional, Dict, Any, List
+try:
+    from pydantic_settings import BaseSettings
+    from pydantic import validator
+except ImportError:
+    from pydantic import BaseSettings, validator
 from functools import lru_cache
-from pydantic import field_validator
-from pydantic_settings import BaseSettings
 
-# Configurar logger
-logger = logging.getLogger(__name__)
 
 class Settings(BaseSettings):
-    """Configurações da aplicação carregadas de variáveis de ambiente."""
+    """Configurações da aplicação."""
     
-    # Configurações gerais
+    # Ambiente
+    ENVIRONMENT: str = "development"
     DEBUG: bool = False
     LOG_LEVEL: str = "INFO"
-    ENVIRONMENT: str = "development"
     
-    # Configurações do Supabase
+    # API
+    API_PREFIX: str = "/api/v1"
+    PROJECT_NAME: str = "Renum Backend"
+    VERSION: str = "0.1.0"
+    HOST: str = "0.0.0.0"
+    PORT: int = 9000
+    WORKERS: int = 4
+    
+    # Segurança
+    SECRET_KEY: str = "development-secret-key"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 dias
+    
+    # CORS
+    CORS_ORIGINS: List[str] = ["*"]
+    CORS_METHODS: List[str] = ["*"]
+    CORS_HEADERS: List[str] = ["*"]
+    
+    # Banco de dados
     SUPABASE_URL: str
     SUPABASE_KEY: str
-    SUPABASE_SERVICE_KEY: str
+    SUPABASE_SERVICE_KEY: Optional[str] = None
     SUPABASE_DB_URL: Optional[str] = None
     
-    # Configurações de APIs externas
-    OPENAI_API_KEY: Optional[str] = None
+    # Redis
+    REDIS_URL: str = "redis://localhost:6379/0"
     
-    # Configurações do Suna Core
-    SUNA_API_URL: Optional[str] = None
+    # Suna Core
+    SUNA_API_URL: str = "http://localhost:8000"
     SUNA_API_KEY: Optional[str] = None
     
-    # Chave para criptografia de dados sensíveis (opcional)
-    ENCRYPTION_KEY: Optional[str] = None
+    # Limites
+    MAX_CONCURRENT_EXECUTIONS: int = 5
+    MAX_AGENTS_PER_TEAM: int = 10
     
-    @field_validator("SUPABASE_URL")
-    @classmethod
-    def validate_supabase_url(cls, v):
-        """Valida a URL do Supabase."""
-        if not v.startswith("https://"):
-            raise ValueError("SUPABASE_URL deve começar com https://")
+    # Criptografia
+    ENCRYPTION_KEY: Optional[str] = None
+    API_KEY_ENCRYPTION_KEY: Optional[str] = None
+    
+    @validator("API_KEY_ENCRYPTION_KEY", pre=True)
+    def validate_encryption_key(cls, v: Optional[str]) -> Optional[str]:
+        """Valida a chave de criptografia."""
+        if v is None:
+            # Em ambiente de desenvolvimento, gera uma chave aleatória
+            if os.environ.get("ENV") == "development":
+                try:
+                    from cryptography.fernet import Fernet
+                    return Fernet.generate_key().decode()
+                except ImportError:
+                    # Se cryptography não estiver disponível, usa uma chave padrão
+                    return "development-key-not-secure"
         return v
     
     class Config:
-        """Configurações do Pydantic."""
         env_file = ".env"
-        env_file_encoding = "utf-8"
         case_sensitive = True
 
 
 @lru_cache()
 def get_settings() -> Settings:
-    """Retorna as configurações da aplicação.
-    
-    Usa cache para evitar carregar as variáveis de ambiente múltiplas vezes.
+    """
+    Obtém as configurações da aplicação.
     
     Returns:
-        Objeto Settings com as configurações da aplicação.
+        Objeto Settings com as configurações
     """
-    try:
-        settings = Settings()
-        logger.info(f"Configurações carregadas com sucesso. Ambiente: {settings.ENVIRONMENT}")
-        return settings
-    except Exception as e:
-        logger.error(f"Erro ao carregar configurações: {str(e)}")
-        raise
+    return Settings()
 
 
-# Instância global das configurações
-settings = get_settings()
+def is_feature_enabled(feature_name: str) -> bool:
+    """
+    Verifica se uma funcionalidade está habilitada.
+    
+    Args:
+        feature_name: Nome da funcionalidade a ser verificada
+        
+    Returns:
+        True se a funcionalidade estiver habilitada, False caso contrário
+    """
+    # Mapeamento de funcionalidades habilitadas
+    enabled_features = {
+        "rag_module": True,  # Módulo RAG sempre habilitado
+        "websocket": True,   # WebSocket sempre habilitado
+        "notifications": True,  # Notificações sempre habilitadas
+        "team_orchestration": True,  # Orquestração de equipes sempre habilitada
+    }
+    
+    return enabled_features.get(feature_name, False)

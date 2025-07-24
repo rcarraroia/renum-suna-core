@@ -1,9 +1,5 @@
 """
-Pacote de acesso a banco de dados para a Plataforma Renum.
+Pacote de banco de dados do Backend Renum.
 
-Este pacote contém as implementações para acesso ao banco de dados PostgreSQL.
+Este pacote contém os módulos de acesso a banco de dados do Backend Renum.
 """
-
-from app.db.pg_pool import PostgreSQLPool, pg_pool
-
-__all__ = ["PostgreSQLPool", "pg_pool"]

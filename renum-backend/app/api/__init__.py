@@ -1,9 +1,5 @@
 """
-Pacote de API para a Plataforma Renum.
+Pacote de API do Backend Renum.
 
-Este pacote contém os endpoints REST e os esquemas de dados da API.
+Este pacote contém os módulos da API do Backend Renum.
 """
-
-from app.api.routes import rag_router
-
-__all__ = ["rag_router"]

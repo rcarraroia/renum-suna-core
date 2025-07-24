@@ -18,17 +18,35 @@ Criar um sistema robusto de orquestração que permita a coordenação inteligen
 
 ## Requisitos Funcionais
 
-### RF001 - Criação de Equipes
+### RF007 - Interface Builder para Equipes (UI/UX)
+- **Como** usuário da plataforma
+- **Eu quero** uma interface visual intuitiva para criar e gerenciar equipes
+- **Para que** eu possa facilmente configurar fluxos complexos sem conhecimento técnico
+
+**Critérios de Aceitação:**
+- [ ] Página /teams/new para criação de equipes
+- [ ] Página /teams/[id] para detalhes e gerenciamento
+- [ ] Seleção visual de agentes existentes para compor equipe
+- [ ] Definição visual do fluxo de trabalho (arrastar e soltar)
+- [ ] Conectar agentes visualmente para definir sequência
+- [ ] Configuração de condições para transição entre agentes
+- [ ] Preview do workflow antes da execução
+- [ ] Templates pré-configurados para casos comuns
+
+## Requisitos Funcionais
+
+### RF001 - Criação de Equipes no Backend Renum
 - **Como** usuário da plataforma
 - **Eu quero** criar equipes de agentes selecionando agentes existentes
 - **Para que** eu possa coordenar múltiplos agentes em uma tarefa complexa
 
 **Critérios de Aceitação:**
 - [ ] Usuário pode criar nova equipe com nome e descrição
-- [ ] Usuário pode adicionar/remover agentes da equipe
-- [ ] Usuário pode definir roles para cada agente (leader, member, coordinator)
-- [ ] Usuário pode configurar ordem de execução e dependências
+- [ ] Usuário pode adicionar/remover agentes da equipe (lista de agent_ids)
+- [ ] Usuário pode definir workflow_definition (JSON/DSL) para orquestração
 - [ ] Sistema valida que todos os agentes pertencem ao mesmo account_id
+- [ ] Backend Renum atua como "cérebro" da equipe, delegando ao Suna Core
+- [ ] Suna Core permanece inalterado em sua funcionalidade principal
 
 ### RF002 - Configuração de Estratégias de Execução
 - **Como** usuário da plataforma
@@ -42,17 +60,18 @@ Criar um sistema robusto de orquestração que permita a coordenação inteligen
 - [ ] Suporte a execução condicional (baseada em resultados)
 - [ ] Interface visual para configurar estratégia
 
-### RF003 - Contexto Compartilhado
+### RF003 - Contexto Compartilhado Aprimorado
 - **Como** agente em uma equipe
 - **Eu quero** acessar informações compartilhadas pela equipe
 - **Para que** eu possa tomar decisões baseadas no trabalho de outros agentes
 
 **Critérios de Aceitação:**
-- [ ] Agentes podem definir variáveis no contexto compartilhado
-- [ ] Agentes podem ler variáveis do contexto compartilhado
+- [ ] Context object atualizado por cada agente e passado para o próximo
+- [ ] Memory compartilhado gerenciado via Redis para comunicação rápida
 - [ ] Contexto é persistido durante toda a execução da equipe
 - [ ] Contexto é isolado por execução de equipe
 - [ ] Sistema de versionamento para mudanças no contexto
+- [ ] Suporte a API keys personalizadas por usuário/equipe
 
 ### RF004 - Comunicação Inter-agentes
 - **Como** agente em uma equipe
@@ -78,16 +97,20 @@ Criar um sistema robusto de orquestração que permita a coordenação inteligen
 - [ ] Sistema gerencia dependências entre agentes
 - [ ] Sistema permite parar execução em andamento
 
-### RF006 - Monitoramento de Execução
+### RF006 - Monitoramento e Atribuição de Custos
 - **Como** usuário da plataforma
-- **Eu quero** acompanhar o progresso da execução da equipe
-- **Para que** eu possa entender o que está acontecendo e intervir se necessário
+- **Eu quero** acompanhar o progresso da execução da equipe e custos associados
+- **Para que** eu possa entender o que está acontecendo, intervir se necessário e controlar gastos
 
 **Critérios de Aceitação:**
 - [ ] Dashboard em tempo real do status de cada agente
 - [ ] Visualização do fluxo de execução
 - [ ] Log detalhado de todas as ações
-- [ ] Métricas de performance (tempo, tokens, custos)
+- [ ] Métricas de performance (tempo, tokens, custos) por agente individual
+- [ ] Sistema de logging que captura consumo de modelos IA por agente
+- [ ] Atribuição correta de custos ao user_id da equipe
+- [ ] Suporte a API keys personalizadas do usuário
+- [ ] Preparação para futuro modelo de billing nativo
 - [ ] Alertas para falhas ou problemas
 
 ## Requisitos Não Funcionais
