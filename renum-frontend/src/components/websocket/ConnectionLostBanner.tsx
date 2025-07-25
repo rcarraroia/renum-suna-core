@@ -49,7 +49,7 @@ const ConnectionLostBanner: React.FC<ConnectionLostBannerProps> = ({
         clearTimeout(timer);
       }
     };
-  }, [status, showAfterMs]);
+  }, [status, showAfterMs, timer]);
 
   if (!visible) {
     return null;

@@ -1,74 +1,53 @@
-# Análise Completa de Erros de Build do Frontend
+# Análise dos Erros de Build do Frontend - Vercel Deploy
 
-## 🔍 PROBLEMAS IDENTIFICADOS
+## Resumo dos Problemas Identificados
 
-### 1. **ShareAgentModal.tsx - MÚLTIPLOS ERROS**
+### 1. Erros Fatais de Compilação (TypeScript)
 
-#### ❌ Erro 1: useToast interface incorreta
-- **Problema:** `showToast` não existe no hook useToast
-- **Solução:** Usar `success()`, `error()`, `info()` ao invés de `showToast()`
+#### Log 1 e 2 (Commits: 9b3f75c, de43992)
+- **Erro**: `Module '"../lib/api-client"' has no exported member 'apiClient'`
+- **Arquivo**: `src/components/ShareAgentModal.tsx:11:10`
+- **Causa**: Tentativa de importar `apiClient` que não existe no módulo
 
-#### ❌ Erro 2: Input component requer prop `id`
-- **Problema:** `<Input>` precisa da prop obrigatória `id`
-- **Solução:** Adicionar `id` único para cada Input
+#### Log 3 e 4 (Commits: cfc0979, e25ed04)
+- **Erro**: `Property 'showToast' does not exist on type`
+- **Arquivo**: `src/components/ShareAgentModal.tsx:68:11`
+- **Causa**: Hook `useToast` não exporta propriedade `showToast`
 
-#### ❌ Erro 3: Select component não aceita `placeholder`
-- **Problema:** SelectProps não tem propriedade `placeholder`
-- **Solução:** Remover `placeholder` ou usar primeira opção como placeholder
+#### Log 4 (Commit: e25ed04)
+- **Erro**: `Module '"lucide-react"' has no exported member 'Tool'`
+- **Arquivo**: `src/components/ToolSelector.tsx:2:10`
+- **Causa**: Ícone `Tool` não existe no lucide-react
 
-#### ❌ Erro 4: Select value type incompatível
-- **Problema:** `value={null}` não é aceito pelo Select
-- **Solução:** Converter null para string vazia ou usar value condicional
+### 2. Avisos Recorrentes (Não Fatais)
+- Dependências deprecated (rimraf, inflight, domexception, etc.)
+- React Hooks dependencies em múltiplos componentes
+- ESLint versão não suportada
 
-#### ❌ Erro 5: Select onChange type incompatível
-- **Problema:** onChange espera string mas recebe ChangeEvent
-- **Solução:** Ajustar handler para extrair value do event
+## Correções Implementadas
 
-#### ❌ Erro 6: expirationOptions com null incompatível
-- **Problema:** SelectOption não aceita value: null
-- **Solução:** Converter null para string vazia
+### 1. ShareAgentModal.tsx
+- ✅ Corrigido uso do hook `useToast` (linha 68)
+- ✅ Removida importação inexistente `apiClient`
+- ✅ Implementado uso correto das funções `success` e `error`
 
-#### ❌ Erro 7: Import não utilizado
-- **Problema:** `UserPlus` importado mas não usado
-- **Solução:** Remover import
+### 2. ToolSelector.tsx
+- ✅ Corrigido importação do ícone `Tool` do lucide-react
+- ✅ Substituído por `Wrench` que existe na biblioteca
 
-### 2. **OUTROS ARQUIVOS COM PROBLEMAS POTENCIAIS**
+### 3. Estrutura de API
+- ✅ Verificada estrutura do `lib/api-client.ts`
+- ✅ Confirmado que `agentApi` é exportado corretamente
 
-#### ⚠️ React Hooks exhaustive-deps warnings (16 arquivos)
-- Não impedem build mas são warnings
-- Podem ser corrigidos posteriormente
+## Status das Correções
+- [x] Erro de importação `apiClient` - RESOLVIDO
+- [x] Erro de propriedade `showToast` - RESOLVIDO  
+- [x] Erro de importação `Tool` do lucide-react - RESOLVIDO
+- [ ] Avisos de React Hooks dependencies - PENDENTE
+- [ ] Atualização de dependências deprecated - PENDENTE
 
-#### ❌ Possíveis problemas em outros componentes UI
-- Verificar se outros componentes usam interfaces incorretas
-- Verificar imports e exports
-
-## 🛠️ PLANO DE CORREÇÃO
-
-### Prioridade 1 - CRÍTICOS (impedem build)
-1. Corrigir ShareAgentModal.tsx completamente
-2. Verificar outros arquivos com erros similares
-
-### Prioridade 2 - WARNINGS (não impedem build)
-1. Corrigir React Hooks exhaustive-deps
-2. Remover imports não utilizados
-
-## 📋 ARQUIVOS PARA VERIFICAR
-
-### Componentes que podem ter problemas similares:
-- Qualquer arquivo que use `useToast`
-- Qualquer arquivo que use componentes UI (Input, Select, etc.)
-- Arquivos com imports de `apiClient`
-
-### Diretórios para análise completa:
-- `renum-frontend/src/components/`
-- `renum-frontend/src/pages/`
-- `renum-frontend/src/hooks/`
-- `renum-frontend/src/services/`
-
-## 🎯 ESTRATÉGIA
-
-1. **Correção Imediata:** Corrigir ShareAgentModal.tsx
-2. **Análise Preventiva:** Buscar padrões similares em outros arquivos
-3. **Correção em Lote:** Aplicar correções similares em todos os arquivos
-4. **Teste Local:** Verificar build local antes do deploy
-5. **Deploy Confiante:** Deploy com alta probabilidade de sucesso
+## Próximos Passos
+1. Testar build local após correções
+2. Fazer commit das correções
+3. Verificar deploy no Vercel
+4. Corrigir avisos de React Hooks se necessário

@@ -1,0 +1,49 @@
+[09:16:38.912] Running build in Washington, D.C., USA (East) – iad1
+[09:16:38.913] Build machine configuration: 2 cores, 8 GB
+[09:16:38.936] Cloning github.com/rcarraroia/renum-suna-core (Branch: master, Commit: de43992)
+[09:16:39.145] Previous build caches not available
+[09:16:40.105] Cloning completed: 1.169s
+[09:16:40.705] Running "vercel build"
+[09:16:42.022] Vercel CLI 44.5.0
+[09:16:42.746] Installing dependencies...
+[09:17:08.713] npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+[09:17:09.828] npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+[09:17:11.019] npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+[09:17:11.340] npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+[09:17:11.419] npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+[09:17:13.250] npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+[09:17:22.875] 
+[09:17:22.876] added 494 packages in 40s
+[09:17:22.877] 
+[09:17:22.877] 158 packages are looking for funding
+[09:17:22.877]   run `npm fund` for details
+[09:17:22.928] Detected Next.js version: 14.1.0
+[09:17:22.934] Running "npm run build"
+[09:17:23.049] 
+[09:17:23.049] > renum-admin@0.1.0 build
+[09:17:23.049] > next build
+[09:17:23.049] 
+[09:17:23.570] Attention: Next.js now collects completely anonymous telemetry regarding usage.
+[09:17:23.571] This information is used to shape Next.js' roadmap and prioritize features.
+[09:17:23.571] You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+[09:17:23.571] https://nextjs.org/telemetry
+[09:17:23.571] 
+[09:17:23.652]    ▲ Next.js 14.1.0
+[09:17:23.652] 
+[09:17:23.653]    Linting and checking validity of types ...
+[09:17:30.235] 
+[09:17:30.237] Failed to compile.
+[09:17:30.237] 
+[09:17:30.238] ./src/hooks/useBilling.ts
+[09:17:30.238] 43:12  Error: React Hook "useQuery" is called in function "getBillingOverview" that is neither a React function component nor a custom React Hook function. React component names must start with an uppercase letter. React Hook names must start with the word "use".  react-hooks/rules-of-hooks
+[09:17:30.240] 62:12  Error: React Hook "useQuery" is called in function "getClientBilling" that is neither a React function component nor a custom React Hook function. React component names must start with an uppercase letter. React Hook names must start with the word "use".  react-hooks/rules-of-hooks
+[09:17:30.240] 145:12  Error: React Hook "useQuery" is called in function "getInvoices" that is neither a React function component nor a custom React Hook function. React component names must start with an uppercase letter. React Hook names must start with the word "use".  react-hooks/rules-of-hooks
+[09:17:30.240] 174:12  Error: React Hook "useQuery" is called in function "getUsageReport" that is neither a React function component nor a custom React Hook function. React component names must start with an uppercase letter. React Hook names must start with the word "use".  react-hooks/rules-of-hooks
+[09:17:30.240] 
+[09:17:30.241] ./src/hooks/useSettings.ts
+[09:17:30.241] 196:12  Error: React Hook "useQuery" is called in function "getChangeLogs" that is neither a React function component nor a custom React Hook function. React component names must start with an uppercase letter. React Hook names must start with the word "use".  react-hooks/rules-of-hooks
+[09:17:30.241] 
+[09:17:30.243] info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+[09:17:30.413] Error: Command "npm run build" exited with 1
+[09:17:31.433] 
+[09:17:35.608] Exiting build container

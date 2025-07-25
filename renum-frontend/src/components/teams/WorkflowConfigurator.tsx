@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { WorkflowDefinition, WorkflowType, WorkflowAgent, AgentRole, InputSource } from '../../services/api-types';
 import { getWorkflowTypeName, getAgentRoleName } from '../../utils/workflow-utils';
 import FormField from '../common/FormField';
@@ -50,10 +50,10 @@ const WorkflowConfigurator: React.FC<WorkflowConfiguratorProps> = ({
       ...value,
       agents: [...currentAgents, ...newAgents]
     });
-  }, [selectedAgents]);
+  }, [selectedAgents, createDefaultAgent, onChange, value]);
   
   // Cria um agente com configurações padrão
-  const createDefaultAgent = (agentId: string, workflowType: WorkflowType): WorkflowAgent => {
+  const createDefaultAgent = useCallback((agentId: string, workflowType: WorkflowType): WorkflowAgent => {
     const baseAgent: WorkflowAgent = {
       agent_id: agentId,
       role: AgentRole.MEMBER,
@@ -71,7 +71,7 @@ const WorkflowConfigurator: React.FC<WorkflowConfiguratorProps> = ({
     }
     
     return baseAgent;
-  };
+  }, [value.agents.length]);
   
   // Manipuladores de eventos
   const handleWorkflowTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

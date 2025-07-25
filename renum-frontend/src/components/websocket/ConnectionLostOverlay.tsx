@@ -59,7 +59,7 @@ const ConnectionLostOverlay: React.FC<ConnectionLostOverlayProps> = ({
         clearTimeout(timer);
       }
     };
-  }, [status, showAfterMs]);
+  }, [status, showAfterMs, disconnectedTime, timer]);
 
   // Tenta reconectar
   const handleReconnect = () => {

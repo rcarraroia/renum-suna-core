@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Tool, Search, Loader2, AlertCircle } from 'lucide-react';
+import { Wrench as Tool, Search, Loader2, AlertCircle } from 'lucide-react';
 import { agentApi } from '../lib/api-client';
 import Checkbox from './ui/Checkbox';
 

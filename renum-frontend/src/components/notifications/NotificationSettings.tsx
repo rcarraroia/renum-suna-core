@@ -2,7 +2,7 @@
  * Componente para configurações de notificações
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useWebSocketContext } from '../../contexts/WebSocketContext';
 
 interface NotificationPreferences {
@@ -47,10 +47,10 @@ const NotificationSettings: React.FC<NotificationSettingsProps> = ({
   // Carrega as preferências ao montar o componente
   useEffect(() => {
     loadPreferences();
-  }, []);
+  }, [loadPreferences]);
 
   // Carrega as preferências do servidor
-  const loadPreferences = async () => {
+  const loadPreferences = useCallback(async () => {
     try {
       setLoading(true);
       sendCommand('get_notification_preferences');
@@ -63,7 +63,7 @@ const NotificationSettings: React.FC<NotificationSettingsProps> = ({
       console.error('Erro ao carregar preferências:', error);
       setLoading(false);
     }
-  };
+  }, [sendCommand]);
 
   // Salva as preferências
   const savePreferences = async () => {

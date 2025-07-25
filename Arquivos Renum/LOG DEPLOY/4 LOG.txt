@@ -1,0 +1,98 @@
+[09:38:02.010] Running build in Washington, D.C., USA (East) – iad1
+[09:38:02.011] Build machine configuration: 2 cores, 8 GB
+[09:38:02.027] Cloning github.com/rcarraroia/renum-suna-core (Branch: master, Commit: e25ed04)
+[09:38:02.165] Previous build caches not available
+[09:38:03.188] Cloning completed: 1.160s
+[09:38:07.313] Running "vercel build"
+[09:38:07.813] Vercel CLI 44.5.0
+[09:38:08.131] Installing dependencies...
+[09:38:11.437] npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+[09:38:12.527] npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+[09:38:13.099] npm warn deprecated domexception@4.0.0: Use your platform's native DOMException instead
+[09:38:13.502] npm warn deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+[09:38:14.397] npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+[09:38:14.398] npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+[09:38:14.826] npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+[09:38:14.979] npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+[09:38:15.047] npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+[09:38:15.093] npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+[09:38:15.191] npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+[09:38:17.340] npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+[09:38:28.751] 
+[09:38:28.752] added 848 packages in 20s
+[09:38:28.752] 
+[09:38:28.753] 197 packages are looking for funding
+[09:38:28.753]   run `npm fund` for details
+[09:38:28.821] Detected Next.js version: 14.1.0
+[09:38:28.821] Running "next build"
+[09:38:29.455] Attention: Next.js now collects completely anonymous telemetry regarding usage.
+[09:38:29.456] This information is used to shape Next.js' roadmap and prioritize features.
+[09:38:29.456] You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+[09:38:29.457] https://nextjs.org/telemetry
+[09:38:29.457] 
+[09:38:29.537]    ▲ Next.js 14.1.0
+[09:38:29.538] 
+[09:38:29.538]    Linting and checking validity of types ...
+[09:38:38.232] 
+[09:38:38.232] ./src/components/admin/WebSocketStatsChart.tsx
+[09:38:38.233] 52:6  Warning: React Hook useEffect has a missing dependency: 'loadStatsHistory'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+[09:38:38.233] 
+[09:38:38.233] ./src/components/executions/ExecutionErrorManager.tsx
+[09:38:38.233] 55:6  Warning: React Hook useEffect has a missing dependency: 'loadErrors'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+[09:38:38.233] 94:6  Warning: React Hook useEffect has a missing dependency: 'addOrUpdateError'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+[09:38:38.233] 
+[09:38:38.233] ./src/components/notifications/NotificationSettings.tsx
+[09:38:38.233] 50:6  Warning: React Hook useEffect has a missing dependency: 'loadPreferences'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+[09:38:38.233] 
+[09:38:38.233] ./src/components/teams/WorkflowConfigurator.tsx
+[09:38:38.233] 53:6  Warning: React Hook useEffect has missing dependencies: 'createDefaultAgent', 'onChange', and 'value'. Either include them or remove the dependency array. If 'onChange' changes too often, find the parent component that defines it and wrap that definition in useCallback.  react-hooks/exhaustive-deps
+[09:38:38.233] 
+[09:38:38.233] ./src/components/websocket/ConnectionLostBanner.tsx
+[09:38:38.233] 52:6  Warning: React Hook useEffect has a missing dependency: 'timer'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+[09:38:38.233] 
+[09:38:38.233] ./src/components/websocket/ConnectionLostOverlay.tsx
+[09:38:38.233] 62:6  Warning: React Hook useEffect has missing dependencies: 'disconnectedTime' and 'timer'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+[09:38:38.233] 
+[09:38:38.233] ./src/components/websocket/ReconnectionProgress.tsx
+[09:38:38.234] 68:6  Warning: React Hook useEffect has a missing dependency: 'visible'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+[09:38:38.234] 
+[09:38:38.234] ./src/contexts/WebSocketContext.tsx
+[09:38:38.234] 96:5  Warning: React Hook useMemo has missing dependencies: 'publish' and 'subscribe'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+[09:38:38.234] 
+[09:38:38.234] ./src/hooks/useExecutionErrors.ts
+[09:38:38.234] 197:6  Warning: React Hook useCallback has a missing dependency: 'loadStatistics'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+[09:38:38.234] 
+[09:38:38.234] ./src/hooks/useExecutions.ts
+[09:38:38.234] 82:6  Warning: React Hook useEffect has a missing dependency: 'polling'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+[09:38:38.234] 
+[09:38:38.234] ./src/hooks/useRealTimeExecutions.ts
+[09:38:38.234] 169:6  Warning: React Hook useCallback has an unnecessary dependency: 'handleExecutionUpdate'. Either exclude it or remove the dependency array.  react-hooks/exhaustive-deps
+[09:38:38.234] 
+[09:38:38.234] ./src/hooks/useWebSocket.ts
+[09:38:38.238] 67:6  Warning: React Hook useEffect has a missing dependency: 'options'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+[09:38:38.238] 
+[09:38:38.238] ./src/hooks/useWebSocketNotifications.ts
+[09:38:38.238] 112:6  Warning: React Hook useEffect has a missing dependency: 'syncWithServer'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+[09:38:38.238] 133:6  Warning: React Hook useEffect has a missing dependency: 'markAsRead'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+[09:38:38.238] 
+[09:38:38.238] ./src/pages/agents/[id]/index.tsx
+[09:38:38.238] 39:6  Warning: React Hook useEffect has a missing dependency: 'fetchAgentDetails'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+[09:38:38.238] 
+[09:38:38.238] ./src/pages/dashboard.tsx
+[09:38:38.238] 20:6  Warning: React Hook useEffect has a missing dependency: 'fetchAgents'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+[09:38:38.238] 
+[09:38:38.238] info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+[09:38:44.068] Failed to compile.
+[09:38:44.069] 
+[09:38:44.070] ./src/components/ToolSelector.tsx:2:10
+[09:38:44.070] Type error: Module '"lucide-react"' has no exported member 'Tool'.
+[09:38:44.070] 
+[09:38:44.070] [0m [90m 1 |[39m [36mimport[39m [33mReact[39m[33m,[39m { useState[33m,[39m useEffect } [36mfrom[39m [32m'react'[39m[33m;[39m[0m
+[09:38:44.071] [0m[31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m { [33mTool[39m[33m,[39m [33mSearch[39m[33m,[39m [33mLoader2[39m[33m,[39m [33mAlertCircle[39m } [36mfrom[39m [32m'lucide-react'[39m[33m;[39m[0m
+[09:38:44.071] [0m [90m   |[39m          [31m[1m^[22m[39m[0m
+[09:38:44.071] [0m [90m 3 |[39m [36mimport[39m { agentApi } [36mfrom[39m [32m'../lib/api-client'[39m[33m;[39m[0m
+[09:38:44.071] [0m [90m 4 |[39m [36mimport[39m [33mCheckbox[39m [36mfrom[39m [32m'./ui/Checkbox'[39m[33m;[39m[0m
+[09:38:44.072] [0m [90m 5 |[39m[0m
+[09:38:44.110] Error: Command "next build" exited with 1
+[09:38:44.437] 
+[09:38:47.596] Exiting build container

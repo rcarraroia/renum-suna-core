@@ -103,6 +103,8 @@ export function WebSocketProvider({ children, options }: WebSocketProviderProps)
       subscribeToChannel,
       unsubscribeFromChannel,
       publishToChannel,
+      publish,
+      subscribe,
       sendCommand,
       on,
       getBufferedMessages,

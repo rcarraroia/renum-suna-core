@@ -1,0 +1,84 @@
+Analisando os quatro logs de deploy fornecidos, consigo identificar os seguintes padrões e erros:
+
+Análise Detalhada dos Logs
+1. 1 LOG.txt (Commit: 9b3f75c)
+
+Avisos de npm warn deprecated: Presentes, indicando pacotes desatualizados como rimraf, inflight, domexception, abab, @humanwhocodes/object-schema, @humanwhocodes/config-array, glob, eslint.
+
+Avisos de React Hooks: Vários avisos de React Hook useEffect has a missing dependency e React Hook useCallback has a missing dependency em diversos componentes (WebSocketStatsChart.tsx, ExecutionErrorManager.tsx, NotificationSettings.tsx, WorkflowConfigurator.tsx, ConnectionLostBanner.tsx, ConnectionLostOverlay.tsx, ReconnectionProgress.tsx, WebSocketContext.tsx, useExecutionErrors.ts, useExecutions.ts, useRealTimeExecutions.ts, useWebSocket.ts, useWebSocketNotifications.ts, pages/agents/[id]/index.tsx, pages/dashboard.tsx).
+
+Erro Principal de Compilação:
+
+./src/components/ShareAgentModal.tsx:11:10
+Type error: Module '"../lib/api-client"' has no exported member 'apiClient'.
+Este erro indica que o apiClient não está sendo exportado ou não existe no módulo ../lib/api-client.
+
+Status Final: Error: Command "next build" exited with 1.
+
+2. 2 LOG.txt (Commit: de43992)
+
+Avisos de npm warn deprecated: Idênticos aos do 1 LOG.txt.
+
+Avisos de React Hooks: Idênticos aos do 1 LOG.txt.
+
+Erro Principal de Compilação:
+
+./src/components/ShareAgentModal.tsx:11:10
+Type error: Module '"../lib/api-client"' has no exported member 'apiClient'.
+Este erro é idêntico ao do 1 LOG.txt.
+
+Status Final: Error: Command "next build" exited with 1.
+
+3. 3 LOG.txt (Commit: cfc0979)
+
+Avisos de npm warn deprecated: Idênticos aos anteriores.
+
+Avisos de React Hooks: Idênticos aos anteriores.
+
+Erro Principal de Compilação:
+
+./src/components/ShareAgentModal.tsx:68:11
+Type error: Property 'showToast' does not exist on type '{ toasts: Toast[]; addToast: (message: string, type?: "error" | "info" | "success", duration?: number) => string; removeToast: (id: string) => void; success: (message: string, duration?: number | undefined) => string; error: (message: string, duration?: number | undefined) => string; info: (message: string, duration...'.
+Este erro é diferente dos dois primeiros. Ele indica que a propriedade showToast não existe no objeto retornado pelo useToast().
+
+Status Final: Error: Command "next build" exited with 1.
+
+4. 4 LOG.txt (Commit: e25ed04)
+
+Avisos de npm warn deprecated: Idênticos aos anteriores.
+
+Avisos de React Hooks: Idênticos aos anteriores.
+
+Erro Principal de Compilação:
+
+./src/components/ShareAgentModal.tsx:68:11
+Type error: Property 'showToast' does not exist on type '{ toasts: Toast[]; addToast: (message: string, type?: "error" | "info" | "success", duration?: number) => string; removeToast: (id: string) => void; success: (message: string, duration?: number | undefined) => string; error: (message: string, duration?: number | undefined) => string; info: (message: string, duration...'.
+Este erro é idêntico ao do 3 LOG.txt.
+
+Status Final: Error: Command "next build" exited with 1.
+
+Comparação dos Erros
+Os erros de deploy podem ser categorizados da seguinte forma:
+
+Avisos (Warnings):
+
+npm warn deprecated: Esses avisos são os mesmos em todos os quatro logs. Eles indicam que várias dependências estão usando versões antigas de pacotes, o que pode levar a problemas futuros, mas não impedem o build diretamente.
+
+Avisos de React Hooks (react-hooks/exhaustive-deps): Estes avisos também são os mesmos em todos os quatro logs. Eles sugerem que as dependências para useEffect, useCallback e useMemo não estão sendo declaradas corretamente, o que pode causar comportamento inesperado ou loops infinitos, mas não resultam em falha de compilação.
+
+Erros Fatais de Compilação (Type error):
+
+Primeiro Grupo de Erros (Logs 1 e 2): Os deploys 1 LOG.txt e 2 LOG.txt apresentaram o mesmo erro fatal: Type error: Module '"../lib/api-client"' has no exported member 'apiClient'.. Isso significa que, na linha 11 do arquivo src/components/ShareAgentModal.tsx, a aplicação estava tentando importar apiClient de ../lib/api-client, mas essa exportação não existia ou estava incorreta no momento desses deploys.
+
+Segundo Grupo de Erros (Logs 3 e 4): Os deploys 3 LOG.txt e 4 LOG.txt apresentaram um erro fatal diferente, mas idêntico entre si: Type error: Property 'showToast' does not exist on type '...'. Este erro, na linha 68 do src/components/ShareAgentModal.tsx, indica que a desestruturação { showToast } = useToast() falhou porque showToast não é uma propriedade válida retornada pelo hook useToast.
+
+Conclusão
+Os avisos (npm warn deprecated e React Hooks) são consistentes em todos os deploys, sugerindo problemas recorrentes de dependências e boas práticas de React.
+
+No entanto, os erros fatais que impedem a compilação são diferentes em duas fases:
+
+Nos dois primeiros deploys (1 LOG.txt e 2 LOG.txt), o problema foi a ausência da exportação apiClient.
+
+Nos dois últimos deploys (3 LOG.txt e 4 LOG.txt), o problema mudou para a ausência da propriedade showToast no hook useToast.
+
+Isso sugere que, entre o segundo e o terceiro deploy, foram feitas alterações no código que possivelmente corrigiram o problema com apiClient, mas introduziram um novo erro relacionado ao uso do hook useToast no ShareAgentModal.tsx.
