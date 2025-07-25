@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Tool, Check, AlertCircle, Loader2 } from 'lucide-react';
+import { ChevronDown, ChevronUp, Wrench as Tool, Check, AlertCircle, Loader2 } from 'lucide-react';
 import { ToolCall } from './ChatInterface';
 
 interface ToolUsageDisplayProps {
