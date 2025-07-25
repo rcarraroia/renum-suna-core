@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Dialog } from '@radix-ui/react-dialog';
-import { X, UserPlus, Trash2, Edit2 } from 'lucide-react';
+import { X, Trash2, Edit2 } from 'lucide-react';
 import { useForm, Controller } from 'react-hook-form';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -54,18 +54,18 @@ const permissionOptions = [
 ];
 
 const expirationOptions = [
-  { value: null, label: 'Sem expiração' },
-  { value: 7, label: '7 dias' },
-  { value: 30, label: '30 dias' },
-  { value: 90, label: '90 dias' },
-  { value: 365, label: '1 ano' },
+  { value: '', label: 'Sem expiração' },
+  { value: '7', label: '7 dias' },
+  { value: '30', label: '30 dias' },
+  { value: '90', label: '90 dias' },
+  { value: '365', label: '1 ano' },
 ];
 
 const ShareAgentModal: React.FC<ShareAgentModalProps> = ({ agentId, isOpen, onClose }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [editingShare, setEditingShare] = useState<AgentShare | null>(null);
-  const { showToast } = useToast();
+  const { success, error } = useToast();
   const queryClient = useQueryClient();
   
   const { register, handleSubmit, control, reset, setValue, formState: { errors } } = useForm<ShareFormData>({
@@ -114,21 +114,13 @@ const ShareAgentModal: React.FC<ShareAgentModalProps> = ({ agentId, isOpen, onCl
       return response.json();
     },
     onSuccess: () => {
-      showToast({
-        title: 'Agente compartilhado',
-        description: 'O agente foi compartilhado com sucesso.',
-        type: 'success',
-      });
+      success('O agente foi compartilhado com sucesso.');
       reset();
       setSelectedUser(null);
       queryClient.invalidateQueries({ queryKey: ['agent-shares', agentId] });
     },
     onError: (error: any) => {
-      showToast({
-        title: 'Erro ao compartilhar',
-        description: error.response?.data?.detail || 'Ocorreu um erro ao compartilhar o agente.',
-        type: 'error',
-      });
+      error(error.response?.data?.detail || 'Ocorreu um erro ao compartilhar o agente.');
     },
   });
 
@@ -146,21 +138,13 @@ const ShareAgentModal: React.FC<ShareAgentModalProps> = ({ agentId, isOpen, onCl
       return response.json();
     },
     onSuccess: () => {
-      showToast({
-        title: 'Compartilhamento atualizado',
-        description: 'O compartilhamento foi atualizado com sucesso.',
-        type: 'success',
-      });
+      success('O compartilhamento foi atualizado com sucesso.');
       setEditingShare(null);
       reset();
       queryClient.invalidateQueries({ queryKey: ['agent-shares', agentId] });
     },
     onError: (error: any) => {
-      showToast({
-        title: 'Erro ao atualizar',
-        description: error.response?.data?.detail || 'Ocorreu um erro ao atualizar o compartilhamento.',
-        type: 'error',
-      });
+      error(error.response?.data?.detail || 'Ocorreu um erro ao atualizar o compartilhamento.');
     },
   });
 
@@ -173,19 +157,11 @@ const ShareAgentModal: React.FC<ShareAgentModalProps> = ({ agentId, isOpen, onCl
       return response.json();
     },
     onSuccess: () => {
-      showToast({
-        title: 'Compartilhamento removido',
-        description: 'O compartilhamento foi removido com sucesso.',
-        type: 'success',
-      });
+      success('O compartilhamento foi removido com sucesso.');
       queryClient.invalidateQueries({ queryKey: ['agent-shares', agentId] });
     },
     onError: (error: any) => {
-      showToast({
-        title: 'Erro ao remover',
-        description: error.response?.data?.detail || 'Ocorreu um erro ao remover o compartilhamento.',
-        type: 'error',
-      });
+      error(error.response?.data?.detail || 'Ocorreu um erro ao remover o compartilhamento.');
     },
   });
 
@@ -211,8 +187,8 @@ const ShareAgentModal: React.FC<ShareAgentModalProps> = ({ agentId, isOpen, onCl
         const daysRemaining = Math.ceil((expiresAt.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
         
         // Encontrar a opção mais próxima
-        const closestOption = expirationOptions.find(option => option.value && option.value >= daysRemaining);
-        setValue('daysValid', closestOption?.value || null);
+        const closestOption = expirationOptions.find(option => option.value && parseInt(option.value) >= daysRemaining);
+        setValue('daysValid', closestOption?.value ? parseInt(closestOption.value) : null);
       } else {
         setValue('daysValid', null);
       }
@@ -288,6 +264,7 @@ const ShareAgentModal: React.FC<ShareAgentModalProps> = ({ agentId, isOpen, onCl
                     ) : (
                       <div className="space-y-2">
                         <Input
+                          id="user-search"
                           placeholder="Buscar usuário por nome ou email"
                           value={searchTerm}
                           onChange={(e) => setSearchTerm(e.target.value)}
@@ -345,10 +322,10 @@ const ShareAgentModal: React.FC<ShareAgentModalProps> = ({ agentId, isOpen, onCl
                     rules={{ required: 'Selecione um nível de permissão' }}
                     render={({ field }) => (
                       <Select
+                        id="permission-level"
                         value={field.value}
                         onChange={field.onChange}
                         options={permissionOptions}
-                        placeholder="Selecione o nível de permissão"
                       />
                     )}
                   />
@@ -366,10 +343,10 @@ const ShareAgentModal: React.FC<ShareAgentModalProps> = ({ agentId, isOpen, onCl
                     control={control}
                     render={({ field }) => (
                       <Select
-                        value={field.value === null ? null : field.value.toString()}
-                        onChange={(value) => field.onChange(value === null ? null : parseInt(value))}
+                        id="expiration"
+                        value={field.value === null ? '' : field.value.toString()}
+                        onChange={(e) => field.onChange(e.target.value === '' ? null : parseInt(e.target.value))}
                         options={expirationOptions}
-                        placeholder="Selecione o período de expiração"
                       />
                     )}
                   />

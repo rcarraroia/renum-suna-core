@@ -1,7 +1,10 @@
 // Execution Context for Team Orchestration
 
 import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
-import { apiClient } from '../services/api-client';
+import RenumApiClient from '../services/api-client';
+
+// Criar instância do cliente API
+const apiClient = new RenumApiClient();
 import { 
   TeamExecution, 
   TeamExecutionCreate, 

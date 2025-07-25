@@ -6,7 +6,7 @@ import AgentCard from '../components/AgentCard';
 import Button from '../components/ui/Button';
 import Select from '../components/ui/Select';
 import { useAuthStore, useAgentStore } from '../lib/store';
-import { apiClient } from '../lib/api-client';
+import { apiRequest } from '../lib/api-client';
 import { useAgentSharing } from '../hooks/useAgentSharing';
 
 export default function Dashboard() {
@@ -139,6 +139,7 @@ export default function Dashboard() {
               <h2 className="text-xl font-semibold">Seus Agentes</h2>
               <div>
                 <Select
+                  id="status-filter"
                   options={[
                     { value: 'all', label: 'Todos' },
                     { value: 'active', label: 'Ativos' },

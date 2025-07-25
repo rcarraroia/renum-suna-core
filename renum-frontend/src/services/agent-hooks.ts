@@ -3,7 +3,10 @@
  */
 
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { apiClient } from './api-client';
+import RenumApiClient from './api-client';
+
+// Criar instância do cliente API
+const apiClient = new RenumApiClient();
 
 // Interface para agente
 export interface Agent {

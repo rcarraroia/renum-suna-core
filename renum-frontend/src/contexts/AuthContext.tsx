@@ -1,7 +1,10 @@
 // Contexto de Autenticação
 
 import React, { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
-import { apiClient } from '../services/api-client';
+import RenumApiClient from '../services/api-client';
+
+// Criar instância do cliente API
+const apiClient = new RenumApiClient();
 import { ApiError } from '../services/api-error';
 
 interface User {
