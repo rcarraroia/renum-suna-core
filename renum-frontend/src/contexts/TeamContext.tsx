@@ -64,19 +64,27 @@ export function TeamProvider({ children }: TeamProviderProps) {
   
   const fetchTeam = useCallback(async (teamId: string): Promise<TeamResponse | null> => {
     try {
-      const teamQuery = useTeam(teamId);
-      await teamQuery.refetch();
-      const team = teamQuery.data;
-      if (team) {
-        setSelectedTeam(team);
-        return team;
+      // Buscar a equipe na lista já carregada primeiro
+      const existingTeam = teamsData?.items.find(team => team.team_id === teamId);
+      if (existingTeam) {
+        setSelectedTeam(existingTeam);
+        return existingTeam;
       }
+      
+      // Se não encontrou na lista, recarregar todas as equipes
+      await refetchTeams();
+      const updatedTeam = teamsData?.items.find(team => team.team_id === teamId);
+      if (updatedTeam) {
+        setSelectedTeam(updatedTeam);
+        return updatedTeam;
+      }
+      
       return null;
     } catch (error) {
       console.error('Erro ao buscar equipe:', error);
       return null;
     }
-  }, []);
+  }, [teamsData, refetchTeams]);
   
   const createTeam = useCallback(async (team: TeamCreate): Promise<TeamResponse | null> => {
     try {
