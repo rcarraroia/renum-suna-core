@@ -8,7 +8,7 @@ import Button from './ui/Button';
 import Input from './ui/Input';
 import Select from './ui/Select';
 import Alert from './ui/Alert';
-import { apiClient } from '../lib/api-client';
+
 import { useToast } from '../hooks/useToast';
 
 // Tipos
@@ -81,8 +81,9 @@ const ShareAgentModal: React.FC<ShareAgentModalProps> = ({ agentId, isOpen, onCl
     queryKey: ['users', searchTerm],
     queryFn: async () => {
       if (!searchTerm || searchTerm.length < 3) return [];
-      const response = await apiClient.get(`/api/v2/users/search?q=${encodeURIComponent(searchTerm)}`);
-      return response.data.users;
+      const response = await fetch(`/api/v2/users/search?q=${encodeURIComponent(searchTerm)}`);
+      const data = await response.json();
+      return data.users;
     },
     enabled: searchTerm.length >= 3,
   });
@@ -91,8 +92,9 @@ const ShareAgentModal: React.FC<ShareAgentModalProps> = ({ agentId, isOpen, onCl
   const { data: shares, isLoading: isLoadingShares } = useQuery({
     queryKey: ['agent-shares', agentId],
     queryFn: async () => {
-      const response = await apiClient.get(`/api/v2/agents/${agentId}/shares`);
-      return response.data.shares;
+      const response = await fetch(`/api/v2/agents/${agentId}/shares`);
+      const data = await response.json();
+      return data.shares;
     },
     enabled: isOpen,
   });
@@ -100,11 +102,16 @@ const ShareAgentModal: React.FC<ShareAgentModalProps> = ({ agentId, isOpen, onCl
   // Mutação para compartilhar agente
   const shareAgentMutation = useMutation({
     mutationFn: async (data: ShareFormData) => {
-      return apiClient.post(`/api/v2/agents/${agentId}/share`, {
-        user_id: data.userId,
-        permission_level: data.permissionLevel,
-        days_valid: data.daysValid,
+      const response = await fetch(`/api/v2/agents/${agentId}/share`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user_id: data.userId,
+          permission_level: data.permissionLevel,
+          days_valid: data.daysValid,
+        }),
       });
+      return response.json();
     },
     onSuccess: () => {
       showToast({
@@ -128,10 +135,15 @@ const ShareAgentModal: React.FC<ShareAgentModalProps> = ({ agentId, isOpen, onCl
   // Mutação para atualizar compartilhamento
   const updateShareMutation = useMutation({
     mutationFn: async (data: { shareId: string, updateData: Partial<ShareFormData> }) => {
-      return apiClient.put(`/api/v2/agents/${agentId}/shares/${data.shareId}`, {
-        permission_level: data.updateData.permissionLevel,
-        days_valid: data.updateData.daysValid,
+      const response = await fetch(`/api/v2/agents/${agentId}/shares/${data.shareId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          permission_level: data.updateData.permissionLevel,
+          days_valid: data.updateData.daysValid,
+        }),
       });
+      return response.json();
     },
     onSuccess: () => {
       showToast({
@@ -155,7 +167,10 @@ const ShareAgentModal: React.FC<ShareAgentModalProps> = ({ agentId, isOpen, onCl
   // Mutação para remover compartilhamento
   const removeShareMutation = useMutation({
     mutationFn: async (shareId: string) => {
-      return apiClient.delete(`/api/v2/agents/${agentId}/shares/${shareId}`);
+      const response = await fetch(`/api/v2/agents/${agentId}/shares/${shareId}`, {
+        method: 'DELETE',
+      });
+      return response.json();
     },
     onSuccess: () => {
       showToast({
