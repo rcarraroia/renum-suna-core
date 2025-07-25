@@ -91,7 +91,9 @@
     - Adicionar lógica para notificações offline
     - _Requisitos: 4.4, 4.5_
 
-- [ ] 5. Integrar WebSocket com sistema de execução de equipes
+- [x] 5. Integrar WebSocket com sistema de execução de equipes
+
+
   - [x] 5.1 Implementar eventos de atualização de execução
 
 
@@ -113,20 +115,28 @@
     - Adicionar notificações para conclusão e erros
     - _Requisitos: 1.1, 1.2, 1.3, 1.4_
 
-  - [ ] 5.3 Adicionar tratamento de erros específicos de execução
+  - [x] 5.3 Adicionar tratamento de erros específicos de execução
+
+
     - Implementar exibição detalhada de erros
     - Criar sistema de retry para execuções falhas
     - Adicionar logs detalhados para depuração
     - _Requisitos: 1.3, 5.4_
 
 - [ ] 6. Implementar painel administrativo para WebSocket
-  - [ ] 6.1 Criar visualização de conexões ativas
+  - [x] 6.1 Criar visualização de conexões ativas
+
+
+
     - Desenvolver interface para listar conexões
     - Adicionar filtros e busca por usuário
     - Implementar estatísticas em tempo real
     - _Requisitos: 3.4_
 
   - [ ] 6.2 Adicionar funcionalidades de gerenciamento
+
+
+
     - Implementar desconexão forçada de usuários
     - Criar sistema de broadcast administrativo
     - Adicionar controles de limitação de taxa

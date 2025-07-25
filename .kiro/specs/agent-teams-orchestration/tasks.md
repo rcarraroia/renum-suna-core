@@ -377,14 +377,14 @@
   - **Estimativa**: 3 dias
   - **Responsável**: Frontend Developer
 
-- [-] **T029**: Implementar editor de membros da equipe
+- [x] **T029**: Implementar editor de membros da equipe
 
   - [x] Drag & drop para reordenar agentes
 
 
   - [x] Configuração de roles e dependências
 
-  - [ ] Preview da ordem de execução
+  - [ ] Preview da ordem de execução (moved to T029b)
 
   - **Estimativa**: 3 dias
   - **Responsável**: Frontend Developer
@@ -420,6 +420,50 @@
   - [ ] Templates pré-configurados
   - **Estimativa**: 3 dias
   - **Responsável**: Frontend Developer
+
+#### Missing Frontend Components
+- [ ] **T029b**: Completar preview da ordem de execução
+  - [ ] Visualização da sequência de execução baseada no workflow
+  - [ ] Indicadores visuais de dependências entre agentes
+  - [ ] Validação visual da configuração do workflow
+  - **Estimativa**: 1 dia
+  - **Responsável**: Frontend Developer
+  - **Requisitos**: RF007
+
+- [ ] **T033b**: Implementar página de detalhes da equipe
+  - [ ] Página `/teams/[id]` para visualizar detalhes da equipe
+  - [ ] Histórico de execuções da equipe
+  - [ ] Botões para executar, editar e excluir equipe
+  - [ ] Métricas de performance da equipe
+  - **Estimativa**: 2 dias
+  - **Responsável**: Frontend Developer
+  - **Requisitos**: RF001, RF006
+
+- [ ] **T033c**: Implementar página de execução de equipe
+  - [ ] Página `/teams/[id]/execute` para iniciar execução
+  - [ ] Formulário para prompt inicial e configurações
+  - [ ] Redirecionamento para monitoramento após iniciar
+  - **Estimativa**: 1 dia
+  - **Responsável**: Frontend Developer
+  - **Requisitos**: RF005
+
+#### Missing Backend Repository Implementations
+- [ ] **T033d**: Corrigir dependências circulares no orquestrador
+  - [ ] Resolver imports comentados nos serviços principais (TeamRepository, TeamExecutionRepository)
+  - [ ] Implementar injeção de dependência adequada no dependencies.py
+  - [ ] Garantir que todos os componentes estejam conectados
+  - [ ] Testar integração completa entre componentes
+  - **Estimativa**: 1 dia
+  - **Responsável**: Backend Developer
+  - **Requisitos**: RF005
+
+- [ ] **T033e**: Implementar métodos faltantes nos repositórios
+  - [ ] Adicionar métodos de consulta de logs e métricas avançados
+  - [ ] Implementar filtros e busca avançada no TeamExecutionRepository
+  - [ ] Adicionar métodos para relatórios e analytics
+  - **Estimativa**: 1 dia
+  - **Responsável**: Backend Developer
+  - **Requisitos**: RF006
 
 ## Fase 4: Monitoramento e Recursos Avançados (5 semanas)
 
@@ -646,6 +690,65 @@
 1. **Bugs em produção** → Testes automatizados e QA dedicado
 2. **UX complexa** → Testes de usabilidade desde Sprint 6
 3. **Performance degradada** → Monitoramento contínuo e alertas
+
+## Status Atual da Implementação (Atualizado)
+
+### ✅ Completamente Implementado
+
+**Backend (Fases 1-2):**
+- [x] Todos os modelos Pydantic e estruturas de dados
+- [x] Schema completo do banco de dados com políticas RLS
+- [x] Repositórios base (TeamRepository, TeamExecutionRepository)
+- [x] Orquestrador central (TeamOrchestrator)
+- [x] Motor de execução (ExecutionEngine) com todas as estratégias
+- [x] Gerenciamento de contexto compartilhado (TeamContextManager)
+- [x] Sistema de mensagens (TeamMessageBus)
+- [x] APIs completas de gerenciamento e execução
+- [x] WebSocket para monitoramento em tempo real
+- [x] Integração com ThreadManager e sistema de billing
+- [x] Testes abrangentes (>90% cobertura)
+
+**Frontend (Fase 2):**
+- [x] Estrutura base com tipos TypeScript
+- [x] Hooks e serviços de API com React Query
+- [x] Context providers para estado global
+- [x] Página de listagem de equipes
+- [x] Página de criação de equipes
+- [x] Componentes base (TeamCard, AgentSelector, WorkflowConfigurator)
+- [x] Editor de membros da equipe (drag & drop, roles)
+
+### 🔄 Parcialmente Implementado
+
+**Frontend (Fase 3):**
+- [ ] Preview da ordem de execução (T029b)
+- [ ] Página de detalhes da equipe (T033b)
+- [ ] Página de execução de equipe (T033c)
+
+**Backend (Correções):**
+- [ ] Dependências circulares nos imports (T033d)
+- [ ] Métodos avançados nos repositórios (T033e)
+
+### ❌ Não Implementado
+
+**Frontend (Fase 3-4):**
+- [ ] Visualizador de fluxo visual
+- [ ] Editor visual de fluxo
+- [ ] Dashboard de monitoramento de execução
+- [ ] Visualização de logs
+- [ ] Chat de mensagens da equipe
+
+**Backend (Fase 4-5):**
+- [ ] Coleta avançada de métricas
+- [ ] Sistema de aprovações
+- [ ] Templates de equipe
+- [ ] Recursos avançados e otimizações
+
+## Próximas Tarefas Prioritárias
+
+1. **T033d**: Corrigir dependências circulares no backend
+2. **T029b**: Completar preview da ordem de execução
+3. **T033b**: Implementar página de detalhes da equipe
+4. **T033c**: Implementar página de execução de equipe
 
 ## Definição de Pronto (DoD)
 
