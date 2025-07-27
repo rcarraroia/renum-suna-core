@@ -1,0 +1,67 @@
+Análise do Novo Log de Deploy (Commit: 62ed13f)
+Analisando o log de deploy mais recente, identifiquei os seguintes pontos:
+
+1. Avisos de npm warn deprecated:
+
+Os avisos de pacotes depreciados persistem, sendo exatamente os mesmos de todos os logs anteriores. Isso inclui rimraf, inflight, domexception, abab, @humanwhocodes/object-schema, @humanwhocodes/config-array, glob, e eslint.
+
+Conclusão: Estes são avisos de dependências desatualizadas e não impedem a compilação, mas ainda merecem atenção para futuras atualizações do projeto.
+
+2. Avisos de React Hooks (react-hooks/exhaustive-deps):
+
+Os avisos de React Hook useEffect has a missing dependency e React Hook useMemo has unnecessary dependencies continuam aparecendo nos mesmos arquivos e linhas que nos logs anteriores do frontend:
+
+WebSocketStatsChart.tsx
+
+ExecutionErrorManager.tsx
+
+WebSocketContext.tsx
+
+useExecutionErrors.ts
+
+useExecutions.ts
+
+useRealTimeExecutions.ts
+
+useWebSocket.ts
+
+useWebSocketNotifications.ts
+
+pages/agents/[id]/index.tsx
+
+pages/dashboard.tsx
+
+Conclusão: Embora você tenha mencionado que as dependências dos React Hooks foram corrigidas, esses avisos ainda persistem. É importante revisar novamente esses componentes para garantir que todas as dependências estejam corretas nos arrays de dependência dos Hooks.
+
+3. Erros Fatais de Compilação (Type error):
+
+Foi encontrado um novo erro fatal que impediu a compilação:
+
+./src/components/ToolUsageDisplay.tsx:3:10
+Type error: Module '"./ChatInterface"' has no exported member 'ToolCall'. Did you mean to use 'import ToolCall from "./ChatInterface"' instead?
+Este erro indica que a importação de ToolCall de ./ChatInterface está incorreta. A mensagem sugere que ToolCall pode não ser uma exportação nomeada ( { ToolCall } ), mas sim uma exportação padrão ( import ToolCall from "./ChatInterface" ).
+
+Comparação com o erro anterior (Commit: e07a874):
+
+O erro anterior era em ToolUsageDisplay.tsx:2:34 sobre Module '"lucide-react"' has no exported member 'Tool'.
+
+O programador está correto: Este erro específico da importação de Tool de lucide-react foi resolvido neste novo log. A linha import { ChevronDown, ChevronUp, Wrench as Tool, Check, AlertCircle, Loader2 } from 'lucide-react'; mostra que Wrench as Tool está sendo usado corretamente agora.
+
+Comparação com erros anteriores do frontend (apiClient, showToast):
+
+Os erros fatais anteriores relacionados a apiClient e showToast não estão presentes neste log, confirmando que essas correções foram eficazes.
+
+Comparação com erros do diretório admin (useQuery):
+
+Os erros fatais relacionados ao uso incorreto de useQuery nos hooks do diretório admin não estão presentes neste log. Isso confirma que as correções para o admin foram bem-sucedidas.
+
+Resumo do Status Atual
+Progresso Significativo: Os principais erros fatais que impediam o deploy nos builds anteriores (apiClient, showToast, e useQuery no admin) foram resolvidos.
+
+Novo Erro Fatal: O build atual falha devido a um novo erro de importação em src/components/ToolUsageDisplay.tsx relacionado a ToolCall de ./ChatInterface.
+
+Avisos Persistentes: Os avisos de npm warn deprecated e os avisos de react-hooks/exhaustive-deps ainda estão presentes, mas não são a causa da falha na compilação.
+
+Próximo Passo Recomendado:
+
+O foco agora deve ser na correção do Type error: Module '"./ChatInterface"' has no exported member 'ToolCall' em src/components/ToolUsageDisplay.tsx. Verifique como ToolCall é exportado em src/components/ChatInterface.tsx e ajuste a importação em ToolUsageDisplay.tsx para que corresponda (se é exportação padrão ou nomeada).

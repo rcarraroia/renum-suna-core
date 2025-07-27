@@ -13,6 +13,7 @@ interface TeamContextType {
   currentPage: number;
   totalPages: number;
   isLoading: boolean;
+  loading: boolean; // Alias para isLoading
   error: ApiError | null;
   selectedTeam: TeamResponse | null;
   fetchTeams: (page?: number, limit?: number) => void;
@@ -133,6 +134,7 @@ export function TeamProvider({ children }: TeamProviderProps) {
     currentPage: teamsData?.page || 1,
     totalPages: teamsData?.pages || 1,
     isLoading,
+    loading: isLoading, // Alias para compatibilidade
     error: teamsError as ApiError | null,
     selectedTeam,
     fetchTeams,

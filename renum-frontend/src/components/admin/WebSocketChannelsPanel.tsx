@@ -95,8 +95,8 @@ export const WebSocketChannelsPanel: React.FC<WebSocketChannelsPanelProps> = ({
 
   const getSortedChannels = () => {
     const channelList = Object.entries(channels).map(([name, info]) => ({
-      name,
-      ...info
+      ...info,
+      name
     }));
 
     // Filtrar por busca

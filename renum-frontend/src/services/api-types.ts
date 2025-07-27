@@ -3,6 +3,66 @@
  */
 
 /**
+ * Basic Agent interface
+ */
+export interface Agent {
+  agent_id: string;
+  name: string;
+  description?: string;
+  model?: string;
+  capabilities?: string[];
+  knowledge_base_ids: string[];
+  knowledge_bases?: Array<{
+    id: string;
+    name: string;
+    description?: string;
+  }>;
+  role?: AgentRole;
+  usage?: {
+    total_executions: number;
+    last_execution: string;
+    average_response_time: number;
+    token_usage: {
+      prompt_tokens: number;
+      completion_tokens: number;
+      total_tokens: number;
+    };
+  };
+  created_at: string;
+  updated_at: string;
+}
+
+/**
+ * Basic Team interface
+ */
+export interface Team {
+  team_id: string;
+  user_id: string;
+  name: string;
+  description?: string;
+  agent_ids: string[];
+  workflow_definition: WorkflowDefinition;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+/**
+ * Team Execution interface
+ */
+export interface TeamExecution {
+  execution_id: string;
+  team_id: string;
+  status: ExecutionStatus;
+  initial_prompt: string;
+  final_result?: Record<string, any>;
+  error_message?: string;
+  started_at?: string;
+  completed_at?: string;
+  created_at: string;
+}
+
+/**
  * Workflow types
  */
 export enum WorkflowType {
@@ -267,6 +327,7 @@ export interface ListTeamsOptions {
   limit?: number;
   nameFilter?: string;
   activeOnly?: boolean;
+  search?: string;
 }
 
 /**

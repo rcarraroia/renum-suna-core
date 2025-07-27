@@ -19,7 +19,7 @@ const TeamMembersPage: React.FC = () => {
   const { data: team, isLoading: isLoadingTeam, error: teamError } = useTeam(teamId);
   
   // Hook para atualizar a equipe
-  const { mutate: updateTeam, isLoading: isUpdating, error: updateError } = useUpdateTeam({
+  const { mutate: updateTeam, isPending: isUpdating, error: updateError } = useUpdateTeam({
     onSuccess: () => {
       // Exibe mensagem de sucesso
       setSuccessMessage('Membros da equipe atualizados com sucesso');

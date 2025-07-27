@@ -44,9 +44,7 @@ export const ExecutionNotifications: React.FC<ExecutionNotificationsProps> = ({
     markAllAsRead, 
     deleteNotification 
   } = useWebSocketNotifications({
-    userId,
-    autoSubscribe: true,
-    filterTypes: ['execution_started', 'execution_completed', 'execution_failed', 'execution_progress']
+    userId
   });
 
   const [executionNotifications, setExecutionNotifications] = useState<ExecutionNotification[]>([]);
@@ -73,7 +71,7 @@ export const ExecutionNotifications: React.FC<ExecutionNotificationsProps> = ({
       }))
       .slice(0, maxNotifications);
 
-    setExecutionNotifications(filtered);
+    setExecutionNotifications(filtered as ExecutionNotification[]);
 
     // Mostrar toasts para novas notificações
     if (showToasts) {
@@ -83,7 +81,7 @@ export const ExecutionNotifications: React.FC<ExecutionNotificationsProps> = ({
       );
 
       if (newNotifications.length > 0) {
-        setShowToastNotifications(prev => [...prev, ...newNotifications]);
+        setShowToastNotifications(prev => [...prev, ...newNotifications as ExecutionNotification[]]);
         
         // Auto-remover toasts após 5 segundos
         newNotifications.forEach(notif => {

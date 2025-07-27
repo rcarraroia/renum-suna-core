@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '../lib/supabase';
+// import { supabase } from '../lib/supabase'; // Comentado temporariamente
 
 export interface TypewriterPhrase {
   id: string;
@@ -14,19 +14,12 @@ export const useTypewriterPhrases = () => {
   const { data: phrases, isLoading, error } = useQuery<TypewriterPhrase[]>({
     queryKey: ['typewriter-phrases'],
     queryFn: async () => {
-      try {
-        const { data, error } = await supabase
-          .from('renum_homepage_phrases')
-          .select('*')
-          .eq('is_active', true)
-          .order('display_order', { ascending: true });
-
-        if (error) throw error;
-        return data || [];
-      } catch (error) {
-        console.error('Error fetching typewriter phrases:', error);
-        return [];
-      }
+      // Temporariamente retornando dados mock
+      return [
+        { id: '1', text: 'Automatize suas tarefas', display_order: 1, is_active: true, created_at: '', updated_at: '' },
+        { id: '2', text: 'Otimize seus processos', display_order: 2, is_active: true, created_at: '', updated_at: '' },
+        { id: '3', text: 'Acelere seu trabalho', display_order: 3, is_active: true, created_at: '', updated_at: '' }
+      ];
     },
   });
 

@@ -34,10 +34,11 @@ const CreateTeamPage: React.FC = () => {
     description?: string;
     agents?: string;
     workflow?: string;
+    [key: string]: string | undefined;
   }>({});
   
   // Hook para criar equipe
-  const { mutate: createTeam, isLoading, error } = useCreateTeam({
+  const { mutate: createTeam, isPending: isLoading, error } = useCreateTeam({
     onSuccess: (data) => {
       // Redireciona para a página de detalhes da equipe
       router.push(`/teams/${data.team_id}`);

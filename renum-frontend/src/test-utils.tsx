@@ -2,6 +2,13 @@ import React, { ReactElement } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { useRouter } from 'next/router';
 
+// Mock useRouter
+jest.mock('next/router', () => ({
+  useRouter: jest.fn()
+}));
+
+const mockedUseRouter = useRouter as jest.MockedFunction<typeof useRouter>;
+
 // Create a custom render function that includes providers if needed
 const customRender = (
   ui: ReactElement,
@@ -11,15 +18,25 @@ const customRender = (
 
   // Setup router mock with custom values if provided
   if (Object.keys(routerMock).length > 0) {
-    useRouter.mockImplementation(() => ({
+    mockedUseRouter.mockImplementation(() => ({
       push: jest.fn(),
       replace: jest.fn(),
       prefetch: jest.fn(),
       back: jest.fn(),
+      forward: jest.fn(),
       reload: jest.fn(),
+      beforePopState: jest.fn(),
       pathname: '/',
+      route: '/',
       query: {},
       asPath: '/',
+      basePath: '',
+      locale: undefined,
+      locales: undefined,
+      defaultLocale: undefined,
+      domainLocales: undefined,
+      isLocaleDomain: false,
+      isPreview: false,
       events: {
         on: jest.fn(),
         off: jest.fn(),

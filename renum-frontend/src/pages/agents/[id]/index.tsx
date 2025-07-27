@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { 
   Bot, 
@@ -8,7 +8,7 @@ import {
   Trash2, 
   ArrowLeft, 
   Database, 
-  Tool, 
+  Wrench as Tool, 
   MessageSquare,
   BarChart3,
   RefreshCw,
@@ -26,19 +26,13 @@ import { formatDate, getAgentStatusColor, translateAgentStatus } from '../../../
 export default function AgentDetails() {
   const router = useRouter();
   const { id } = router.query;
-  const { agents, selectedAgent, setSelectedAgent, removeAgent } = useAgentStore();
+  const { agents, selectedAgent, setSelectedAgent, removeAgent, addAgent } = useAgentStore();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const { isShareModalOpen, openShareModal, closeShareModal } = useAgentSharing(id as string);
 
-  useEffect(() => {
-    if (id) {
-      fetchAgentDetails(id as string);
-    }
-  }, [id]);
-
-  const fetchAgentDetails = async (agentId: string) => {
+  const fetchAgentDetails = useCallback(async (agentId: string) => {
     setIsLoading(true);
     setError(null);
 
@@ -52,51 +46,31 @@ export default function AgentDetails() {
         return;
       }
 
-      // TODO: Implementar integração real com a API
-      // Por enquanto, simular chamada de API
-      await new Promise(resolve => setTimeout(resolve, 800));
+      // Se não estiver no store, buscar da API
+      const response = await fetch(`/api/v1/agents/${agentId}`);
       
-      // Simular resposta da API
-      const mockAgent = {
-        id: agentId,
-        name: 'Assistente de Pesquisa',
-        description: 'Agente que ajuda a pesquisar informações na web e em bases de conhecimento',
-        status: 'active',
-        created_at: '2025-07-17T14:30:00Z',
-        updated_at: '2025-07-17T16:45:00Z',
-        configuration: {
-          model: 'gpt-4',
-          system_prompt: 'Você é um assistente de pesquisa especializado em encontrar informações relevantes e precisas. Utilize as ferramentas disponíveis para fornecer respostas completas e bem fundamentadas.',
-          tools: [
-            { name: 'tavily_search', description: 'Pesquisa na web usando a API Tavily' },
-            { name: 'firecrawl', description: 'Web scraping usando a API Firecrawl' }
-          ]
-        },
-        knowledge_base_ids: ['1', '2'],
-        usage: {
-          total_executions: 42,
-          last_execution: '2025-07-17T14:30:00Z',
-          average_response_time: 2.3,
-          token_usage: {
-            prompt_tokens: 12500,
-            completion_tokens: 8700,
-            total_tokens: 21200
-          }
-        },
-        knowledge_bases: [
-          { id: '1', name: 'Documentação Técnica', document_count: 24 },
-          { id: '2', name: 'Manuais de Produto', document_count: 15 }
-        ]
-      };
+      if (!response.ok) {
+        throw new Error('Agente não encontrado');
+      }
+
+      const agentData = await response.json();
+      setSelectedAgent(agentData);
       
-      setSelectedAgent(mockAgent);
-    } catch (err: any) {
-      console.error('Erro ao carregar detalhes do agente:', err);
-      setError(err.message || 'Erro ao carregar detalhes do agente');
+      // Adicionar ao store para cache
+      addAgent(agentData);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Erro ao carregar agente';
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [agents, addAgent]);
+
+  useEffect(() => {
+    if (id) {
+      fetchAgentDetails(id as string);
+    }
+  }, [id, fetchAgentDetails]);
 
   const handleDeleteAgent = async () => {
     if (!selectedAgent) return;

@@ -63,7 +63,14 @@ export interface WebSocketNotification {
   title: string;
   message: string;
   read: boolean;
+  status: 'read' | 'unread';
   created_at: string;
+  metadata?: {
+    execution_id?: string;
+    team_id?: string;
+    team_name?: string;
+    [key: string]: any;
+  };
   action?: {
     type: string;
     payload: any;

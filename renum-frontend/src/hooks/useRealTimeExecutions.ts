@@ -166,7 +166,7 @@ export const useRealTimeExecutions = (
 
     subscribeToChannel(channelName, handleExecutionUpdate);
     setSubscribedExecutions(prev => new Set([...prev, executionId]));
-  }, [isConnected, subscribedExecutions, subscribeToChannel, handleExecutionUpdate]);
+  }, [isConnected, subscribedExecutions, subscribeToChannel]);
 
   // Desinscrever-se de execução específica
   const unsubscribeFromExecution = useCallback((executionId: string) => {

@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useExecutionContext } from '../contexts/ExecutionContext';
 import { TeamExecution, TeamExecutionCreate, TeamExecutionStatus, TeamExecutionResult, ExecutionLogEntry } from '../services/api-types';
 import { ApiError } from '../services/api-error';
-import { useExecutionWebSocket } from '../services/team-execution-hooks';
+// import { useExecutionWebSocket } from '../services/team-execution-hooks'; // Comentado temporariamente
 
 // Hook para gerenciar a execução de uma equipe
 export function useTeamExecution() {
@@ -29,82 +29,7 @@ export function useTeamExecution() {
   return { runTeamExecution, success, loading, error };
 }
 
-// Hook para monitorar o status de uma execução
-export function useExecutionMonitor(executionId: string | null) {
-  const { fetchExecutionStatus, stopExecution, loading, error } = useExecutionContext();
-  const [status, setStatus] = useState<TeamExecutionStatus | null>(null);
-  const [polling, setPolling] = useState<NodeJS.Timeout | null>(null);
 
-  // Configuração do WebSocket para atualizações em tempo real
-  const { connected, status: wsStatus, error: wsError } = useExecutionWebSocket(executionId);
-
-  // Atualiza o status quando recebemos atualizações do WebSocket
-  useEffect(() => {
-    if (wsStatus) {
-      setStatus(wsStatus);
-    }
-  }, [wsStatus]);
-
-  // Função para buscar o status manualmente
-  const fetchStatus = useCallback(async () => {
-    if (!executionId) return null;
-    
-    const result = await fetchExecutionStatus(executionId);
-    if (result) {
-      setStatus(result);
-    }
-    return result;
-  }, [executionId, fetchExecutionStatus]);
-
-  // Inicia polling para atualizações de status quando não há WebSocket
-  useEffect(() => {
-    if (!executionId || connected) {
-      // Se não temos ID de execução ou o WebSocket está conectado, não precisamos de polling
-      if (polling) {
-        clearInterval(polling);
-        setPolling(null);
-      }
-      return;
-    }
-
-    // Busca o status inicial
-    fetchStatus();
-    
-    // Configura polling a cada 5 segundos
-    const interval = setInterval(fetchStatus, 5000);
-    setPolling(interval);
-    
-    return () => {
-      if (polling) {
-        clearInterval(polling);
-      }
-    };
-  }, [executionId, connected, fetchStatus]);
-
-  // Para o polling quando a execução termina
-  useEffect(() => {
-    if (status && ['completed', 'failed', 'cancelled'].includes(status.status) && polling) {
-      clearInterval(polling);
-      setPolling(null);
-    }
-  }, [status, polling]);
-
-  // Função para parar a execução
-  const handleStopExecution = useCallback(async () => {
-    if (!executionId) return false;
-    return stopExecution(executionId);
-  }, [executionId, stopExecution]);
-
-  return { 
-    status, 
-    fetchStatus, 
-    stopExecution: handleStopExecution, 
-    loading, 
-    error,
-    wsConnected: connected,
-    wsError
-  };
-}
 
 // Hook para obter o resultado de uma execução
 export function useExecutionResult(executionId: string | null) {

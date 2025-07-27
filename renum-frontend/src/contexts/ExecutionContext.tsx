@@ -10,7 +10,8 @@ import {
   TeamExecutionCreate, 
   TeamExecutionStatus, 
   TeamExecutionResult,
-  ExecutionLogEntry
+  ExecutionLogEntry,
+  ExecutionStatus
 } from '../services/api-types';
 import { ApiError } from '../services/api-error';
 
@@ -58,7 +59,7 @@ export function ExecutionProvider({ children }: ExecutionProviderProps) {
     setLoading(true);
     setError(null);
     try {
-      const data = await apiClient.listExecutions(1, 50, teamId);
+      const data = await apiClient.listExecutions({ limit: 50, offset: 0, teamId });
       setExecutions(data);
       setLoading(false);
     } catch (err) {
@@ -143,14 +144,14 @@ export function ExecutionProvider({ children }: ExecutionProviderProps) {
       setExecutions(prev => 
         prev.map(exec => 
           exec.execution_id === executionId 
-            ? { ...exec, status: 'cancelled' } 
+            ? { ...exec, status: ExecutionStatus.CANCELLED } 
             : exec
         )
       );
       
       // Atualiza a execução selecionada se for a mesma
       if (selectedExecution && selectedExecution.execution_id === executionId) {
-        setSelectedExecution(prev => prev ? { ...prev, status: 'cancelled' } : null);
+        setSelectedExecution(prev => prev ? { ...prev, status: ExecutionStatus.CANCELLED } : null);
       }
       
       setLoading(false);

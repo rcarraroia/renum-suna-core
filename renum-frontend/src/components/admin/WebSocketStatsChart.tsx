@@ -59,8 +59,8 @@ export const WebSocketStatsChart: React.FC<WebSocketStatsChartProps> = ({
         hour: '2-digit', 
         minute: '2-digit' 
       }),
-      timestamp: point.timestamp,
-      ...point
+      ...point,
+      timestamp: point.timestamp
     }));
   };
 

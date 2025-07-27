@@ -12,6 +12,7 @@ interface User {
   email: string;
   name: string;
   role: string;
+  token?: string;
 }
 
 interface AuthContextType {
@@ -33,6 +34,9 @@ export function useAuthContext() {
   }
   return context;
 }
+
+// Alias para compatibilidade
+export const useAuth = useAuthContext;
 
 interface AuthProviderProps {
   children: ReactNode;

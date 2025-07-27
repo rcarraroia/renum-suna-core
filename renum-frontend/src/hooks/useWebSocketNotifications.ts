@@ -15,6 +15,7 @@ interface UseWebSocketNotificationsOptions {
   autoMarkAsRead?: boolean;
   autoMarkAsReadDelay?: number;
   enableSync?: boolean;
+  userId?: string;
 }
 
 /**
@@ -86,52 +87,6 @@ export function useWebSocketNotifications(options: UseWebSocketNotificationsOpti
     return unsubscribe;
   }, [on, maxNotifications, enableSync]);
 
-  // Sincronização automática quando conectado
-  useEffect(() => {
-    if (isConnected && enableSync) {
-      // Sincroniza imediatamente ao conectar
-      syncWithServer();
-      
-      // Configura sincronização periódica
-      syncIntervalRef.current = setInterval(() => {
-        syncWithServer();
-      }, 30000); // Sincroniza a cada 30 segundos
-    } else {
-      // Limpa o intervalo de sincronização
-      if (syncIntervalRef.current) {
-        clearInterval(syncIntervalRef.current);
-        syncIntervalRef.current = null;
-      }
-    }
-
-    return () => {
-      if (syncIntervalRef.current) {
-        clearInterval(syncIntervalRef.current);
-      }
-    };
-  }, [isConnected, enableSync]);
-
-  // Auto marca como lida
-  useEffect(() => {
-    if (!autoMarkAsRead) return;
-
-    const timers: NodeJS.Timeout[] = [];
-
-    notifications.forEach((notification) => {
-      if (!notification.read) {
-        const timer = setTimeout(() => {
-          markAsRead(notification.id);
-        }, autoMarkAsReadDelay);
-
-        timers.push(timer);
-      }
-    });
-
-    return () => {
-      timers.forEach((timer) => clearTimeout(timer));
-    };
-  }, [notifications, autoMarkAsRead, autoMarkAsReadDelay]);
-
   // Sincroniza com o servidor
   const syncWithServer = useCallback(async () => {
     if (!enableSync || isLoading) return;
@@ -196,7 +151,7 @@ export function useWebSocketNotifications(options: UseWebSocketNotificationsOpti
   const markAsRead = useCallback((id: string) => {
     setNotifications((prev) =>
       prev.map((notification) =>
-        notification.id === id ? { ...notification, read: true, read_at: new Date().toISOString() } : notification
+        notification.id === id ? { ...notification, read: true, status: 'read' as const } : notification
       )
     );
 
@@ -208,6 +163,56 @@ export function useWebSocketNotifications(options: UseWebSocketNotificationsOpti
       sendCommand('mark_notification_as_read', { notification_id: id });
     }
   }, [sendCommand, enableSync]);
+
+  // Sincronização automática quando conectado
+  useEffect(() => {
+    if (isConnected && enableSync) {
+      // Sincroniza imediatamente ao conectar
+      syncWithServer();
+      
+      // Configura sincronização periódica
+      syncIntervalRef.current = setInterval(() => {
+        syncWithServer();
+      }, 30000); // Sincroniza a cada 30 segundos
+    } else {
+      // Limpa o intervalo de sincronização
+      if (syncIntervalRef.current) {
+        clearInterval(syncIntervalRef.current);
+        syncIntervalRef.current = null;
+      }
+    }
+
+    return () => {
+      if (syncIntervalRef.current) {
+        clearInterval(syncIntervalRef.current);
+      }
+    };
+  }, [isConnected, enableSync, syncWithServer]);
+
+  // Auto marca como lida
+  useEffect(() => {
+    if (!autoMarkAsRead) return;
+
+    const timers: NodeJS.Timeout[] = [];
+
+    notifications.forEach((notification) => {
+      if (!notification.read) {
+        const timer = setTimeout(() => {
+          markAsRead(notification.id);
+        }, autoMarkAsReadDelay);
+
+        timers.push(timer);
+      }
+    });
+
+    return () => {
+      timers.forEach((timer) => clearTimeout(timer));
+    };
+  }, [notifications, autoMarkAsRead, autoMarkAsReadDelay, markAsRead]);
+
+
+
+
 
   // Marca todas as notificações como lidas
   const markAllAsRead = useCallback(() => {
@@ -276,6 +281,7 @@ export function useWebSocketNotifications(options: UseWebSocketNotificationsOpti
     markAsRead,
     markAllAsRead,
     removeNotification,
+    deleteNotification: removeNotification, // Alias para compatibilidade
     clearAllNotifications,
     // Funcionalidades de sincronização
     isLoading,

@@ -120,7 +120,7 @@ export class NotificationSyncService {
    * Marca uma notificação como lida localmente
    */
   markAsReadLocally(id: string): void {
-    this.updateNotification(id, { read: true, read_at: new Date().toISOString() });
+    this.updateNotification(id, { read: true });
     this.addPendingAction('mark_read', id);
   }
 

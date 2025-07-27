@@ -11,10 +11,7 @@ export * from './api-types';
 // API Error
 export * from './api-error';
 
-// API Hooks
-export * from './api-hooks';
-
-// React Query Hooks
+// React Query Hooks (preferred over api-hooks)
 export * from './react-query-hooks';
 
 // Query Client

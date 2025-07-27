@@ -102,6 +102,22 @@ interface Agent {
     tools: any[];
   };
   knowledge_base_ids: string[];
+  knowledge_bases?: Array<{
+    id: string;
+    name: string;
+    description?: string;
+    document_count?: number;
+  }>;
+  usage?: {
+    total_executions: number;
+    last_execution: string;
+    average_response_time: number;
+    token_usage: {
+      prompt_tokens: number;
+      completion_tokens: number;
+      total_tokens: number;
+    };
+  };
 }
 
 /**

@@ -2,121 +2,102 @@
  * Hooks para gerenciamento de agentes
  */
 
-import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { useQuery, useMutation, useQueryClient, UseQueryOptions, UseMutationOptions } from '@tanstack/react-query';
 import RenumApiClient from './api-client';
+import { Agent } from './api-types';
 
 // Criar instância do cliente API
 const apiClient = new RenumApiClient();
 
-// Interface para agente
-export interface Agent {
-  agent_id: string;
-  name: string;
-  description?: string;
-  model?: string;
-  capabilities?: string[];
-  created_at: string;
-  updated_at: string;
-}
-
 // Chaves de consulta
 const queryKeys = {
-  agents: 'agents',
-  agent: (id: string) => ['agent', id],
+  agents: ['agents'] as const,
+  agent: (id: string) => ['agent', id] as const,
 };
 
 /**
  * Hook para buscar todos os agentes
  */
-export function useAgents() {
-  return useQuery<Agent[]>(
-    queryKeys.agents,
-    async () => {
-      const response = await apiClient.get<Agent[]>('/agents');
+export function useAgents(queryOptions: Omit<UseQueryOptions<Agent[]>, 'queryKey' | 'queryFn'> = {}) {
+  return useQuery({
+    queryKey: queryKeys.agents,
+    queryFn: async () => {
+      const response = await apiClient.listAgents();
       return response;
     },
-    {
-      staleTime: 1000 * 60 * 5, // 5 minutos
-    }
-  );
+    staleTime: 1000 * 60 * 5, // 5 minutos
+    ...queryOptions
+  });
 }
 
 /**
  * Hook para buscar um agente específico
  */
-export function useAgent(agentId: string) {
-  return useQuery<Agent>(
-    queryKeys.agent(agentId),
-    async () => {
-      const response = await apiClient.get<Agent>(`/agents/${agentId}`);
+export function useAgent(agentId: string, queryOptions: Omit<UseQueryOptions<Agent>, 'queryKey' | 'queryFn'> = {}) {
+  return useQuery({
+    queryKey: queryKeys.agent(agentId),
+    queryFn: async () => {
+      const response = await apiClient.getAgent(agentId);
       return response;
     },
-    {
-      enabled: !!agentId,
-      staleTime: 1000 * 60 * 5, // 5 minutos
-    }
-  );
+    enabled: !!agentId,
+    staleTime: 1000 * 60 * 5, // 5 minutos
+    ...queryOptions
+  });
 }
 
 /**
  * Hook para criar um agente
  */
-export function useCreateAgent() {
+export function useCreateAgent(options: UseMutationOptions<Agent, Error, Omit<Agent, 'agent_id' | 'created_at' | 'updated_at'>> = {}) {
   const queryClient = useQueryClient();
   
-  return useMutation<Agent, Error, Omit<Agent, 'agent_id' | 'created_at' | 'updated_at'>>(
-    async (data) => {
-      const response = await apiClient.post<Agent>('/agents', data);
+  return useMutation({
+    mutationFn: async (data: Omit<Agent, 'agent_id' | 'created_at' | 'updated_at'>) => {
+      const response = await apiClient.createAgent(data);
       return response;
     },
-    {
-      onSuccess: (data) => {
-        queryClient.invalidateQueries(queryKeys.agents);
-        queryClient.setQueryData(queryKeys.agent(data.agent_id), data);
-      },
-    }
-  );
+    onSuccess: (data: Agent) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.agents });
+      queryClient.setQueryData(queryKeys.agent(data.agent_id), data);
+    },
+    ...options
+  });
 }
 
 /**
  * Hook para atualizar um agente
  */
-export function useUpdateAgent() {
+export function useUpdateAgent(options: UseMutationOptions<Agent, Error, { agentId: string; data: Partial<Omit<Agent, 'agent_id' | 'created_at' | 'updated_at'>> }> = {}) {
   const queryClient = useQueryClient();
   
-  return useMutation<
-    Agent,
-    Error,
-    { agentId: string; data: Partial<Omit<Agent, 'agent_id' | 'created_at' | 'updated_at'>> }
-  >(
-    async ({ agentId, data }) => {
-      const response = await apiClient.put<Agent>(`/agents/${agentId}`, data);
+  return useMutation({
+    mutationFn: async ({ agentId, data }: { agentId: string; data: Partial<Omit<Agent, 'agent_id' | 'created_at' | 'updated_at'>> }) => {
+      const response = await apiClient.updateAgent(agentId, data);
       return response;
     },
-    {
-      onSuccess: (data) => {
-        queryClient.invalidateQueries(queryKeys.agents);
-        queryClient.setQueryData(queryKeys.agent(data.agent_id), data);
-      },
-    }
-  );
+    onSuccess: (data: Agent) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.agents });
+      queryClient.setQueryData(queryKeys.agent(data.agent_id), data);
+    },
+    ...options
+  });
 }
 
 /**
  * Hook para excluir um agente
  */
-export function useDeleteAgent() {
+export function useDeleteAgent(options: UseMutationOptions<{ success: boolean }, Error, string> = {}) {
   const queryClient = useQueryClient();
   
-  return useMutation<void, Error, string>(
-    async (agentId) => {
-      await apiClient.delete(`/agents/${agentId}`);
+  return useMutation({
+    mutationFn: async (agentId: string) => {
+      return await apiClient.deleteAgent(agentId);
     },
-    {
-      onSuccess: (_, agentId) => {
-        queryClient.invalidateQueries(queryKeys.agents);
-        queryClient.removeQueries(queryKeys.agent(agentId));
-      },
-    }
-  );
+    onSuccess: (_: { success: boolean }, agentId: string) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.agents });
+      queryClient.removeQueries({ queryKey: queryKeys.agent(agentId) });
+    },
+    ...options
+  });
 }

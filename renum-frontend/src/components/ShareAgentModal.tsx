@@ -14,6 +14,15 @@ import { useToast } from '../hooks/useToast';
 // Tipos
 type PermissionLevel = 'view' | 'use' | 'edit' | 'admin';
 
+interface ApiError {
+  response?: {
+    data?: {
+      detail?: string;
+    };
+  };
+  message?: string;
+}
+
 interface User {
   id: string;
   name: string;
@@ -65,7 +74,7 @@ const ShareAgentModal: React.FC<ShareAgentModalProps> = ({ agentId, isOpen, onCl
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [editingShare, setEditingShare] = useState<AgentShare | null>(null);
-  const { success, error } = useToast();
+  const { success, error: showError } = useToast();
   const queryClient = useQueryClient();
   
   const { register, handleSubmit, control, reset, setValue, formState: { errors } } = useForm<ShareFormData>({
@@ -119,8 +128,8 @@ const ShareAgentModal: React.FC<ShareAgentModalProps> = ({ agentId, isOpen, onCl
       setSelectedUser(null);
       queryClient.invalidateQueries({ queryKey: ['agent-shares', agentId] });
     },
-    onError: (error: any) => {
-      error(error.response?.data?.detail || 'Ocorreu um erro ao compartilhar o agente.');
+    onError: (error: ApiError) => {
+      showError(error.response?.data?.detail || 'Ocorreu um erro ao compartilhar o agente.');
     },
   });
 
@@ -143,8 +152,8 @@ const ShareAgentModal: React.FC<ShareAgentModalProps> = ({ agentId, isOpen, onCl
       reset();
       queryClient.invalidateQueries({ queryKey: ['agent-shares', agentId] });
     },
-    onError: (error: any) => {
-      error(error.response?.data?.detail || 'Ocorreu um erro ao atualizar o compartilhamento.');
+    onError: (error: ApiError) => {
+      showError(error.response?.data?.detail || 'Ocorreu um erro ao atualizar o compartilhamento.');
     },
   });
 
@@ -160,8 +169,8 @@ const ShareAgentModal: React.FC<ShareAgentModalProps> = ({ agentId, isOpen, onCl
       success('O compartilhamento foi removido com sucesso.');
       queryClient.invalidateQueries({ queryKey: ['agent-shares', agentId] });
     },
-    onError: (error: any) => {
-      error(error.response?.data?.detail || 'Ocorreu um erro ao remover o compartilhamento.');
+    onError: (error: ApiError) => {
+      showError(error.response?.data?.detail || 'Ocorreu um erro ao remover o compartilhamento.');
     },
   });
 

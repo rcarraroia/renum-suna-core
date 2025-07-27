@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { PlusCircle, BarChart3, Users, Database, Share2 } from 'lucide-react';
 import Layout from '../components/Layout';
@@ -15,11 +15,7 @@ export default function Dashboard() {
   const [statusFilter, setStatusFilter] = useState('all');
   const { sharedWithMe, isLoadingSharedWithMe } = useAgentSharing();
 
-  useEffect(() => {
-    fetchAgents();
-  }, []);
-
-  const fetchAgents = async () => {
+  const fetchAgents = useCallback(async () => {
     setLoading(true);
     try {
       // TODO: Implementar integração real com a API
@@ -30,55 +26,32 @@ export default function Dashboard() {
         {
           id: '1',
           name: 'Assistente de Pesquisa',
-          description: 'Agente que ajuda a pesquisar informações na web e em bases de conhecimento',
+          description: 'Especializado em pesquisa e análise de dados',
           status: 'active',
-          created_at: '2025-07-17T14:30:00Z',
-          updated_at: '2025-07-17T14:30:00Z',
+          created_at: '2024-01-15T10:00:00Z',
+          updated_at: '2024-01-20T14:30:00Z',
           configuration: {
             model: 'gpt-4',
-            system_prompt: 'Você é um assistente de pesquisa especializado.',
-            tools: []
+            system_prompt: 'Você é um assistente especializado em pesquisa...',
+            tools: ['web_search', 'data_analysis']
           },
-          knowledge_base_ids: ['1', '2']
+          knowledge_base_ids: ['kb1', 'kb2']
         },
-        {
-          id: '2',
-          name: 'Analista de Dados',
-          description: 'Agente especializado em análise de dados e geração de relatórios',
-          status: 'draft',
-          created_at: '2025-07-15T10:20:00Z',
-          updated_at: '2025-07-15T10:20:00Z',
-          configuration: {
-            model: 'claude-3-opus',
-            system_prompt: 'Você é um analista de dados especializado.',
-            tools: []
-          },
-          knowledge_base_ids: []
-        },
-        {
-          id: '3',
-          name: 'Assistente de Atendimento',
-          description: 'Agente para atendimento ao cliente com base em documentação interna',
-          status: 'active',
-          created_at: '2025-07-16T09:15:00Z',
-          updated_at: '2025-07-16T09:15:00Z',
-          configuration: {
-            model: 'gpt-4',
-            system_prompt: 'Você é um assistente de atendimento ao cliente.',
-            tools: []
-          },
-          knowledge_base_ids: ['3']
-        }
+        // Adicionar mais agentes mock conforme necessário
       ];
       
       setAgents(mockAgents);
-    } catch (err: any) {
-      console.error('Erro ao carregar agentes:', err);
-      setError(err.message || 'Erro ao carregar agentes');
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Erro ao carregar agentes';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchAgents();
+  }, [fetchAgents]);
 
   // Filtrar agentes por status
   const filteredAgents = statusFilter === 'all'

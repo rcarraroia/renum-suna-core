@@ -8,6 +8,7 @@
 import axios, { AxiosInstance, AxiosError, AxiosRequestConfig } from 'axios';
 import { 
   ApiClientOptions, 
+  Agent,
   TeamCreate, 
   TeamUpdate, 
   TeamResponse, 
@@ -211,13 +212,13 @@ class RenumApiClient {
   async listExecutions(options: ListExecutionsOptions = {}): Promise<TeamExecutionResponse[]> {
     const { teamId, limit = 10, offset = 0 } = options;
     
-    const params = {
+    const params: any = {
       limit,
       offset
     };
     
     if (teamId) {
-      params['team_id'] = teamId;
+      params.team_id = teamId;
     }
     
     const response = await this.client.get<TeamExecutionResponse[]>('/executions', { params });
@@ -267,7 +268,7 @@ class RenumApiClient {
   async getExecutionLogs(executionId: string, options: GetExecutionLogsOptions = {}): Promise<ExecutionLogEntry[]> {
     const { limit = 100, offset = 0, logTypes, agentId } = options;
     
-    const params = {
+    const params: any = {
       limit,
       offset
     };
@@ -319,6 +320,91 @@ class RenumApiClient {
     const response = await this.client.delete<{ success: boolean }>(`/api-keys/${serviceName}`);
     return response.data;
   }
+
+  /**
+   * Métodos genéricos HTTP para compatibilidade
+   */
+  
+  /**
+   * Método GET genérico
+   */
+  async get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
+    const response = await this.client.get<T>(url, config);
+    return response.data;
+  }
+
+  /**
+   * Método POST genérico
+   */
+  async post<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
+    const response = await this.client.post<T>(url, data, config);
+    return response.data;
+  }
+
+  /**
+   * Método PUT genérico
+   */
+  async put<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
+    const response = await this.client.put<T>(url, data, config);
+    return response.data;
+  }
+
+  /**
+   * Método DELETE genérico
+   */
+  async delete<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
+    const response = await this.client.delete<T>(url, config);
+    return response.data;
+  }
+
+  /**
+   * Métodos específicos para Agentes
+   */
+  
+  /**
+   * Lista todos os agentes
+   */
+  async listAgents(): Promise<Agent[]> {
+    return this.get<Agent[]>('/agents');
+  }
+
+  /**
+   * Obtém um agente específico
+   */
+  async getAgent(agentId: string): Promise<Agent> {
+    return this.get<Agent>(`/agents/${agentId}`);
+  }
+
+  /**
+   * Cria um novo agente
+   */
+  async createAgent(data: Omit<Agent, 'agent_id' | 'created_at' | 'updated_at'>): Promise<Agent> {
+    return this.post<Agent>('/agents', data);
+  }
+
+  /**
+   * Atualiza um agente
+   */
+  async updateAgent(agentId: string, data: Partial<Omit<Agent, 'agent_id' | 'created_at' | 'updated_at'>>): Promise<Agent> {
+    return this.put<Agent>(`/agents/${agentId}`, data);
+  }
+
+  /**
+   * Exclui um agente
+   */
+  async deleteAgent(agentId: string): Promise<{ success: boolean }> {
+    return this.delete<{ success: boolean }>(`/agents/${agentId}`);
+  }
+
+  /**
+   * Limpa o token de autenticação
+   */
+  clearToken(): void {
+    this.token = null;
+    delete this.client.defaults.headers['Authorization'];
+  }
+
+
   
   /**
    * Conexão WebSocket

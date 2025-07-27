@@ -21,10 +21,22 @@ export interface UseWebSocketOptions extends Omit<WebSocketConnectionOptions, 'o
 
 /**
  * Hook para usar o serviço WebSocket
- * @param options Opções de conexão
+ * @param options Opções de conexão (opcional)
  * @returns Objeto com o serviço WebSocket e funções auxiliares
  */
-export function useWebSocket(options: UseWebSocketOptions) {
+export function useWebSocket(options: Partial<UseWebSocketOptions> = {}) {
+  // Valores padrão para as opções obrigatórias
+  const defaultOptions: UseWebSocketOptions = {
+    url: process.env.NEXT_PUBLIC_WEBSOCKET_URL || 'ws://localhost:8000/ws',
+    token: '',
+    autoConnect: true,
+    autoReconnect: true,
+    maxReconnectAttempts: 5,
+    reconnectInterval: 3000,
+    heartbeatInterval: 30000,
+    debug: false,
+    ...options
+  };
   const [status, setStatus] = useState<WebSocketConnectionStatus>(WebSocketConnectionStatus.DISCONNECTED);
   const [lastMessage, setLastMessage] = useState<WebSocketMessage | null>(null);
   const [error, setError] = useState<Error | null>(null);
@@ -33,7 +45,7 @@ export function useWebSocket(options: UseWebSocketOptions) {
   // Inicializa o serviço WebSocket
   useEffect(() => {
     const service = createWebSocketService({
-      ...options,
+      ...defaultOptions,
       onOpen: (event) => {
         setStatus(WebSocketConnectionStatus.CONNECTED);
         setError(null);
@@ -56,7 +68,7 @@ export function useWebSocket(options: UseWebSocketOptions) {
     serviceRef.current = service;
 
     // Conecta automaticamente se necessário
-    if (options.autoConnect !== false) {
+    if (defaultOptions.autoConnect !== false) {
       service.connect();
     }
 
@@ -64,7 +76,7 @@ export function useWebSocket(options: UseWebSocketOptions) {
     return () => {
       service.disconnect();
     };
-  }, [options.url, options.token]); // Recria o serviço apenas se a URL ou o token mudarem
+  }, [defaultOptions]); // Recria o serviço apenas se as opções mudarem
 
   // Função para conectar
   const connect = useCallback(() => {

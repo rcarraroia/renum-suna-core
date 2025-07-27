@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useWebSocket } from '../../hooks/useWebSocket';
 import { useExecutionMonitor } from '../../hooks/useExecutionMonitor';
-import { ExecutionProgress } from './ExecutionProgress';
+import ExecutionProgress from './ExecutionProgress';
 
 interface ExecutionUpdate {
   execution_id: string;
@@ -34,10 +34,10 @@ export const RealTimeExecutionProgress: React.FC<RealTimeExecutionProgressProps>
 }) => {
   const { isConnected } = useWebSocket();
   const { 
-    executionData, 
-    isMonitoring, 
-    startMonitoring, 
-    stopMonitoring,
+    executionUpdate,
+    isRunning,
+    subscribeToExecution,
+    unsubscribeFromExecution,
     error: monitorError 
   } = useExecutionMonitor(executionId);
 
@@ -48,46 +48,48 @@ export const RealTimeExecutionProgress: React.FC<RealTimeExecutionProgressProps>
   // Iniciar monitoramento quando o componente monta
   useEffect(() => {
     if (executionId && isConnected) {
-      startMonitoring();
+      const unsubscribe = subscribeToExecution();
       setConnectionLost(false);
+      return unsubscribe;
     }
 
     return () => {
-      stopMonitoring();
+      unsubscribeFromExecution();
     };
-  }, [executionId, isConnected, startMonitoring, stopMonitoring]);
+  }, [executionId, isConnected, subscribeToExecution, unsubscribeFromExecution]);
 
   // Atualizar estado quando receber dados
   useEffect(() => {
-    if (executionData) {
-      setExecutionState(executionData);
+    if (executionUpdate) {
+      setExecutionState(executionUpdate as ExecutionUpdate);
       setLastUpdate(new Date());
       
       // Chamar callbacks apropriados
       if (onStatusChange) {
-        onStatusChange(executionData.status);
+        onStatusChange(executionUpdate.status);
       }
       
-      if (executionData.status === 'completed' && onComplete) {
-        onComplete(executionData.result);
+      if (executionUpdate.status === 'completed' && onComplete) {
+        onComplete(executionUpdate.result);
       }
       
-      if (executionData.status === 'failed' && onError && executionData.error_message) {
-        onError(executionData.error_message);
+      if (executionUpdate.status === 'failed' && onError && executionUpdate.error) {
+        onError(executionUpdate.error);
       }
     }
-  }, [executionData, onStatusChange, onComplete, onError]);
+  }, [executionUpdate, onStatusChange, onComplete, onError]);
 
   // Detectar perda de conexão
   useEffect(() => {
-    if (!isConnected && isMonitoring) {
+    if (!isConnected && isRunning) {
       setConnectionLost(true);
     } else if (isConnected && connectionLost) {
       setConnectionLost(false);
       // Reiniciar monitoramento após reconexão
-      startMonitoring();
+      const unsubscribe = subscribeToExecution();
+      return unsubscribe;
     }
-  }, [isConnected, isMonitoring, connectionLost, startMonitoring]);
+  }, [isConnected, isRunning, connectionLost, subscribeToExecution]);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -211,11 +213,9 @@ export const RealTimeExecutionProgress: React.FC<RealTimeExecutionProgressProps>
       <div className="p-4">
         {/* Barra de progresso */}
         <ExecutionProgress
-          progress={executionState.progress}
-          status={executionState.status}
-          currentStep={executionState.current_step}
-          totalSteps={executionState.total_steps}
-          completedSteps={executionState.completed_steps}
+          executionId={executionId}
+          teamId={teamId}
+          showDetails={true}
         />
 
         {/* Informações detalhadas */}

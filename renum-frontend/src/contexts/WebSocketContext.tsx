@@ -2,7 +2,7 @@
  * Contexto para o serviço WebSocket
  */
 
-import React, { createContext, useContext, ReactNode, useMemo } from 'react';
+import React, { createContext, useContext, ReactNode, useMemo, useCallback } from 'react';
 import { useWebSocket, UseWebSocketOptions } from '../hooks/useWebSocket';
 import {
   WebSocketMessage,
@@ -65,14 +65,14 @@ export function WebSocketProvider({ children, options }: WebSocketProviderProps)
   } = useWebSocket(options);
 
   // Simplifica a API de assinatura
-  const subscribe = (channel: string, onMessage?: (message: WebSocketMessage) => void) => {
+  const subscribe = useCallback((channel: string, onMessage?: (message: WebSocketMessage) => void) => {
     return subscribeToChannel({ channel, onMessage });
-  };
+  }, [subscribeToChannel]);
 
   // Simplifica a API de publicação
-  const publish = (channel: string, message: any, requestId?: string) => {
+  const publish = useCallback((channel: string, message: any, requestId?: string) => {
     publishToChannel(channel, message, requestId);
-  };
+  }, [publishToChannel]);
 
   // Memoriza o valor do contexto
   const value = useMemo(

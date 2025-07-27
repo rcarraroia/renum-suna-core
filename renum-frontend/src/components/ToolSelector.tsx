@@ -131,9 +131,10 @@ const ToolSelector: React.FC<ToolSelectorProps> = ({ selectedIds, onChange }) =>
       ];
       
       setTools(mockTools);
-    } catch (err: any) {
-      console.error('Erro ao carregar ferramentas:', err);
-      setError(err.message || 'Erro ao carregar ferramentas');
+    } catch (err: unknown) {
+      const error = err as { message?: string; response?: { data?: { error?: string } } };
+      console.error('Erro ao carregar ferramentas:', error);
+      setError(error.message || error.response?.data?.error || 'Erro ao carregar ferramentas');
     } finally {
       setIsLoading(false);
     }

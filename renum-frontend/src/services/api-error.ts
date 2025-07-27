@@ -14,7 +14,7 @@ export class ApiError extends Error {
   errors?: Record<string, string[]>;
   originalError: Error;
 
-  constructor(message: string, status: number, detail?: string, errors?: Record<string, string[]>, originalError?: Error) {
+  constructor(status: number, message: string, detail?: string, errors?: Record<string, string[]>, originalError?: Error) {
     super(message);
     this.name = 'ApiError';
     this.status = status;
@@ -32,7 +32,7 @@ export class ApiError extends Error {
     const detail = error.response?.data?.detail;
     const errors = error.response?.data?.errors;
 
-    return new ApiError(message, status, detail, errors, error);
+    return new ApiError(status, message, detail, errors, error);
   }
 
   /**
@@ -40,6 +40,14 @@ export class ApiError extends Error {
    */
   isAuthError(): boolean {
     return this.status === 401;
+  }
+
+  /**
+   * Verifica se o erro é um erro de não autorizado (401)
+   * Alias para isAuthError para compatibilidade
+   */
+  isUnauthorized(): boolean {
+    return this.isAuthError();
   }
 
   /**
@@ -118,7 +126,7 @@ export function handleApiError(error: unknown): ApiError {
 
   // Erro genérico
   const message = error instanceof Error ? error.message : 'Erro desconhecido';
-  return new ApiError(message, 500, undefined, undefined, error instanceof Error ? error : undefined);
+  return new ApiError(500, message, undefined, undefined, error instanceof Error ? error : undefined);
 }
 
 /**

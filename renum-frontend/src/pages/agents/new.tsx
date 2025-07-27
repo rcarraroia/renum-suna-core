@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { Save, ArrowLeft, Bot, Tool as ToolIcon } from 'lucide-react';
+import { Save, ArrowLeft, Bot, Wrench as ToolIcon } from 'lucide-react';
 import Layout from '../../components/Layout';
 import Input from '../../components/ui/Input';
 import Textarea from '../../components/ui/Textarea';

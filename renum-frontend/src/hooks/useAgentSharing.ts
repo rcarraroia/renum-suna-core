@@ -3,6 +3,16 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiRequest } from '../lib/api-client';
 import { useToast } from './useToast';
 
+// Tipo para erros da API
+interface ApiError {
+  response?: {
+    data?: {
+      detail?: string;
+    };
+  };
+  message?: string;
+}
+
 // Tipos
 export type PermissionLevel = 'view' | 'use' | 'edit' | 'admin';
 
@@ -39,7 +49,7 @@ export interface UpdateShareData {
 export function useAgentSharing(agentId?: string) {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const queryClient = useQueryClient();
-  const { showToast } = useToast();
+  const { addToast } = useToast();
 
   // Buscar compartilhamentos de um agente
   const {
@@ -52,7 +62,7 @@ export function useAgentSharing(agentId?: string) {
     queryKey: ['agent-shares', agentId],
     queryFn: async () => {
       if (!agentId) return { shares: [], count: 0 };
-      const response = await apiClient.get(`/api/v2/agents/${agentId}/shares`);
+      const response = await apiRequest(`/api/v2/agents/${agentId}/shares`);
       return response.data;
     },
     enabled: !!agentId,
@@ -68,7 +78,7 @@ export function useAgentSharing(agentId?: string) {
   } = useQuery({
     queryKey: ['shared-with-me'],
     queryFn: async () => {
-      const response = await apiClient.get('/api/v2/agents/shared-with-me');
+      const response = await apiRequest('/api/v2/agents/shared-with-me');
       return response.data;
     },
   });
@@ -77,22 +87,14 @@ export function useAgentSharing(agentId?: string) {
   const shareAgentMutation = useMutation({
     mutationFn: async (data: ShareAgentData) => {
       if (!agentId) throw new Error('ID do agente não fornecido');
-      return apiClient.post(`/api/v2/agents/${agentId}/share`, data);
+      return apiRequest(`/api/v2/agents/${agentId}/share`, { method: 'POST', body: data });
     },
     onSuccess: () => {
-      showToast({
-        title: 'Agente compartilhado',
-        description: 'O agente foi compartilhado com sucesso.',
-        type: 'success',
-      });
+      addToast('Agente compartilhado com sucesso.', 'success');
       queryClient.invalidateQueries({ queryKey: ['agent-shares', agentId] });
     },
-    onError: (error: any) => {
-      showToast({
-        title: 'Erro ao compartilhar',
-        description: error.response?.data?.detail || 'Ocorreu um erro ao compartilhar o agente.',
-        type: 'error',
-      });
+    onError: (error: ApiError) => {
+      addToast(error.response?.data?.detail || 'Ocorreu um erro ao compartilhar o agente.', 'error');
     },
   });
 
@@ -100,22 +102,14 @@ export function useAgentSharing(agentId?: string) {
   const updateShareMutation = useMutation({
     mutationFn: async ({ shareId, data }: { shareId: string, data: UpdateShareData }) => {
       if (!agentId) throw new Error('ID do agente não fornecido');
-      return apiClient.put(`/api/v2/agents/${agentId}/shares/${shareId}`, data);
+      return apiRequest(`/api/v2/agents/${agentId}/shares/${shareId}`, { method: 'PUT', body: data });
     },
     onSuccess: () => {
-      showToast({
-        title: 'Compartilhamento atualizado',
-        description: 'O compartilhamento foi atualizado com sucesso.',
-        type: 'success',
-      });
+      addToast('Compartilhamento atualizado com sucesso.', 'success');
       queryClient.invalidateQueries({ queryKey: ['agent-shares', agentId] });
     },
-    onError: (error: any) => {
-      showToast({
-        title: 'Erro ao atualizar',
-        description: error.response?.data?.detail || 'Ocorreu um erro ao atualizar o compartilhamento.',
-        type: 'error',
-      });
+    onError: (error: ApiError) => {
+      addToast(error.response?.data?.detail || 'Ocorreu um erro ao atualizar o compartilhamento.', 'error');
     },
   });
 
@@ -123,22 +117,14 @@ export function useAgentSharing(agentId?: string) {
   const removeShareMutation = useMutation({
     mutationFn: async (shareId: string) => {
       if (!agentId) throw new Error('ID do agente não fornecido');
-      return apiClient.delete(`/api/v2/agents/${agentId}/shares/${shareId}`);
+      return apiRequest(`/api/v2/agents/${agentId}/shares/${shareId}`, { method: 'DELETE' });
     },
     onSuccess: () => {
-      showToast({
-        title: 'Compartilhamento removido',
-        description: 'O compartilhamento foi removido com sucesso.',
-        type: 'success',
-      });
+      addToast('Compartilhamento removido com sucesso.', 'success');
       queryClient.invalidateQueries({ queryKey: ['agent-shares', agentId] });
     },
-    onError: (error: any) => {
-      showToast({
-        title: 'Erro ao remover',
-        description: error.response?.data?.detail || 'Ocorreu um erro ao remover o compartilhamento.',
-        type: 'error',
-      });
+    onError: (error: ApiError) => {
+      addToast(error.response?.data?.detail || 'Ocorreu um erro ao remover o compartilhamento.', 'error');
     },
   });
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp, Wrench as Tool, Check, AlertCircle, Loader2 } from 'lucide-react';
-import { ToolCall } from './ChatInterface';
+import { ToolCall } from '../types/index.d';
 
 interface ToolUsageDisplayProps {
   toolCall: ToolCall;
@@ -22,7 +22,7 @@ const ToolUsageDisplay: React.FC<ToolUsageDisplayProps> = ({ toolCall }) => {
     switch (toolCall.status) {
       case 'completed':
         return <Check className="h-4 w-4 text-green-500" />;
-      case 'failed':
+      case 'error':
         return <AlertCircle className="h-4 w-4 text-red-500" />;
       case 'pending':
       default:
@@ -35,7 +35,7 @@ const ToolUsageDisplay: React.FC<ToolUsageDisplayProps> = ({ toolCall }) => {
     switch (toolCall.status) {
       case 'completed':
         return 'bg-green-50 border-green-200';
-      case 'failed':
+      case 'error':
         return 'bg-red-50 border-red-200';
       case 'pending':
       default:
@@ -52,11 +52,11 @@ const ToolUsageDisplay: React.FC<ToolUsageDisplayProps> = ({ toolCall }) => {
         <div className="flex items-center space-x-2">
           <Tool className="h-4 w-4 text-indigo-600" />
           <span className="font-medium text-sm">
-            {formatToolName(toolCall.tool)}
+            {formatToolName(toolCall.name)}
           </span>
           <span className="text-xs text-gray-500">
             {toolCall.status === 'completed' ? 'Concluído' : 
-             toolCall.status === 'failed' ? 'Falhou' : 'Em andamento'}
+             toolCall.status === 'error' ? 'Falhou' : 'Em andamento'}
           </span>
         </div>
         <div className="flex items-center">

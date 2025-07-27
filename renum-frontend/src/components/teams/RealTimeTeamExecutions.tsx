@@ -19,7 +19,7 @@ interface TeamExecution {
   result?: any;
 }
 
-interface RealTimeTeamExecutionsProps {
+export interface RealTimeTeamExecutionsProps {
   teamId: string;
   userId?: string;
   onExecutionStart?: (execution: TeamExecution) => void;
@@ -335,3 +335,5 @@ export const RealTimeTeamExecutions: React.FC<RealTimeTeamExecutionsProps> = ({
     </div>
   );
 };
+
+export default RealTimeTeamExecutions;

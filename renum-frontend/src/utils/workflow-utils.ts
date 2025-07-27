@@ -13,7 +13,8 @@ export function getWorkflowTypeName(type: WorkflowType): string {
   const names: Record<WorkflowType, string> = {
     [WorkflowType.SEQUENTIAL]: 'Sequencial',
     [WorkflowType.PARALLEL]: 'Paralelo',
-    [WorkflowType.CONDITIONAL]: 'Condicional'
+    [WorkflowType.CONDITIONAL]: 'Condicional',
+    [WorkflowType.PIPELINE]: 'Pipeline'
   };
   
   return names[type] || type;
@@ -24,12 +25,13 @@ export function getWorkflowTypeName(type: WorkflowType): string {
  * @param role Papel do agente
  * @returns Nome amigável
  */
-export function getAgentRoleName(role: AgentRole): string {
+export function getAgentRoleName(role: AgentRole | undefined): string {
+  if (!role) return 'Sem papel definido';
+  
   const names: Record<AgentRole, string> = {
     [AgentRole.LEADER]: 'Líder',
     [AgentRole.COORDINATOR]: 'Coordenador',
-    [AgentRole.MEMBER]: 'Membro',
-    [AgentRole.REVIEWER]: 'Revisor'
+    [AgentRole.MEMBER]: 'Membro'
   };
   
   return names[role] || role;
@@ -44,8 +46,7 @@ export function getAgentRoleColor(role: AgentRole): string {
   const colors: Record<AgentRole, string> = {
     [AgentRole.LEADER]: 'bg-blue-100 text-blue-800',
     [AgentRole.COORDINATOR]: 'bg-purple-100 text-purple-800',
-    [AgentRole.MEMBER]: 'bg-green-100 text-green-800',
-    [AgentRole.REVIEWER]: 'bg-orange-100 text-orange-800'
+    [AgentRole.MEMBER]: 'bg-green-100 text-green-800'
   };
   
   return colors[role] || 'bg-gray-100 text-gray-800';
@@ -60,26 +61,11 @@ export function getWorkflowTypeColor(type: WorkflowType): string {
   const colors: Record<WorkflowType, string> = {
     [WorkflowType.SEQUENTIAL]: 'bg-blue-100 text-blue-800',
     [WorkflowType.PARALLEL]: 'bg-green-100 text-green-800',
-    [WorkflowType.CONDITIONAL]: 'bg-purple-100 text-purple-800'
+    [WorkflowType.CONDITIONAL]: 'bg-purple-100 text-purple-800',
+    [WorkflowType.PIPELINE]: 'bg-yellow-100 text-yellow-800'
   };
   
   return colors[type] || 'bg-gray-100 text-gray-800';
-}
-
-/**
- * Obtém a cor associada a um papel de agente
- * @param role Papel do agente
- * @returns Classe CSS de cor
- */
-export function getAgentRoleColor(role: AgentRole): string {
-  const colors: Record<AgentRole, string> = {
-    [AgentRole.LEADER]: 'bg-blue-100 text-blue-800',
-    [AgentRole.COORDINATOR]: 'bg-purple-100 text-purple-800',
-    [AgentRole.MEMBER]: 'bg-green-100 text-green-800',
-    [AgentRole.REVIEWER]: 'bg-orange-100 text-orange-800'
-  };
-  
-  return colors[role] || 'bg-gray-100 text-gray-800';
 }
 
 /**
@@ -102,11 +88,10 @@ export function sortAgentsByExecutionOrder(agents: WorkflowAgent[]): WorkflowAge
     const roleOrder: Record<AgentRole, number> = {
       [AgentRole.LEADER]: 1,
       [AgentRole.COORDINATOR]: 2,
-      [AgentRole.MEMBER]: 3,
-      [AgentRole.REVIEWER]: 4
+      [AgentRole.MEMBER]: 3
     };
     
-    return (roleOrder[a.role] || 99) - (roleOrder[b.role] || 99);
+    return (roleOrder[a.role || AgentRole.MEMBER] || 99) - (roleOrder[b.role || AgentRole.MEMBER] || 99);
   });
 }
 

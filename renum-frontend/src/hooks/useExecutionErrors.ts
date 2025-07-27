@@ -161,6 +161,23 @@ export const useExecutionErrors = (
     });
   }, [subscribedChannels, unsubscribeFromChannel]);
 
+  // Carregar estatísticas
+  const loadStatistics = useCallback(async () => {
+    try {
+      const params = new URLSearchParams();
+      if (teamId) params.append('team_id', teamId);
+
+      const response = await fetch(`/api/v1/execution-errors/statistics?${params.toString()}`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        setStatistics(data);
+      }
+    } catch (err) {
+      console.error('Erro ao carregar estatísticas:', err);
+    }
+  }, [teamId]);
+
   // Carregar erros da API
   const refreshErrors = useCallback(async () => {
     try {
@@ -194,24 +211,9 @@ export const useExecutionErrors = (
     } finally {
       setIsLoading(false);
     }
-  }, [executionId, teamId, userId, includeResolved, maxErrors]);
+  }, [executionId, teamId, userId, includeResolved, maxErrors, loadStatistics]);
 
-  // Carregar estatísticas
-  const loadStatistics = useCallback(async () => {
-    try {
-      const params = new URLSearchParams();
-      if (teamId) params.append('team_id', teamId);
 
-      const response = await fetch(`/api/v1/execution-errors/statistics?${params.toString()}`);
-      
-      if (response.ok) {
-        const data = await response.json();
-        setStatistics(data);
-      }
-    } catch (err) {
-      console.error('Erro ao carregar estatísticas:', err);
-    }
-  }, [teamId]);
 
   // Tentar execução novamente
   const retryExecution = useCallback(async (executionId: string): Promise<boolean> => {

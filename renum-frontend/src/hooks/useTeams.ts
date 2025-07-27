@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useTeamContext } from '../contexts/TeamContext';
-import { Team, TeamCreate, TeamUpdate, WorkflowDefinition, AgentRole } from '../services/api-types';
+import { Team, TeamCreate, TeamUpdate, WorkflowDefinition, AgentRole, InputSource } from '../services/api-types';
 import { ApiError } from '../services/api-error';
 
 // Hook para gerenciar a criação de equipes
@@ -121,7 +121,7 @@ export function useTeamMembers(team: Team | null) {
         role: role,
         execution_order: executionOrder,
         input: {
-          source: "initial_prompt"
+          source: InputSource.INITIAL_PROMPT
         }
       }
     ];

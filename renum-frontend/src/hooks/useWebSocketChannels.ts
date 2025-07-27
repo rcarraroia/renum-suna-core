@@ -225,3 +225,40 @@ export function useWebSocketRoom(
     sendMessage,
   };
 }
+
+/**
+ * Hook para gerenciar múltiplos canais WebSocket
+ * Versão que funciona como contexto global
+ */
+export function useWebSocketChannels() {
+  const { subscribe, unsubscribe, publish, sendCommand } = useWebSocketContext();
+  
+  const subscribeToChannel = useCallback((channelName: string, onMessage: (message: WebSocketMessage) => void) => {
+    if (!channelName) return () => {};
+    
+    return subscribe(channelName, onMessage);
+  }, [subscribe]);
+  
+  const unsubscribeFromChannel = useCallback((channelName: string) => {
+    if (!channelName) return;
+    
+    unsubscribe(channelName);
+  }, [unsubscribe]);
+  
+  const publishToChannel = useCallback((channelName: string, message: any) => {
+    if (!channelName) return;
+    
+    publish(channelName, message);
+  }, [publish]);
+  
+  const sendChannelCommand = useCallback((command: string, params?: any) => {
+    sendCommand(command, params);
+  }, [sendCommand]);
+  
+  return {
+    subscribeToChannel,
+    unsubscribeFromChannel,
+    publishToChannel,
+    sendChannelCommand,
+  };
+}

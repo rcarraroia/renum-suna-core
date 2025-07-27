@@ -55,13 +55,12 @@ export function useApiClient() {
 /**
  * Hook para listar equipes
  */
-export function useTeams(options: ListTeamsOptions = {}, queryOptions: UseQueryOptions<PaginatedTeamResponse> = {}) {
+export function useTeams(options: ListTeamsOptions = {}, queryOptions: Partial<UseQueryOptions<PaginatedTeamResponse, Error>> = {}) {
   const apiClient = useApiClient();
   
-  return useQuery<PaginatedTeamResponse>({
+  return useQuery({
     queryKey: [queryKeys.teams, options],
     queryFn: () => apiClient.listTeams(options),
-    onError: (error) => handleApiError(error),
     ...queryOptions
   });
 }
@@ -69,13 +68,12 @@ export function useTeams(options: ListTeamsOptions = {}, queryOptions: UseQueryO
 /**
  * Hook para obter uma equipe por ID
  */
-export function useTeam(teamId: string, queryOptions: UseQueryOptions<TeamResponse> = {}) {
+export function useTeam(teamId: string, queryOptions: Partial<UseQueryOptions<TeamResponse, Error>> = {}) {
   const apiClient = useApiClient();
   
-  return useQuery<TeamResponse>({
+  return useQuery({
     queryKey: queryKeys.team(teamId),
     queryFn: () => apiClient.getTeam(teamId),
-    onError: (error) => handleApiError(error),
     enabled: !!teamId,
     ...queryOptions
   });
@@ -88,15 +86,14 @@ export function useCreateTeam(options: UseMutationOptions<TeamResponse, unknown,
   const apiClient = useApiClient();
   const queryClient = useQueryClient();
   
-  return useMutation<TeamResponse, unknown, TeamCreate>({
-    mutationFn: (teamData) => apiClient.createTeam(teamData),
-    onSuccess: (data) => {
+  return useMutation({
+    mutationFn: (teamData: TeamCreate) => apiClient.createTeam(teamData),
+    onSuccess: (data: TeamResponse) => {
       // Invalida a consulta de listagem para forçar uma atualização
       queryClient.invalidateQueries({ queryKey: [queryKeys.teams] });
       // Adiciona a nova equipe ao cache
       queryClient.setQueryData(queryKeys.team(data.team_id), data);
     },
-    onError: (error) => handleApiError(error),
     ...options
   });
 }
@@ -108,7 +105,7 @@ export function useUpdateTeam(teamId: string, options: UseMutationOptions<TeamRe
   const apiClient = useApiClient();
   const queryClient = useQueryClient();
   
-  return useMutation<TeamResponse, unknown, TeamUpdate>({
+  return useMutation({
     mutationFn: (teamData) => apiClient.updateTeam(teamId, teamData),
     onSuccess: (data) => {
       // Atualiza o cache
@@ -116,7 +113,7 @@ export function useUpdateTeam(teamId: string, options: UseMutationOptions<TeamRe
       // Invalida a consulta de listagem para forçar uma atualização
       queryClient.invalidateQueries({ queryKey: [queryKeys.teams] });
     },
-    onError: (error) => handleApiError(error),
+    
     ...options
   });
 }
@@ -128,7 +125,7 @@ export function useDeleteTeam(options: UseMutationOptions<{ success: boolean }, 
   const apiClient = useApiClient();
   const queryClient = useQueryClient();
   
-  return useMutation<{ success: boolean }, unknown, string>({
+  return useMutation({
     mutationFn: (teamId) => apiClient.deleteTeam(teamId),
     onSuccess: (_, teamId) => {
       // Remove do cache
@@ -136,7 +133,7 @@ export function useDeleteTeam(options: UseMutationOptions<{ success: boolean }, 
       // Invalida a consulta de listagem para forçar uma atualização
       queryClient.invalidateQueries({ queryKey: [queryKeys.teams] });
     },
-    onError: (error) => handleApiError(error),
+    
     ...options
   });
 }
@@ -155,13 +152,13 @@ export function useAddTeamMember(
   const apiClient = useApiClient();
   const queryClient = useQueryClient();
   
-  return useMutation<TeamResponse, unknown, { agent_id: string; role?: string; execution_order?: number }>({
+  return useMutation({
     mutationFn: (memberData) => apiClient.addTeamMember(teamId, memberData),
     onSuccess: (data) => {
       // Atualiza o cache
       queryClient.setQueryData(queryKeys.team(teamId), data);
     },
-    onError: (error) => handleApiError(error),
+    
     ...options
   });
 }
@@ -176,13 +173,13 @@ export function useRemoveTeamMember(
   const apiClient = useApiClient();
   const queryClient = useQueryClient();
   
-  return useMutation<TeamResponse, unknown, string>({
+  return useMutation({
     mutationFn: (agentId) => apiClient.removeTeamMember(teamId, agentId),
     onSuccess: (data) => {
       // Atualiza o cache
       queryClient.setQueryData(queryKeys.team(teamId), data);
     },
-    onError: (error) => handleApiError(error),
+    
     ...options
   });
 }
@@ -194,13 +191,13 @@ export function useRemoveTeamMember(
 /**
  * Hook para listar execuções
  */
-export function useExecutions(options: ListExecutionsOptions = {}, queryOptions: UseQueryOptions<TeamExecutionResponse[]> = {}) {
+export function useExecutions(options: ListExecutionsOptions = {}, queryOptions: Partial<UseQueryOptions<TeamExecutionResponse[], Error>> = {}) {
   const apiClient = useApiClient();
   
-  return useQuery<TeamExecutionResponse[]>({
+  return useQuery({
     queryKey: [queryKeys.executions, options],
     queryFn: () => apiClient.listExecutions(options),
-    onError: (error) => handleApiError(error),
+    
     ...queryOptions
   });
 }
@@ -208,13 +205,13 @@ export function useExecutions(options: ListExecutionsOptions = {}, queryOptions:
 /**
  * Hook para listar execuções de uma equipe específica
  */
-export function useTeamExecutions(teamId: string, queryOptions: UseQueryOptions<TeamExecutionResponse[]> = {}) {
+export function useTeamExecutions(teamId: string, queryOptions: Partial<UseQueryOptions<TeamExecutionResponse[], Error>> = {}) {
   const apiClient = useApiClient();
   
-  return useQuery<TeamExecutionResponse[]>({
+  return useQuery({
     queryKey: queryKeys.teamExecutions(teamId),
     queryFn: () => apiClient.listExecutions({ teamId }),
-    onError: (error) => handleApiError(error),
+    
     enabled: !!teamId,
     ...queryOptions
   });
@@ -223,13 +220,13 @@ export function useTeamExecutions(teamId: string, queryOptions: UseQueryOptions<
 /**
  * Hook para obter status da execução
  */
-export function useExecutionStatus(executionId: string, queryOptions: UseQueryOptions<TeamExecutionStatus> = {}) {
+export function useExecutionStatus(executionId: string, queryOptions: Partial<UseQueryOptions<TeamExecutionStatus, Error>> = {}) {
   const apiClient = useApiClient();
   
-  return useQuery<TeamExecutionStatus>({
+  return useQuery({
     queryKey: queryKeys.executionStatus(executionId),
     queryFn: () => apiClient.getExecutionStatus(executionId),
-    onError: (error) => handleApiError(error),
+    
     enabled: !!executionId,
     // Atualiza a cada 2 segundos por padrão
     refetchInterval: queryOptions.refetchInterval ?? 2000,
@@ -240,13 +237,13 @@ export function useExecutionStatus(executionId: string, queryOptions: UseQueryOp
 /**
  * Hook para obter resultado da execução
  */
-export function useExecutionResult(executionId: string, queryOptions: UseQueryOptions<TeamExecutionResult> = {}) {
+export function useExecutionResult(executionId: string, queryOptions: Partial<UseQueryOptions<TeamExecutionResult, Error>> = {}) {
   const apiClient = useApiClient();
   
-  return useQuery<TeamExecutionResult>({
+  return useQuery({
     queryKey: queryKeys.executionResult(executionId),
     queryFn: () => apiClient.getExecutionResult(executionId),
-    onError: (error) => handleApiError(error),
+    
     enabled: !!executionId,
     ...queryOptions
   });
@@ -258,14 +255,14 @@ export function useExecutionResult(executionId: string, queryOptions: UseQueryOp
 export function useExecutionLogs(
   executionId: string, 
   options: GetExecutionLogsOptions = {}, 
-  queryOptions: UseQueryOptions<ExecutionLogEntry[]> = {}
+  queryOptions: Partial<UseQueryOptions<ExecutionLogEntry[], Error>> = {}
 ) {
   const apiClient = useApiClient();
   
-  return useQuery<ExecutionLogEntry[]>({
+  return useQuery({
     queryKey: [...queryKeys.executionLogs(executionId), options],
     queryFn: () => apiClient.getExecutionLogs(executionId, options),
-    onError: (error) => handleApiError(error),
+    
     enabled: !!executionId,
     // Atualiza a cada 5 segundos por padrão
     refetchInterval: queryOptions.refetchInterval ?? 5000,
@@ -289,7 +286,7 @@ export function useExecuteTeam(
       // Invalida a consulta de execuções para forçar uma atualização
       queryClient.invalidateQueries({ queryKey: queryKeys.teamExecutions(teamId) });
     },
-    onError: (error) => handleApiError(error),
+    
     ...options
   });
 }
@@ -301,13 +298,13 @@ export function useStopExecution(options: UseMutationOptions<{ success: boolean 
   const apiClient = useApiClient();
   const queryClient = useQueryClient();
   
-  return useMutation<{ success: boolean }, unknown, string>({
+  return useMutation({
     mutationFn: (executionId) => apiClient.stopExecution(executionId),
     onSuccess: (_, executionId) => {
       // Invalida a consulta de status para forçar uma atualização
       queryClient.invalidateQueries({ queryKey: queryKeys.executionStatus(executionId) });
     },
-    onError: (error) => handleApiError(error),
+    
     ...options
   });
 }

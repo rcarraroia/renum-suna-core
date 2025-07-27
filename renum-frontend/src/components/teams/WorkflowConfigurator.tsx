@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { WorkflowDefinition, WorkflowType, WorkflowAgent, AgentRole, InputSource } from '../../services/api-types';
 import { getWorkflowTypeName, getAgentRoleName } from '../../utils/workflow-utils';
 import FormField from '../common/FormField';
@@ -33,25 +33,6 @@ const WorkflowConfigurator: React.FC<WorkflowConfiguratorProps> = ({
     label: getAgentRoleName(role)
   }));
   
-  // Atualiza os agentes no workflow quando a seleção muda
-  useEffect(() => {
-    // Filtra os agentes que não estão mais selecionados
-    const currentAgents = value.agents.filter(agent => 
-      selectedAgents.includes(agent.agent_id)
-    );
-    
-    // Adiciona novos agentes selecionados
-    const newAgents = selectedAgents
-      .filter(agentId => !currentAgents.some(a => a.agent_id === agentId))
-      .map(agentId => createDefaultAgent(agentId, value.type));
-    
-    // Atualiza o workflow com todos os agentes
-    onChange({
-      ...value,
-      agents: [...currentAgents, ...newAgents]
-    });
-  }, [selectedAgents, createDefaultAgent, onChange, value]);
-  
   // Cria um agente com configurações padrão
   const createDefaultAgent = useCallback((agentId: string, workflowType: WorkflowType): WorkflowAgent => {
     const baseAgent: WorkflowAgent = {
@@ -72,6 +53,25 @@ const WorkflowConfigurator: React.FC<WorkflowConfiguratorProps> = ({
     
     return baseAgent;
   }, [value.agents.length]);
+
+  // Atualiza os agentes no workflow quando a seleção muda
+  useEffect(() => {
+    // Filtra os agentes que não estão mais selecionados
+    const currentAgents = value.agents.filter(agent => 
+      selectedAgents.includes(agent.agent_id)
+    );
+    
+    // Adiciona novos agentes selecionados
+    const newAgents = selectedAgents
+      .filter(agentId => !currentAgents.some(a => a.agent_id === agentId))
+      .map(agentId => createDefaultAgent(agentId, value.type));
+    
+    // Atualiza o workflow com todos os agentes
+    onChange({
+      ...value,
+      agents: [...currentAgents, ...newAgents]
+    });
+  }, [selectedAgents, createDefaultAgent, onChange, value]);
   
   // Manipuladores de eventos
   const handleWorkflowTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

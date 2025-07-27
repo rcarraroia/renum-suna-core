@@ -44,11 +44,6 @@ const NotificationSettings: React.FC<NotificationSettingsProps> = ({
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
 
-  // Carrega as preferências ao montar o componente
-  useEffect(() => {
-    loadPreferences();
-  }, [loadPreferences]);
-
   // Carrega as preferências do servidor
   const loadPreferences = useCallback(async () => {
     try {
@@ -64,6 +59,11 @@ const NotificationSettings: React.FC<NotificationSettingsProps> = ({
       setLoading(false);
     }
   }, [sendCommand]);
+
+  // Carrega as preferências ao montar o componente
+  useEffect(() => {
+    loadPreferences();
+  }, [loadPreferences]);
 
   // Salva as preferências
   const savePreferences = async () => {

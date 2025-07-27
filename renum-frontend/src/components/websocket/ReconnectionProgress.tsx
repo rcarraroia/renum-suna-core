@@ -65,7 +65,7 @@ const ReconnectionProgress: React.FC<ReconnectionProgressProps> = ({
         clearInterval(intervalId);
       }
     };
-  }, [status, intervalId, visible]);
+  }, [status]);
 
   if (!visible) {
     return null;

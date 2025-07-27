@@ -64,7 +64,8 @@ export function useChat({ agentId, initialMessages = [] }: UseChatOptions) {
         toolCalls = [
           {
             id: uuidv4(),
-            tool: 'tavily_search',
+            type: 'function',
+            name: 'tavily_search',
             input: { query: content },
             output: { results: [{ title: 'Resultado de pesquisa simulado', url: 'https://example.com' }] },
             status: 'completed'

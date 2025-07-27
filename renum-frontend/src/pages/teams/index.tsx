@@ -20,7 +20,7 @@ const TeamsPage: React.FC = () => {
   // Busca as equipes usando React Query
   const { data, isLoading, error, refetch } = useTeams(
     { page: currentPage, limit: pageSize, search: searchTerm },
-    { keepPreviousData: true }
+    { placeholderData: (previousData) => previousData }
   );
   
   // Manipuladores de eventos
