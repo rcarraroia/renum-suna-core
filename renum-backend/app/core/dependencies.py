@@ -6,7 +6,7 @@ como repositórios, serviços e clientes.
 """
 
 try:
-    import aioredis
+    import redis.asyncio as redis
     REDIS_AVAILABLE = True
 except ImportError:
     REDIS_AVAILABLE = False
@@ -45,11 +45,11 @@ async def get_redis_client():
         return
     
     settings = get_settings()
-    redis = await aioredis.from_url(settings.REDIS_URL)
+    redis_client = redis.from_url(settings.REDIS_URL)
     try:
-        yield redis
+        yield redis_client
     finally:
-        await redis.close()
+        await redis_client.aclose()
 
 
 # Suna API client

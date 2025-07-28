@@ -51,7 +51,7 @@ def check_dependencies():
         "pydantic",
         "supabase",
         "postgrest",
-        "aioredis",
+        "redis",
         "pyjwt",
         "cryptography",
         "httpx",
@@ -157,7 +157,7 @@ async def check_redis_connection():
         bool: True se a conexão foi bem-sucedida, False caso contrário
     """
     try:
-        import aioredis
+        import redis.asyncio as redis
         from dotenv import load_dotenv
         
         # Carrega as variáveis de ambiente
@@ -167,18 +167,20 @@ async def check_redis_connection():
         redis_url = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
         
         # Conecta ao Redis
-        redis = await aioredis.from_url(redis_url)
+        redis_client = redis.from_url(redis_url)
         
         # Testa a conexão
-        await redis.set("test_key", "test_value")
-        value = await redis.get("test_key")
-        await redis.delete("test_key")
+        await redis_client.set("test_key", "test_value")
+        value = await redis_client.get("test_key")
+        await redis_client.delete("test_key")
         
         if value == b"test_value":
             logger.info("Conexão com o Redis bem-sucedida")
+            await redis_client.aclose()
             return True
         else:
             logger.error("Erro ao testar a conexão com o Redis")
+            await redis_client.aclose()
             return False
     
     except Exception as e:
