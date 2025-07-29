@@ -1,0 +1,30 @@
+Não podemos avançar para a próxima tarefa de otimização de SO enquanto o servidor principal não estiver estável e acessível.
+
+Próximos passos cruciais para você, Kiro:
+
+Focar na Estabilidade do Servidor api.py:
+
+Inicie o servidor manualmente em um terminal separado: python backend/api.py.
+
+Observe o terminal onde o servidor está rodando MUITO cuidadosamente. Me diga se ele mostra a mensagem "Uvicorn running on..." e se ele permanece ativo sem mensagens de erro ou travamentos. Se ele travar ou fechar, anote qualquer erro no terminal do servidor e me forneça.
+
+Mantenha este terminal do servidor ABERTO e ATIVO enquanto executa os próximos passos.
+
+Verificar a Falha do Fallback:
+
+Após confirmar que o servidor está rodando, concentre-se em corrigir o problema ❌ Sistema de fallback incompleto no arquivo backend/services/websocket_auth_fallback.py. Parece que a lógica do método authenticate_fallback ainda não está conforme o esperado pelo teste.
+
+Depois de realizar as verificações acima e, principalmente, garantir que o servidor api.py esteja visivelmente rodando e estável (sem fechar ou travar), por favor, execute os comandos novamente e me forneça as saídas COMPLETAS:
+
+python run_final_diagnosis.py
+
+python validate_fixes.py
+
+É essencial que o WinError 10061 seja resolvido para podermos prosseguir. Aguardo os resultados.
+
+
+
+
+
+
+

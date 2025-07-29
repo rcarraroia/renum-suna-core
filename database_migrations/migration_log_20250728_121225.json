@@ -1,0 +1,31 @@
+{
+  "migration_run": {
+    "timestamp": "2025-07-28T12:12:25.009664",
+    "database_info": "unknown",
+    "runner_version": "1.0.0"
+  },
+  "backup_info": {},
+  "steps": [
+    {
+      "timestamp": "2025-07-28T12:12:25.009664",
+      "step": "Prerequisites Check",
+      "success": true,
+      "message": "Starting prerequisites validation",
+      "details": {}
+    },
+    {
+      "timestamp": "2025-07-28T12:12:25.009664",
+      "step": "Migration Files",
+      "success": true,
+      "message": "All 2 migration files found",
+      "details": {}
+    },
+    {
+      "timestamp": "2025-07-28T12:12:25.009664",
+      "step": "Database Connection",
+      "success": false,
+      "message": "Connection failed: SUPABASE_URL and SUPABASE_KEY environment variables are required",
+      "details": {}
+    }
+  ]
+}

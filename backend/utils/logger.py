@@ -1,9 +1,20 @@
 import structlog, logging, os
 
 ENV_MODE = os.getenv("ENV_MODE", "LOCAL")
-LOGGING_LEVEL = logging.getLevelNamesMapping().get(
-    os.getenv("LOGGING_LEVEL", "DEBUG").upper(), logging.DEBUG
-)
+
+# Compatibilidade com Python 3.10 - getLevelNamesMapping() só existe no 3.11+
+def get_logging_level():
+    level_name = os.getenv("LOGGING_LEVEL", "DEBUG").upper()
+    level_mapping = {
+        'DEBUG': logging.DEBUG,
+        'INFO': logging.INFO,
+        'WARNING': logging.WARNING,
+        'ERROR': logging.ERROR,
+        'CRITICAL': logging.CRITICAL
+    }
+    return level_mapping.get(level_name, logging.DEBUG)
+
+LOGGING_LEVEL = get_logging_level()
 
 renderer = [structlog.processors.JSONRenderer()]
 # if ENV_MODE.lower() == "local".lower() or ENV_MODE.lower() == "staging".lower():

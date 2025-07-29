@@ -1,12 +1,19 @@
 from dotenv import load_dotenv
 load_dotenv()
 
+# Setup logging first
+from logging_config import setup_logging, get_logger, get_timeout_config
+setup_logging()
+logger = get_logger(__name__)
+
 from fastapi import FastAPI, Request, HTTPException, Response, Depends, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 from services import redis
 import sentry
 from contextlib import asynccontextmanager
+from middleware.timeout_middleware import setup_timeout_middleware
+from services.timeout_config import validate_timeout_configuration, log_timeout_summary
 from agentpress.thread_manager import ThreadManager
 from services.supabase import DBConnection
 from datetime import datetime, timezone
@@ -103,6 +110,13 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+# Setup timeout middleware
+app = setup_timeout_middleware(app)
+
+# Validate timeout configuration on startup
+validate_timeout_configuration()
+log_timeout_summary()
+
 @app.middleware("http")
 async def log_requests_middleware(request: Request, call_next):
     structlog.contextvars.clear_contextvars()
@@ -190,6 +204,9 @@ api_router.include_router(pipedream_api.router)
 from auth import phone_verification_supabase_mfa
 api_router.include_router(phone_verification_supabase_mfa.router)
 
+# Include WebSocket router - versão final com correções
+from websocket_endpoint_final import setup_websocket_routes
+
 @api_router.get("/health")
 async def health_check():
     logger.info("Health check endpoint called")
@@ -221,6 +238,9 @@ async def health_check():
 
 
 app.include_router(api_router, prefix="/api")
+
+# Configure WebSocket routes - versão final com correções
+setup_websocket_routes(app)
 
 
 if __name__ == "__main__":

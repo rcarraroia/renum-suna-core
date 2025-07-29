@@ -1,0 +1,33 @@
+{
+  "timestamp": "2025-07-28T08:49:58.296487",
+  "duration": 17.953592,
+  "overall_status": "🔴 CRÍTICO",
+  "status_emoji": "🔴",
+  "score": 27.27272727272727,
+  "summary": {
+    "total_tests": 11,
+    "ok": 2,
+    "warnings": 2,
+    "errors": 7
+  },
+  "detailed_results": {
+    "token_validation": "ERROR",
+    "empty_tokens": "ERROR",
+    "invalid_tokens": "ERROR",
+    "tcp_connection": "WARNING",
+    "websocket_protocol": "WARNING",
+    "memory_usage": "OK",
+    "cpu_usage": "ERROR",
+    "network_connections": "OK",
+    "health_endpoint": "ERROR",
+    "stats_endpoint": "ERROR",
+    "broadcast_endpoint": "ERROR"
+  },
+  "recommendations": [
+    "🔧 Corrigir tratamento de tokens vazios no sistema de autenticação",
+    "🔧 Implementar validação mais rigorosa de tokens JWT",
+    "📊 Otimizar uso de CPU - verificar processos intensivos",
+    "📋 Executar testes de carga após implementar correções",
+    "📊 Implementar monitoramento contínuo"
+  ]
+}

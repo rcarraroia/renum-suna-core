@@ -12,8 +12,12 @@ from contextlib import asynccontextmanager
 import time
 import uuid
 
-from app.core.logger import logger
+from app.core.logging_config import setup_logging, get_logger, get_timeout_config
 from app.core.config import get_settings
+
+# Setup logging first
+setup_logging()
+logger = get_logger(__name__)
 from app.db.database import get_db_instance
 from app.core.middleware import AuthenticationMiddleware, RequestLoggingMiddleware
 from app.api.routes import teams, team_executions, team_members

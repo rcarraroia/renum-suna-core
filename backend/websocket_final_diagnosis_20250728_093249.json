@@ -1,0 +1,31 @@
+{
+  "timestamp": "2025-07-28T09:32:49.839034",
+  "duration": 9.617004,
+  "overall_status": "🟠 PROBLEMAS",
+  "status_emoji": "🟠",
+  "score": 81.81818181818183,
+  "summary": {
+    "total_tests": 11,
+    "ok": 8,
+    "warnings": 2,
+    "errors": 1
+  },
+  "detailed_results": {
+    "token_validation": "OK",
+    "empty_tokens": "OK",
+    "invalid_tokens": "OK",
+    "tcp_connection": "OK",
+    "websocket_protocol": "WARNING",
+    "memory_usage": "WARNING",
+    "cpu_usage": "ERROR",
+    "network_connections": "OK",
+    "health_endpoint": "OK",
+    "stats_endpoint": "OK",
+    "broadcast_endpoint": "OK"
+  },
+  "recommendations": [
+    "📊 Otimizar uso de CPU - verificar processos intensivos",
+    "📋 Executar testes de carga após implementar correções",
+    "📊 Implementar monitoramento contínuo"
+  ]
+}

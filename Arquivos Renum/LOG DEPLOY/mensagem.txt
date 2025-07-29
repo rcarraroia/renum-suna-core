@@ -1,0 +1,74 @@
+Para: Kiro
+
+Assunto: Ação Urgente: Resolução de Problemas Críticos no WebSocket (Prioridade Máxima)
+
+Kiro,
+
+O último diagnóstico (run_final_diagnosis.py) e os testes de validação (validate_fixes.py) mostram que ainda temos problemas críticos no sistema WebSocket que precisam ser resolvidos imediatamente.
+
+Status Atual: 🔴 CRÍTICO
+
+Os pontos mais urgentes são:
+
+JWT_SECRET not found:
+
+Problema: A variável de ambiente JWT_SECRET não está sendo encontrada, o que inviabiliza a validação de tokens e afeta toda a autenticação.
+
+Ação Necessária: Verifique e configure o JWT_SECRET no ambiente onde o api.py é executado. Se estiver usando um arquivo .env, garanta que ele está no local correto (backend/) e que o servidor está carregando-o.
+
+Servidor API não está respondendo / WinError 10061:
+
+Problema: O diagnóstico indica que os endpoints do servidor (/ws/health, /ws/stats, /ws/broadcast) não estão acessíveis, provavelmente porque o servidor não está ativo ou está falhando.
+
+Ação Necessária:
+
+Confirme manualmente: Inicie o servidor (python backend/api.py) em um terminal separado. Mantenha este terminal aberto e o servidor em execução. Observe o console para qualquer erro na inicialização.
+
+Só então execute os scripts de diagnóstico e teste em um novo terminal.
+
+Erro no diagnóstico de tokens: 'ValidationResult' object is not subscriptable
+
+Problema: Houve uma regressão no diagnóstico de tokens. Parece que o run_final_diagnosis.py ou o ImprovedTokenValidator está retornando um objeto ValidationResult que está sendo tratado como um dicionário/lista, o que causa um erro.
+
+Ação Necessária: Revise a lógica de retorno do ImprovedTokenValidator e/ou como o run_final_diagnosis.py consome esse resultado, para garantir que os tipos de dados sejam compatíveis.
+
+❌ Sistema de fallback incompleto:
+
+Problema: O teste validate_fixes.py ainda reporta que o sistema de fallback de autenticação está incompleto.
+
+Ação Necessária: Revise o websocket_auth_fallback.py para garantir que a lógica de fallback esteja totalmente implementada e funcionando conforme esperado.
+
+❌ Uso de CPU: CRÍTICO (100%):
+
+Problema: O servidor está utilizando 100% da CPU, o que pode estar relacionado aos problemas de conectividade e estabilidade.
+
+Ação Necessária: Investigue a causa do alto uso de CPU. Pode ser um loop, uma operação intensiva, ou simplesmente o servidor falhando em iniciar corretamente.
+
+Próximos Passos (para você executar):
+
+Inicie o servidor python backend/api.py e garanta que ele esteja rodando sem erros.
+
+Resolva a configuração do JWT_SECRET.
+
+Corrija o problema de ValidationResult no diagnóstico de tokens.
+
+Complete a implementação do sistema de fallback.
+
+Investigue e otimize o alto uso de CPU.
+
+Após realizar essas correções, execute novamente os seguintes comandos e me forneça as saídas COMPLETAS de AMBOS:
+
+python run_final_diagnosis.py
+
+python validate_fixes.py
+
+Não podemos avançar para outras tarefas (3.3 Otimizar configurações do sistema operacional, por exemplo) enquanto esses problemas fundamentais e críticos persistirem. Precisamos de soluções concretas e validações claras, não apenas mensagens de erro diferentes.
+
+Conto com você para resolver isso.
+
+
+
+
+
+
+
