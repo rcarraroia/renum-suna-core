@@ -54,7 +54,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     
     try {
       // Verifica se há um token armazenado
-      const token = localStorage.getItem('auth_token');
+      const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
       if (!token) {
         setUser(null);
         setLoading(false);
@@ -74,7 +74,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       
       // Se for erro de autenticação, limpa o token
       if (apiError.isUnauthorized()) {
-        localStorage.removeItem('auth_token');
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('auth_token');
+        }
         apiClient.clearToken();
       }
       
@@ -100,7 +102,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const response = await apiClient.post<{ token: string; user: User }>('/auth/login', { email, password });
       
       // Armazena o token e configura o cliente de API
-      localStorage.setItem('auth_token', response.token);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('auth_token', response.token);
+      }
       apiClient.setToken(response.token);
       
       // Atualiza o estado com as informações do usuário
@@ -119,7 +123,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
   // Função de logout
   const logout = useCallback(() => {
     // Remove o token do armazenamento local
-    localStorage.removeItem('auth_token');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('auth_token');
+    }
     apiClient.clearToken();
     
     // Limpa o estado do usuário

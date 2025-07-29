@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { authApi } from '../lib/api-client';
 import { useAuthStore } from '../lib/store';
+import { LocalStorageManager } from '../utils/localStorage';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
 import Alert from '../components/ui/Alert';
@@ -53,7 +54,7 @@ export default function Login() {
         setAuth(response.user, response.token);
         
         // Verificar se o token foi armazenado corretamente
-        const storedToken = localStorage.getItem('token');
+        const storedToken = LocalStorageManager.getToken();
         if (!storedToken) {
           setDebug('Aviso: Token não foi armazenado no localStorage. Isso pode causar problemas de autenticação.');
         }
@@ -94,7 +95,7 @@ export default function Login() {
         setAuth(mockUser, mockToken);
         
         // Verificar se o token foi armazenado corretamente
-        const storedToken = localStorage.getItem('token');
+        const storedToken = LocalStorageManager.getToken();
         if (!storedToken) {
           setDebug('Aviso: Token não foi armazenado no localStorage. Isso pode causar problemas de autenticação.');
         }

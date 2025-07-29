@@ -1,0 +1,350 @@
+Vejo que há um erro de importação circular no backend. Vou corrigir isso:
+
+Read file(s)
+
+api.py 215 - 226
+O problema é que está tentando importar from api import metrics dentro do próprio arquivo api.py. Vou corrigir isso:
+
+Accepted edits to
+
+api.py
+
+
+Agora vou tentar iniciar o backend novamente:
+
+Command
+python api.py
+PS E:\PROJETOS SITE\repositorios\renum-suna-core\backend> 
+ol.py", "timestamp": "2025-07-29T11:38:56.206001Z"}       2025-07-29 08:38:56,206 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function deploy", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.206001Z"}  2025-07-29 08:38:56,212 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function deploy", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.212943Z"}   2025-07-29 08:38:56,215 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'expose-port' to function expose_port", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.215019Z"}                                    2025-07-29 08:38:56,216 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'port' with type 'content' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.216018Z"}                2025-07-29 08:38:56,217 - services.llm - DEBUG - {"event":
+ "Added xml schema to function expose_port", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.217019Z"}  2025-07-29 08:38:56,218 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function expose_port", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.218055Z"}                                                       2025-07-29 08:38:56,218 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function expose_port", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filen
+ame": "tool.py", "timestamp": "2025-07-29T11:38:56.218959Z"}                                                        2025-07-29 08:38:56,232 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'web-search' to function web_search", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.232135Z"}                                      2025-07-29 08:38:56,233 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'query' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.233136Z"}             2025-07-29 08:38:56,234 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'num_results' with type 'attribute' at path '.', required=True", "level": "debug",
+ "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.234133Z"}       2025-07-29 08:38:56,235 - services.llm - DEBUG - {"event":
+ "Added xml schema to function web_search", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.235168Z"}   2025-07-29 08:38:56,235 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function web_search", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.235168Z"}                                                        2025-07-29 08:38:56,235 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function web_search", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.235168Z"}                                                         2025-07-29 08:38:56,235 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'scrape-webpage' to function scrape_webpage", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.235168Z"}                              2025-07-29 08:38:56,239 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'urls' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.239122Z"}              2025-07-29 08:38:56,240 - services.llm - DEBUG - {"event":
+ "Added xml schema to function scrape_webpage", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.240120Z"}                                                         2025-07-29 08:38:56,241 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function scrape_webpage", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.241122Z"}                                                    2025-07-29 08:38:56,247 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function scrape_webpage", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.247331Z"}                                                     2025-07-29 08:38:56,251 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'execute-command' to function execute_command", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.251327Z"}
+2025-07-29 08:38:56,252 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'command' with type 'content' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.252262Z"}             2025-07-29 08:38:56,253 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'folder' with type 'attribute' at path '.', required=False", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.253306Z"}           2025-07-29 08:38:56,254 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'session_name' with type 'attribute' at path '.', required=False", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.254116Z"}     2025-07-29 08:38:56,255 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'blocking' with type 'attribute' at path '.', required=False", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.255125Z"}         2025-07-29 08:38:56,256 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'timeout' with type 'attribute' at path '.', required=False", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.256114Z"}          2025-07-29 08:38:56,257 - services.llm - DEBUG - {"event":
+ "Added xml schema to function execute_command", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filen
+ame": "tool.py", "timestamp": "2025-07-29T11:38:56.257918Z"}                                                        2025-07-29 08:38:56,261 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function execute_command", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.261074Z"}                                                   2025-07-29 08:38:56,263 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function execute_command", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.263081Z"}                                                    2025-07-29 08:38:56,264 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'check-command-output' to function check_command_output", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.264077Z"}                  2025-07-29 08:38:56,265 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'session_name' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.265077Z"}      2025-07-29 08:38:56,266 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'kill_session' with type 'attribute' at path '.', required=False", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.266075Z"}     2025-07-29 08:38:56,268 - services.llm - DEBUG - {"event":
+ "Added xml schema to function check_command_output", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.268580Z"}                                                   2025-07-29 08:38:56,269 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function check_command_output", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.269292Z"}                                              2025-07-29 08:38:56,270 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function check_command_output", "level": "debug", "func_name": "_add_schema", "lineno": 16
+5, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.270290Z"}                                               2025-07-29 08:38:56,271 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'terminate-command' to function terminate_command", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.271289Z"}                        2025-07-29 08:38:56,272 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'session_name' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.272288Z"}      2025-07-29 08:38:56,273 - services.llm - DEBUG - {"event":
+ "Added xml schema to function terminate_command", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.273363Z"}                                                      2025-07-29 08:38:56,274 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function terminate_command", "level": "debug", "func_name": "decorator", "lineno": 171,
+ "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.274430Z"}                                                 2025-07-29 08:38:56,279 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function terminate_command", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.2
+79217Z"}                                                  2025-07-29 08:38:56,280 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'list-commands' to function list_commands", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.280219Z"}                                2025-07-29 08:38:56,281 - services.llm - DEBUG - {"event":
+ "Added xml schema to function list_commands", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.281219Z"}2025-07-29 08:38:56,282 - services.llm - DEBUG - {"event": "Applying OpenAPI schema to function list_commands", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.282219Z"}                                                     2025-07-29 08:38:56,284 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function list_commands", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.284762Z"}                                                      2025-07-29 08:38:56,287 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'create-file' to function create_file", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.287417Z"}                                    2025-07-29 08:38:56,288 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'file_path' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.288416Z"}         2025-07-29 08:38:56,288 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'file_contents' with type 'content' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.288416Z"}       2025-07-29 08:38:56,289 - services.llm - DEBUG - {"event":
+ "Added xml schema to function create_file", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.289417Z"}  2025-07-29 08:38:56,290 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function create_file", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.290416Z"}                                                       2025-07-29 08:38:56,291 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function create_file", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filen
+ame": "tool.py", "timestamp": "2025-07-29T11:38:56.291457Z"}                                                        2025-07-29 08:38:56,297 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'str-replace' to function str_replace", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.297128Z"}                                    2025-07-29 08:38:56,298 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'file_path' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.298569Z"}         2025-07-29 08:38:56,299 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'old_str' with type 'element' at path 'old_str', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.299572Z"}       2025-07-29 08:38:56,300 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'new_str' with type 'element' at path 'new_str', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.300571Z"}       2025-07-29 08:38:56,301 - services.llm - DEBUG - {"event":
+ "Added xml schema to function str_replace", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.301571Z"}  2025-07-29 08:38:56,302 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function str_replace", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.302572Z"}                                                       2025-07-29 08:38:56,304 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function str_replace", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filen
+ame": "tool.py", "timestamp": "2025-07-29T11:38:56.304647Z"}                                                        2025-07-29 08:38:56,305 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'full-file-rewrite' to function full_file_rewrite", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.305288Z"}                        2025-07-29 08:38:56,306 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'file_path' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.306286Z"}         2025-07-29 08:38:56,307 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'file_contents' with type 'content' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.307286Z"}       2025-07-29 08:38:56,308 - services.llm - DEBUG - {"event":
+ "Added xml schema to function full_file_rewrite", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.308284Z"}                                                      2025-07-29 08:38:56,313 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function full_file_rewrite", "level": "debug", "func_name": "decorator", "lineno": 171,
+ "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.313724Z"}                                                 2025-07-29 08:38:56,314 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function full_file_rewrite", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.3
+14724Z"}                                                  2025-07-29 08:38:56,315 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'delete-file' to function delete_file", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.315723Z"}                                    2025-07-29 08:38:56,316 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'file_path' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.316725Z"}         2025-07-29 08:38:56,318 - services.llm - DEBUG - {"event":
+ "Added xml schema to function delete_file", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.318135Z"}  2025-07-29 08:38:56,319 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function delete_file", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.319670Z"}                                                       2025-07-29 08:38:56,320 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function delete_file", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filen
+ame": "tool.py", "timestamp": "2025-07-29T11:38:56.320674Z"}                                                        2025-07-29 08:38:56,360 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'browser-navigate-to' to function browser_navigate_to", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.360905Z"}                    2025-07-29 08:38:56,360 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'url' with type 'content' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.360905Z"}                 2025-07-29 08:38:56,360 - services.llm - DEBUG - {"event":
+ "Added xml schema to function browser_navigate_to", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.360905Z"}                                                    2025-07-29 08:38:56,360 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function browser_navigate_to", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.360905Z"}                                               2025-07-29 08:38:56,360 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function browser_navigate_to", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.360905Z"}                                                2025-07-29 08:38:56,360 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'browser-go-back' to function browser_go_back", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.360905Z"}
+2025-07-29 08:38:56,360 - services.llm - DEBUG - {"event":
+ "Added xml schema to function browser_go_back", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filen
+ame": "tool.py", "timestamp": "2025-07-29T11:38:56.360905Z"}                                                        2025-07-29 08:38:56,360 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function browser_go_back", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.360905Z"}                                                   2025-07-29 08:38:56,370 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function browser_go_back", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.370377Z"}                                                    2025-07-29 08:38:56,371 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'browser-wait' to function browser_wait", "level": "debug", "func_name": "decorator",
+ "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.371066Z"}                                  2025-07-29 08:38:56,372 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'seconds' with type 'content' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.372064Z"}             2025-07-29 08:38:56,373 - services.llm - DEBUG - {"event":
+ "Added xml schema to function browser_wait", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.373065Z"} 2025-07-29 08:38:56,374 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function browser_wait", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.373065Z"}                                                      2025-07-29 08:38:56,378 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function browser_wait", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.374839Z"}                                                       2025-07-29 08:38:56,379 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'browser-click-element' to function browser_click_element", "level": "debug", "func_n
+ame": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.379444Z"}                2025-07-29 08:38:56,381 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'index' with type 'content' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.381443Z"}
+2025-07-29 08:38:56,382 - services.llm - DEBUG - {"event":
+ "Added xml schema to function browser_click_element", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.3
+82444Z"}                                                  2025-07-29 08:38:56,383 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function browser_click_element", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38
+:56.383443Z"}                                             2025-07-29 08:38:56,385 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function browser_click_element", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.384718Z"}                                              2025-07-29 08:38:56,386 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'browser-input-text' to function browser_input_text", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timest
+amp": "2025-07-29T11:38:56.386147Z"}                      2025-07-29 08:38:56,387 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'index' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.387140Z"}             2025-07-29 08:38:56,388 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'text' with type 'content' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.388140Z"}                2025-07-29 08:38:56,389 - services.llm - DEBUG - {"event":
+ "Added xml schema to function browser_input_text", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.389143Z"}                                                     2025-07-29 08:38:56,390 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function browser_input_text", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.390140Z"}                                                2025-07-29 08:38:56,391 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function browser_input_text", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.391187Z"}                                                 2025-07-29 08:38:56,396 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'browser-send-keys' to function browser_send_keys", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.396869Z"}                        2025-07-29 08:38:56,396 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'keys' with type 'content' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.396869Z"}                2025-07-29 08:38:56,396 - services.llm - DEBUG - {"event":
+ "Added xml schema to function browser_send_keys", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.396869Z"}                                                      2025-07-29 08:38:56,396 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function browser_send_keys", "level": "debug", "func_name": "decorator", "lineno": 171,
+ "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.396869Z"}                                                 2025-07-29 08:38:56,396 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function browser_send_keys", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.3
+96869Z"}                                                  2025-07-29 08:38:56,396 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'browser-switch-tab' to function browser_switch_tab", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timest
+amp": "2025-07-29T11:38:56.396869Z"}                      2025-07-29 08:38:56,402 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'page_id' with type 'content' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.402898Z"}             2025-07-29 08:38:56,403 - services.llm - DEBUG - {"event":
+ "Added xml schema to function browser_switch_tab", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.403897Z"}                                                     2025-07-29 08:38:56,404 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function browser_switch_tab", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.404899Z"}                                                2025-07-29 08:38:56,405 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function browser_switch_tab", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.405897Z"}                                                 2025-07-29 08:38:56,406 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'browser-close-tab' to function browser_close_tab", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.406900Z"}                        2025-07-29 08:38:56,407 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'page_id' with type 'content' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.407970Z"}             2025-07-29 08:38:56,414 - services.llm - DEBUG - {"event":
+ "Added xml schema to function browser_close_tab", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.414164Z"}                                                      2025-07-29 08:38:56,414 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function browser_close_tab", "level": "debug", "func_name": "decorator", "lineno": 171,
+ "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.414164Z"}                                                 2025-07-29 08:38:56,414 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function browser_close_tab", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.4
+14164Z"}                                                  2025-07-29 08:38:56,414 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'browser-scroll-down' to function browser_scroll_down", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.414164Z"}                    2025-07-29 08:38:56,414 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'amount' with type 'content' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.414164Z"}              2025-07-29 08:38:56,414 - services.llm - DEBUG - {"event":
+ "Added xml schema to function browser_scroll_down", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.414164Z"}                                                    2025-07-29 08:38:56,420 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function browser_scroll_down", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.420077Z"}                                               2025-07-29 08:38:56,421 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function browser_scroll_down", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.421075Z"}                                                2025-07-29 08:38:56,422 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'browser-scroll-up' to function browser_scroll_up", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.422077Z"}                        2025-07-29 08:38:56,423 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'amount' with type 'content' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.423078Z"}              2025-07-29 08:38:56,424 - services.llm - DEBUG - {"event":
+ "Added xml schema to function browser_scroll_up", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.424318Z"}                                                      2025-07-29 08:38:56,429 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function browser_scroll_up", "level": "debug", "func_name": "decorator", "lineno": 171,
+ "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.429202Z"}                                                 2025-07-29 08:38:56,431 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function browser_scroll_up", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.4
+31454Z"}                                                  2025-07-29 08:38:56,431 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'browser-scroll-to-text' to function browser_scroll_to_text", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.431454Z"}              2025-07-29 08:38:56,432 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'text' with type 'content' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.432454Z"}                2025-07-29 08:38:56,433 - services.llm - DEBUG - {"event":
+ "Added xml schema to function browser_scroll_to_text", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.433453Z"}                                                 2025-07-29 08:38:56,434 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function browser_scroll_to_text", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.434454Z"}                                            2025-07-29 08:38:56,435 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function browser_scroll_to_text", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38
+:56.435453Z"}                                             2025-07-29 08:38:56,436 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'browser-get-dropdown-options' to function browser_get_dropdown_options", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.436468Z"}  2025-07-29 08:38:56,438 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'index' with type 'content' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.438022Z"}
+2025-07-29 08:38:56,439 - services.llm - DEBUG - {"event":
+ "Added xml schema to function browser_get_dropdown_options", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.439024Z"}                                           2025-07-29 08:38:56,440 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function browser_get_dropdown_options", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.440022Z"}                                      2025-07-29 08:38:56,441 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function browser_get_dropdown_options", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.441315Z"}                                       2025-07-29 08:38:56,449 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'browser-select-dropdown-option' to function browser_select_dropdown_option", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.448806Z"}                                                        2025-07-29 08:38:56,450 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'index' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.450806Z"}             2025-07-29 08:38:56,451 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'text' with type 'content' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.451802Z"}                2025-07-29 08:38:56,452 - services.llm - DEBUG - {"event":
+ "Added xml schema to function browser_select_dropdown_option", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.451802Z"}                                         2025-07-29 08:38:56,452 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function browser_select_dropdown_option", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.452802Z"}                                    2025-07-29 08:38:56,454 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function browser_select_dropdown_option", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.454444Z"}                                     2025-07-29 08:38:56,455 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'browser-drag-drop' to function browser_drag_drop", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.455987Z"}                        2025-07-29 08:38:56,456 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'element_source' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.456244Z"}    
+2025-07-29 08:38:56,457 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'element_target' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.457244Z"}    
+2025-07-29 08:38:56,463 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'coord_source_x' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.463400Z"}    
+2025-07-29 08:38:56,464 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'coord_source_y' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.464405Z"}    
+2025-07-29 08:38:56,465 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'coord_target_x' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.465402Z"}    
+2025-07-29 08:38:56,466 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'coord_target_y' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.466399Z"}    
+2025-07-29 08:38:56,467 - services.llm - DEBUG - {"event":
+ "Added xml schema to function browser_drag_drop", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.466399Z"}                                                      2025-07-29 08:38:56,468 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function browser_drag_drop", "level": "debug", "func_name": "decorator", "lineno": 171,
+ "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.468290Z"}                                                 2025-07-29 08:38:56,469 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function browser_drag_drop", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.4
+69358Z"}                                                  2025-07-29 08:38:56,470 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'browser-click-coordinates' to function browser_click_coordinates", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.470356Z"}        2025-07-29 08:38:56,471 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'x' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.470356Z"}                 2025-07-29 08:38:56,471 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'y' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.471356Z"}                 2025-07-29 08:38:56,473 - services.llm - DEBUG - {"event":
+ "Added xml schema to function browser_click_coordinates", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.473404Z"}                                              2025-07-29 08:38:56,477 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function browser_click_coordinates", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.473404Z"}                                         2025-07-29 08:38:56,477 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function browser_click_coordinates", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.477488Z"}                                          2025-07-29 08:38:56,485 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'get-data-provider-endpoints' to function get_data_provider_endpoints", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.485014Z"}    
+2025-07-29 08:38:56,486 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'service_name' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.486056Z"}      2025-07-29 08:38:56,487 - services.llm - DEBUG - {"event":
+ "Added xml schema to function get_data_provider_endpoints", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.487008Z"}                                            2025-07-29 08:38:56,488 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function get_data_provider_endpoints", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.488008Z"}                                       2025-07-29 08:38:56,489 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function get_data_provider_endpoints", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.489010Z"}                                        2025-07-29 08:38:56,490 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'execute-data-provider-call' to function execute_data_provider_call", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.490009Z"}      2025-07-29 08:38:56,491 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'service_name' with type 'attribute' at path 'service_name', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.491270Z"}                                                     2025-07-29 08:38:56,495 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'route' with type 'attribute' at path 'route', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.495854Z"}         2025-07-29 08:38:56,498 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'payload' with type 'content' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.498469Z"}             2025-07-29 08:38:56,499 - services.llm - DEBUG - {"event":
+ "Added xml schema to function execute_data_provider_call", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38
+:56.499468Z"}                                             2025-07-29 08:38:56,500 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function execute_data_provider_call", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.500467Z"}                                        2025-07-29 08:38:56,501 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function execute_data_provider_call", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.500467Z"}                                         2025-07-29 08:38:56,503 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'expand-message' to function expand_message", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.503243Z"}                              2025-07-29 08:38:56,504 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'message_id' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "too
+l.py", "timestamp": "2025-07-29T11:38:56.504245Z"}        2025-07-29 08:38:56,505 - services.llm - DEBUG - {"event":
+ "Added xml schema to function expand_message", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.505245Z"}                                                         2025-07-29 08:38:56,505 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function expand_message", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.505245Z"}                                                    2025-07-29 08:38:56,506 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function expand_message", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.506243Z"}                                                     2025-07-29 08:38:56,639 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'see-image' to function see_image", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.639311Z"}                                        2025-07-29 08:38:56,639 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'file_path' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.639311Z"}         2025-07-29 08:38:56,639 - services.llm - DEBUG - {"event":
+ "Added xml schema to function see_image", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.639311Z"}    
+2025-07-29 08:38:56,639 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function see_image", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.639311Z"}                                                         2025-07-29 08:38:56,639 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function see_image", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.639311Z"}2025-07-29 08:38:56,639 - services.llm - DEBUG - {"event": "Applying XML schema with tag 'image-edit-or-generate' to function image_edit_or_generate", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.639311Z"}              2025-07-29 08:38:56,654 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'mode' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.654936Z"}              2025-07-29 08:38:56,656 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'prompt' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.656358Z"}            2025-07-29 08:38:56,657 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'image_path' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "too
+l.py", "timestamp": "2025-07-29T11:38:56.657359Z"}        2025-07-29 08:38:56,659 - services.llm - DEBUG - {"event":
+ "Added xml schema to function image_edit_or_generate", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.659363Z"}                                                 2025-07-29 08:38:56,660 - services.llm - DEBUG - {"event":
+ "Applying OpenAPI schema to function image_edit_or_generate", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:56.660351Z"}                                            2025-07-29 08:38:56,662 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function image_edit_or_generate", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38
+:56.661355Z"}                                             2025-07-29 08:38:57,089 - services.llm - DEBUG - {"event":
+ "Applying XML schema with tag 'call-mcp-tool' to function call_mcp_tool", "level": "debug", "func_name": "decorator", "lineno": 212, "filename": "tool.py", "timestamp": "2025-07-29T11:38:57.089410Z"}                                2025-07-29 08:38:57,089 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'tool_name' with type 'attribute' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:57.089410Z"}         2025-07-29 08:38:57,089 - services.llm - DEBUG - {"event":
+ "Added XML mapping for parameter 'arguments' with type 'content' at path '.', required=True", "level": "debug", "func_name": "add_mapping", "lineno": 70, "filename": "tool.py", "timestamp": "2025-07-29T11:38:57.089410Z"}           2025-07-29 08:38:57,089 - services.llm - DEBUG - {"event":
+ "Added xml schema to function call_mcp_tool", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:57.089410Z"}2025-07-29 08:38:57,089 - services.llm - DEBUG - {"event": "Applying OpenAPI schema to function call_mcp_tool", "level": "debug", "func_name": "decorator", "lineno": 171, "filename": "tool.py", "timestamp": "2025-07-29T11:38:57.089410Z"}                                                     2025-07-29 08:38:57,089 - services.llm - DEBUG - {"event":
+ "Added openapi schema to function call_mcp_tool", "level": "debug", "func_name": "_add_schema", "lineno": 165, "filename": "tool.py", "timestamp": "2025-07-29T11:38:57.089410Z"}                                                      2025-07-29 08:38:57,333 - services.email - WARNING - MAILT
+RAP_API_TOKEN not found in environment variables          2025-07-29 08:38:57,427 - middleware.timeout_middleware - 
+INFO - Timeout middleware setup completed
+2025-07-29 08:38:57,427 - middleware.metrics_middleware - 
+INFO - Prometheus metrics middleware setup completed      
+=== Timeout Settings Summary (development) ===
+API:
+  request_timeout: 300.0
+  graceful_shutdown: 60.0
+  keep_alive: 5.0
+  client_timeout: 120.0
+  websocket_timeout: 600.0
+DATABASE:
+  connection_timeout: 30.0
+  query_timeout: 60.0
+  transaction_timeout: 120.0
+  pool_timeout: 10.0
+  idle_timeout: 600.0
+  max_lifetime: 7200.0
+REDIS:
+  connection_timeout: 10.0
+  socket_timeout: 30.0
+  health_check_interval: 60.0
+  retry_on_timeout: True
+  socket_keepalive: True
+HTTP_CLIENT:
+  connect_timeout: 30.0
+  read_timeout: 60.0
+  total_timeout: 120.0
+  pool_timeout: 10.0
+  max_retries: 5
+WORKER:
+  task_timeout: 600.0
+  shutdown_timeout: 60.0
+  heartbeat_interval: 120.0
+  max_retries: 5
+  retry_delay: 10.0
+RABBITMQ:
+  connection_timeout: 30.0
+  heartbeat: 600
+  blocked_connection_timeout: 300
+  socket_timeout: 10.0
+==================================================        
+2025-07-29 08:38:58,777 - logging_config - INFO - Logging 
+configuration initialized
+2025-07-29 08:38:58,777 - middleware.timeout_middleware - 
+INFO - Timeout middleware setup completed
+2025-07-29 08:38:58,777 - middleware.metrics_middleware - 
+INFO - Prometheus metrics middleware setup completed      
+=== Timeout Settings Summary (development) ===
+API:
+  request_timeout: 300.0
+  graceful_shutdown: 60.0
+  keep_alive: 5.0
+  client_timeout: 120.0
+  websocket_timeout: 600.0
+DATABASE:
+  connection_timeout: 30.0
+  query_timeout: 60.0
+  transaction_timeout: 120.0
+  pool_timeout: 10.0
+  idle_timeout: 600.0
+  max_lifetime: 7200.0
+REDIS:
+  connection_timeout: 10.0
+  socket_timeout: 30.0
+  health_check_interval: 60.0
+  retry_on_timeout: True
+  socket_keepalive: True
+HTTP_CLIENT:
+  connect_timeout: 30.0
+  read_timeout: 60.0
+  total_timeout: 120.0
+  pool_timeout: 10.0
+  max_retries: 5
+WORKER:
+  task_timeout: 600.0
+  shutdown_timeout: 60.0
+  heartbeat_interval: 120.0
+  max_retries: 5
+  retry_delay: 10.0
+RABBITMQ:
+  connection_timeout: 30.0
+  heartbeat: 600
+  blocked_connection_timeout: 300
+  socket_timeout: 10.0
+==================================================        
+Traceback (most recent call last):
+  File "E:\PROJETOS SITE\repositorios\renum-suna-core\back
+end\api.py", line 218, in <module>                            from api.metrics import router as metrics_router      
+  File "E:\PROJETOS SITE\repositorios\renum-suna-core\back
+end\api.py", line 218, in <module>                            from api.metrics import router as metrics_router      
+ModuleNotFoundError: No module named 'api.metrics'; 'api' 
+is not a package
+O problema é que não existe um módulo api.metrics. Vou verificar se existe o arquivo correto:
+
+Searched workspace
+Verificando a estrutura da pasta api no backend
+O arquivo existe. O problema é que o Python não está reconhecendo api como um pacote. Vou verificar se existe um __init__.py:
+
+Error(s) while reading file(s)
+Preciso criar o arquivo __init__.py para que o Python reconheça api como um pacote:
+
+Created
+
+__init__.py
+
+
+Agora vou tentar iniciar o backend novamente:
+

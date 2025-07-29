@@ -24,7 +24,7 @@ const isBrowser = typeof window !== 'undefined';
  * Obtém o token de autenticação do localStorage
  */
 const getAuthToken = (): string | null => {
-  if (!isBrowser) return null;
+  if (!isBrowser || typeof window === 'undefined') return null;
   try {
     return localStorage.getItem('token');
   } catch (error) {
@@ -37,7 +37,7 @@ const getAuthToken = (): string | null => {
  * Salva o token de autenticação no localStorage
  */
 const setAuthToken = (token: string): void => {
-  if (!isBrowser) return;
+  if (!isBrowser || typeof window === 'undefined') return;
   try {
     localStorage.setItem('token', token);
   } catch (error) {
@@ -49,7 +49,7 @@ const setAuthToken = (token: string): void => {
  * Salva os dados do usuário no localStorage
  */
 const setUserData = (user: any): void => {
-  if (!isBrowser) return;
+  if (!isBrowser || typeof window === 'undefined') return;
   try {
     localStorage.setItem('user', JSON.stringify(user));
   } catch (error) {
@@ -61,7 +61,7 @@ const setUserData = (user: any): void => {
  * Remove os dados de autenticação do localStorage
  */
 const clearAuthData = (): void => {
-  if (!isBrowser) return;
+  if (!isBrowser || typeof window === 'undefined') return;
   try {
     localStorage.removeItem('token');
     localStorage.removeItem('user');

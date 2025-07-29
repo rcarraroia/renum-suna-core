@@ -3,6 +3,7 @@
  */
 
 import { WebSocketNotification } from '../types/websocket';
+import { LocalStorageManager } from '../utils/localStorage';
 
 interface StoredNotification extends WebSocketNotification {
   synced: boolean;
@@ -35,7 +36,7 @@ export class NotificationSyncService {
    */
   getStoredNotifications(): StoredNotification[] {
     try {
-      const stored = localStorage.getItem(this.storageKey);
+      const stored = LocalStorageManager.getItem(this.storageKey);
       if (!stored) return [];
       
       const notifications = JSON.parse(stored) as StoredNotification[];
@@ -56,7 +57,7 @@ export class NotificationSyncService {
         .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
         .slice(0, this.maxStoredNotifications);
       
-      localStorage.setItem(this.storageKey, JSON.stringify(limited));
+      LocalStorageManager.setItem(this.storageKey, JSON.stringify(limited));
     } catch (error) {
       console.error('Erro ao salvar notificações no localStorage:', error);
     }
@@ -141,7 +142,7 @@ export class NotificationSyncService {
       this.addPendingAction('delete', notification.id);
     });
     
-    localStorage.removeItem(this.storageKey);
+    LocalStorageManager.removeItem(this.storageKey);
   }
 
   /**
@@ -149,7 +150,13 @@ export class NotificationSyncService {
    */
   getSyncState(): SyncState {
     try {
-      const stored = localStorage.getItem(this.syncStateKey);
+      if (typeof window === 'undefined') {
+        return {
+          lastSyncTime: new Date(0).toISOString(),
+          pendingActions: [],
+        };
+      }
+      const stored = LocalStorageManager.getItem(this.syncStateKey);
       if (!stored) {
         return {
           lastSyncTime: new Date(0).toISOString(),
@@ -172,7 +179,7 @@ export class NotificationSyncService {
    */
   saveSyncState(state: SyncState): void {
     try {
-      localStorage.setItem(this.syncStateKey, JSON.stringify(state));
+      LocalStorageManager.setItem(this.syncStateKey, JSON.stringify(state));
     } catch (error) {
       console.error('Erro ao salvar estado de sincronização:', error);
     }
@@ -349,8 +356,8 @@ export class NotificationSyncService {
    * Limpa todos os dados de sincronização
    */
   clearSyncData(): void {
-    localStorage.removeItem(this.storageKey);
-    localStorage.removeItem(this.syncStateKey);
+    LocalStorageManager.removeItem(this.storageKey);
+    LocalStorageManager.removeItem(this.syncStateKey);
   }
 }
 

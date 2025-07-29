@@ -51,7 +51,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryProvider>
       <WebSocketProvider options={{ 
-        url: process.env.NEXT_PUBLIC_WS_URL || WEBSOCKET_CONFIG.DEFAULT_URL,
+        url: process.env.NEXT_PUBLIC_WEBSOCKET_URL || WEBSOCKET_CONFIG.DEFAULT_URL,
         token: token || ''
       }}>
         <Component {...pageProps} />

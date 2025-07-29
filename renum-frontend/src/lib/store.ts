@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { LocalStorageManager } from '../utils/localStorage';
 
 /**
  * Interface para o usuário autenticado
@@ -38,41 +39,26 @@ export const useAuthStore = create<AuthState>()(
       isAuthenticated: false,
       setAuth: (user, token) => {
         // Salvar no localStorage manualmente para garantir
-        if (isBrowser) {
-          try {
-            localStorage.setItem('token', token);
-            localStorage.setItem('user', JSON.stringify(user));
-          } catch (error) {
-            console.error('Erro ao salvar dados de autenticação:', error);
-          }
-        }
+        LocalStorageManager.setToken(token);
+        LocalStorageManager.setItem('user', JSON.stringify(user));
         set({ user, token, isAuthenticated: true });
       },
       clearAuth: () => {
         // Limpar do localStorage manualmente para garantir
-        if (isBrowser) {
-          try {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-          } catch (error) {
-            console.error('Erro ao limpar dados de autenticação:', error);
-          }
-        }
+        LocalStorageManager.removeToken();
+        LocalStorageManager.removeItem('user');
         set({ user: null, token: null, isAuthenticated: false });
       },
     }),
     {
       name: 'auth-storage',
       storage: createJSONStorage(() => {
-        // Usar sessionStorage como fallback se localStorage não estiver disponível
-        if (isBrowser) {
-          try {
-            localStorage.getItem('test');
-            return localStorage;
-          } catch (e) {
-            console.warn('localStorage não disponível, usando sessionStorage');
-            return sessionStorage;
-          }
+        // Usar LocalStorageManager que já trata SSR
+        if (LocalStorageManager.isAvailable()) {
+          return localStorage;
+        } else if (isBrowser) {
+          console.warn('localStorage não disponível, usando sessionStorage');
+          return sessionStorage;
         }
         
         // Fallback para quando não estamos no navegador (SSR)
@@ -172,15 +158,12 @@ export const useAgentStore = create<AgentState>()(
     {
       name: 'agent-storage',
       storage: createJSONStorage(() => {
-        // Usar sessionStorage como fallback se localStorage não estiver disponível
-        if (isBrowser) {
-          try {
-            localStorage.getItem('test');
-            return localStorage;
-          } catch (e) {
-            console.warn('localStorage não disponível, usando sessionStorage');
-            return sessionStorage;
-          }
+        // Usar LocalStorageManager que já trata SSR
+        if (LocalStorageManager.isAvailable()) {
+          return localStorage;
+        } else if (isBrowser) {
+          console.warn('localStorage não disponível, usando sessionStorage');
+          return sessionStorage;
         }
         
         // Fallback para quando não estamos no navegador (SSR)

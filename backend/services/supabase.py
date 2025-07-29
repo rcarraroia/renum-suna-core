@@ -10,6 +10,7 @@ import base64
 import uuid
 from datetime import datetime
 import threading
+from services.metrics_decorators import instrument_database_query, time_database_operation
 
 class DBConnection:
     """Thread-safe singleton database connection manager using Supabase."""

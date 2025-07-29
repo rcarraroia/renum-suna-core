@@ -13,7 +13,9 @@ from services import redis
 import sentry
 from contextlib import asynccontextmanager
 from middleware.timeout_middleware import setup_timeout_middleware
+from middleware.metrics_middleware import setup_metrics_middleware
 from services.timeout_config import validate_timeout_configuration, log_timeout_summary
+from services.metrics import get_metrics_collector
 from agentpress.thread_manager import ThreadManager
 from services.supabase import DBConnection
 from datetime import datetime, timezone
@@ -87,6 +89,10 @@ async def lifespan(app: FastAPI):
         # Initialize pipedream API
         pipedream_api.initialize(db)
         
+        # Set application status to healthy
+        metrics_collector.set_application_status('healthy')
+        logger.info("Application startup completed successfully")
+        
         yield
         
         # Clean up agent resources
@@ -110,8 +116,13 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-# Setup timeout middleware
+# Setup middleware
 app = setup_timeout_middleware(app)
+app = setup_metrics_middleware(app)
+
+# Initialize metrics collector
+metrics_collector = get_metrics_collector()
+metrics_collector.set_application_status('starting')
 
 # Validate timeout configuration on startup
 validate_timeout_configuration()
@@ -150,18 +161,20 @@ async def log_requests_middleware(request: Request, call_next):
         raise
 
 # Define allowed origins based on environment
-allowed_origins = ["https://www.suna.so", "https://suna.so"]
-allow_origin_regex = None
+allowed_origins = ["https://www.suna.so", "https://suna.so", "https://renum.com.br", "https://www.renum.com.br"]
+allow_origin_regex = r"https://renum-.*\.vercel\.app"
 
 # Add staging-specific origins
 if config.ENV_MODE == EnvMode.LOCAL:
     allowed_origins.append("http://localhost:3000")
+    allowed_origins.append("http://localhost:3001")  # Renum frontend local
 
 # Add staging-specific origins
 if config.ENV_MODE == EnvMode.STAGING:
     allowed_origins.append("https://staging.suna.so")
     allowed_origins.append("http://localhost:3000")
-    allow_origin_regex = r"https://suna-.*-prjcts\.vercel\.app"
+    allowed_origins.append("http://localhost:3001")  # Renum frontend local
+    allow_origin_regex = r"https://suna-.*-prjcts\.vercel\.app|https://renum-.*\.vercel\.app"
 
 app.add_middleware(
     CORSMiddleware,
@@ -195,8 +208,15 @@ api_router.include_router(email_api.router)
 from knowledge_base import api as knowledge_base_api
 api_router.include_router(knowledge_base_api.router)
 
+from pipedream import api as pipedream_api
+api_router.include_router(pipedream_api.router)
+
 api_router.include_router(triggers_api.router)
 api_router.include_router(workflows_router, prefix="/workflows")
+
+# Add metrics endpoints
+from api.metrics import router as metrics_router
+api_router.include_router(metrics_router)
 
 from pipedream import api as pipedream_api
 api_router.include_router(pipedream_api.router)

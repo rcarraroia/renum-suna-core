@@ -38,10 +38,12 @@ export const queryKeys = {
 /**
  * Hook para criar uma instância do cliente API
  */
+import { LocalStorageManager } from '../utils/localStorage';
+
 export function useApiClient() {
   // Aqui você pode adicionar lógica para obter o token de autenticação
   // de um contexto de autenticação ou localStorage
-  const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
+  const token = LocalStorageManager.getItem('auth_token');
   
   return new RenumApiClient({
     token: token || undefined

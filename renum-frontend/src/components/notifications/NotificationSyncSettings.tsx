@@ -67,6 +67,7 @@ const NotificationSyncSettings: React.FC<NotificationSyncSettingsProps> = ({
   // Calcula o tamanho aproximado dos dados armazenados
   const getStorageSize = () => {
     try {
+      if (typeof window === 'undefined') return 0;
       const notificationsData = localStorage.getItem('renum_notifications') || '';
       const syncStateData = localStorage.getItem('renum_notifications_sync') || '';
       return notificationsData.length + syncStateData.length;

@@ -129,7 +129,11 @@
   - _Requirements: 3.1, 3.4_
 
 - [ ] 6. Implement comprehensive observability
-- [ ] 6.1 Add Prometheus metrics instrumentation to FastAPI
+- [x] 6.1 Add Prometheus metrics instrumentation to FastAPI
+
+
+
+
   - Install and configure prometheus-client
   - Instrument HTTP requests, database queries, and Redis operations
   - Create custom metrics for business logic monitoring
@@ -167,9 +171,51 @@
   - _Requirements: 5.2, 5.3_
 
 - [ ] 7.3 Validate frontend builds and functionality
-  - Run build processes for both frontend applications
-  - Test critical user flows after dependency updates
+- [x] 7.3.1 Fix ReferenceError: localStorage is not defined in Frontend
+
+
+
+  - Identify all direct localStorage accesses in Next.js frontend code
+  - Wrap localStorage accesses in environment checks (typeof window !== 'undefined')
+  - Ensure localStorage usage only occurs in client-side React hooks (useEffect)
+  - Validate that Next.js build on Vercel no longer shows this error
+  - _Requirements: 5.1, 5.4_
+
+- [x] 7.3.2 Resolve WebSocket Connection Failures
+
+
+
+
+
+  - **Frontend Code (Next.js) Verification:**
+    - Locate WebSocket configuration file where WebSocket/Socket.IO instance is created
+    - Ensure WebSocket URL comes from environment variable with NEXT_PUBLIC_ prefix
+    - Verify process.env.NEXT_PUBLIC_WEBSOCKET_URL is read correctly without localhost fallbacks
+    - Replace hardcoded ws://localhost:8000 references with environment variable
+  - **Frontend Deploy Configuration (Vercel):**
+    - Define NEXT_PUBLIC_WEBSOCKET_URL environment variable in Vercel project settings
+    - Configure variable for both Production and Preview environments
+    - Set value to public backend WebSocket URL (e.g., wss://api.renum.com.br/ws)
+  - **Backend Code (FastAPI) Verification:**
+    - Check main FastAPI application file (api.py) for CORS middleware configuration
+    - Ensure CORSMiddleware allows frontend domain origins for WebSocket connections
+    - Verify WebSocket endpoint (/ws) implementation and authentication logic
+    - Confirm WebSocket service initialization and token validation robustness
+  - **Backend Environment Configuration:**
+    - Verify backend server is running and listening on correct port (8000 or configured)
+    - Ensure backend is accessible via public address for WebSocket connections
+    - Check firewall/security group settings for WebSocket port accessibility
+  - **Integration Testing:**
+    - Test WebSocket connectivity across different environments (dev/staging/prod)
+    - Validate token authentication flow for WebSocket connections
+    - Verify real-time communication functionality end-to-end
+  - _Requirements: 5.1, 5.4_
+
+- [ ] 7.3.3 Complete frontend build and functionality validation
+  - Run build processes for both frontend applications after critical fixes
+  - Test critical user flows after dependency updates and fixes
   - Validate performance improvements from optimizations
+  - Ensure real-time features work correctly via WebSocket
   - _Requirements: 5.1, 5.4_
 
 - [ ] 8. Implement comprehensive testing framework

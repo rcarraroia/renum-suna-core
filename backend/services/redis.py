@@ -5,6 +5,7 @@ import asyncio
 from utils.logger import logger
 from typing import List, Any
 from utils.retry import retry
+from services.metrics_decorators import instrument_redis_operation, time_redis_operation
 
 # Redis client and connection pool
 client: redis.Redis | None = None
@@ -122,12 +123,14 @@ async def get_client():
 
 
 # Basic Redis operations
+@instrument_redis_operation("SET")
 async def set(key: str, value: str, ex: int = None, nx: bool = False):
     """Set a Redis key."""
     redis_client = await get_client()
     return await redis_client.set(key, value, ex=ex, nx=nx)
 
 
+@instrument_redis_operation("GET")
 async def get(key: str, default: str = None):
     """Get a Redis key."""
     redis_client = await get_client()
@@ -135,6 +138,7 @@ async def get(key: str, default: str = None):
     return result if result is not None else default
 
 
+@instrument_redis_operation("DELETE")
 async def delete(key: str):
     """Delete a Redis key."""
     redis_client = await get_client()
@@ -154,12 +158,14 @@ async def create_pubsub():
 
 
 # List operations
+@instrument_redis_operation("RPUSH")
 async def rpush(key: str, *values: Any):
     """Append one or more values to a list."""
     redis_client = await get_client()
     return await redis_client.rpush(key, *values)
 
 
+@instrument_redis_operation("LRANGE")
 async def lrange(key: str, start: int, end: int) -> List[str]:
     """Get a range of elements from a list."""
     redis_client = await get_client()
