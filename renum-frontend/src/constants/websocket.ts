@@ -3,7 +3,7 @@
  */
 
 export const WEBSOCKET_CONFIG = {
-  DEFAULT_URL: 'ws://localhost:8000/ws',
+  DEFAULT_URL: process.env.NEXT_PUBLIC_WEBSOCKET_URL || 'ws://localhost:8000/ws',
   RECONNECT_INTERVAL: 5000,
   MAX_RECONNECT_ATTEMPTS: 5,
   HEARTBEAT_INTERVAL: 30000,
