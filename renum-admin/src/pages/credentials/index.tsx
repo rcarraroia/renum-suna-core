@@ -10,6 +10,7 @@ import Modal from '../../components/ui/Modal';
 import Alert from '../../components/ui/Alert';
 import CredentialViewer from '../../components/credentials/CredentialViewer';
 import ProtectedRoute from '../../components/layout/ProtectedRoute';
+import { Credential } from '../../types/credential';
 
 export default function CredentialsList() {
   const {
@@ -41,7 +42,7 @@ export default function CredentialsList() {
   };
 
   const columns = [
-    { header: 'Serviço', accessor: 'service_name' },
+    { header: 'Serviço', accessor: (row: Credential) => row.service_name },
     { header: 'Tipo', accessor: (row: any) => {
       const typeLabels: Record<string, string> = {
         'api_key': 'Chave de API',

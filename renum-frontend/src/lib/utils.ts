@@ -3,6 +3,15 @@
  */
 
 /**
+ * Combina classes CSS condicionalmente
+ * @param classes - Classes CSS a serem combinadas
+ * @returns String de classes CSS combinadas
+ */
+export function cn(...classes: (string | undefined | null | false)[]): string {
+  return classes.filter(Boolean).join(' ');
+}
+
+/**
  * Formata uma data para exibição
  * @param dateString - String de data ISO
  * @param options - Opções de formatação (opcional)

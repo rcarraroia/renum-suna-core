@@ -19,9 +19,9 @@ export default function BillingOverview() {
     isLoadingPeriods,
     currentPeriod,
     setCurrentPeriod,
-    getBillingOverview,
-    getClientBilling,
-    getUsageReport,
+    useBillingOverview,
+    useClientBilling,
+    useUsageReport,
     exportReport,
     isExportingReport,
     error,
@@ -43,17 +43,17 @@ export default function BillingOverview() {
   const {
     data: overviewData,
     isLoading: isLoadingOverview,
-  } = getBillingOverview(selectedPeriod?.label);
+  } = useBillingOverview(selectedPeriod?.label);
 
   const {
     data: clientBillingData,
     isLoading: isLoadingClientBilling,
-  } = getClientBilling(selectedPeriod?.label);
+  } = useClientBilling(selectedPeriod?.label);
 
   const {
     data: usageReportData,
     isLoading: isLoadingUsageReport,
-  } = getUsageReport(undefined, selectedPeriod?.label);
+  } = useUsageReport(undefined, selectedPeriod?.label);
 
   const handleExportReport = (format: 'csv' | 'pdf') => {
     exportReport({

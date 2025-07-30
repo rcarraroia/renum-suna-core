@@ -1,0 +1,153 @@
+Vou verificar o arquivo de novos erros para analisar a situação atual.
+
+Read file(s)
+
+novos erros.txt
+Analisando os novos erros, identifiquei dois problemas críticos que precisam ser resolvidos:
+
+🚨 Problema 1: Mixed Content - WebSocket precisa de WSS
+Erro: Mixed Content: The page at 'https://renum-frontend.vercel.app/' was loaded over HTTPS, but attempted to connect to the insecure WebSocket endpoint 'ws://157.180.39.41:9000/ws'
+
+Causa: O frontend está em HTTPS, mas tentando conectar WebSocket via protocolo inseguro (ws://)
+
+Solução: O backend precisa suportar WSS (WebSocket Secure)
+
+🚨 Problema 2: URLs de API ainda hardcoded para localhost
+Erro: localhost:8000/api/v2/agents/shared-with-me:1 Failed to load resource: net::ERR_CONNECTION_REFUSED
+
+Causa: Ainda existem URLs hardcoded para localhost nas chamadas de API
+
+Vou investigar e corrigir esses problemas:
+
+Searched workspace
+Searching for hardcoded localhost URLs in API calls
+Vou verificar os arquivos de configuração de ambiente para entender qual variável está sendo usada:
+
+Read file(s)
+
+.env.development
+
+.env.production
+Agora vou verificar se há algum problema na configuração. O código parece estar correto, mas vou verificar se há alguma configuração específica que possa estar causando o problema:
+
+Searched workspace
+Searching for any hardcoded API URLs that might be overriding the environment variables
+Vou verificar se há alguma configuração no Next.js que possa estar interferindo:
+
+Read file(s)
+
+next.config.js
+Agora vou verificar se há algum problema específico no arquivo de configuração da API:
+
+Read file(s)
+
+api-client.ts
+Agora vou verificar se há algum problema específico com as variáveis de ambiente no Vercel. Vou criar um script de diagnóstico para identificar exatamente qual é o problema:
+
+Created
+
+debug-env-vars.js
+
+
+Agora vou analisar o problema mais profundamente. Baseado nos logs, parece que o problema pode estar relacionado ao fato de que as variáveis de ambiente não estão sendo aplicadas corretamente no Vercel. Vou verificar se há alguma configuração específica que precisa ser ajustada:
+
+Created
+
+WEBSOCKET_AND_API_FIXES_ANALYSIS.md
+
+
+Agora vou criar um script para testar e validar as configurações:
+
+Created
+
+validate-production-config.js
+
+
+Vou executar o script de validação para ver o status atual:
+
+Command
+node validate-production-config.js
+🔍 Validação de Configuração de Produção
+=========================================
+
+📋 Configuração Atual:
+NODE_ENV: production
+NEXT_PUBLIC_API_URL: http://localhost:8000
+NEXT_PUBLIC_WEBSOCKET_URL: ws://localhost:8000/ws
+
+🔍 Análise das URLs:
+API URL Analysis:
+  - Is Localhost: true
+  - Is Secure (HTTPS): false
+  - Has Correct Domain: false
+WebSocket URL Analysis:
+  - Is Localhost: true
+  - Is Secure (WSS): false
+  - Has Correct Domain: false
+
+⚠️  Problemas Identificados:
+❌ API URL ainda aponta para localhost em produção
+   Atual: http://localhost:8000
+   Esperado: https://api.renum.com.br ou https://157.180.3
+9.41:porta                                                ❌ WebSocket URL ainda aponta para localhost em produção  
+                                                             Atual: ws://localhost:8000/ws
+   Esperado: wss://api.renum.com.br/ws ou wss://157.180.39
+.41:porta/ws                                              
+🔧 Sugestões de Correção:
+
+1. Verificar Variáveis de Ambiente no Vercel:
+   - Acessar dashboard do Vercel
+   - Ir em Settings > Environment Variables
+   - Verificar se as variáveis estão definidas para Produc
+tion                                                         - Fazer redeploy após alterar variáveis
+
+3. Configuração Recomendada para Produção:
+   NEXT_PUBLIC_API_URL=https://api.renum.com.br
+   NEXT_PUBLIC_WEBSOCKET_URL=wss://api.renum.com.br/ws    
+   OU
+   NEXT_PUBLIC_API_URL=https://157.180.39.41:porta        
+   NEXT_PUBLIC_WEBSOCKET_URL=wss://157.180.39.41:porta/ws
+
+🧪 Testes Recomendados:
+1. Testar API: curl -I http://localhost:8000/api/health   
+2. Testar SSL WebSocket: openssl s_client -connect ws://lo
+calhost:8000                                              3. Verificar no navegador: Console > Network tab
+
+📊 Resumo:
+Status: ❌ PROBLEMAS ENCONTRADOS
+Próximo passo: Corrigir problemas identificados
+Perfeito! O diagnóstico confirma que as variáveis de ambiente não estão sendo aplicadas corretamente. O script está lendo os valores padrão (localhost) em vez dos valores de produção.
+
+Isso indica que o problema está na configuração das variáveis de ambiente no Vercel. Vou criar um guia detalhado para resolver isso:
+
+Created
+
+VERCEL_ENV_VARS_FIX_GUIDE.md
+
+
+📋 Resumo da Situação e Soluções
+Analisei os novos erros e identifiquei dois problemas críticos:
+
+🚨 Problema 1: Mixed Content (WebSocket)
+Erro: Tentativa de usar ws:// em página HTTPS
+Causa: Backend não suporta WSS (WebSocket Secure)
+Solução: Backend precisa de SSL ou proxy reverso
+🚨 Problema 2: Variáveis de Ambiente não Aplicadas
+Erro: URLs ainda apontam para localhost:8000
+Causa: Variáveis de ambiente não configuradas no Vercel
+Solução: Configurar variáveis no dashboard do Vercel
+🎯 Ações Imediatas Necessárias
+1. Configurar Variáveis no Vercel (URGENTE)
+NEXT_PUBLIC_API_URL=https://api.renum.com.br
+NEXT_PUBLIC_WEBSOCKET_URL=wss://api.renum.com.br/ws
+2. Configurar SSL no Backend (CRÍTICO)
+O backend precisa suportar WSS na porta WebSocket, ou usar proxy reverso.
+
+3. Fazer Redeploy
+Após configurar as variáveis, fazer redeploy no Vercel.
+
+📊 Status Atual
+❌ Variáveis de ambiente: Não aplicadas no Vercel
+❌ Backend SSL: Não suporta WSS
+✅ Código frontend: Configurado corretamente
+Próximo passo: Configurar as variáveis de ambiente no dashboard do Vercel e fazer redeploy.

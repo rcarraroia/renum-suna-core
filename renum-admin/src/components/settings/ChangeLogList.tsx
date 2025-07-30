@@ -20,7 +20,7 @@ const ChangeLogList: React.FC<ChangeLogListProps> = ({ data, isLoading }) => {
   };
 
   const columns = [
-    { header: 'Configuração', accessor: 'setting_key' },
+    { header: 'Configuração', accessor: (row: ChangeLog) => row.setting_key },
     { 
       header: 'Valor Anterior', 
       accessor: (row: ChangeLog) => {
@@ -35,7 +35,7 @@ const ChangeLogList: React.FC<ChangeLogListProps> = ({ data, isLoading }) => {
         return value.length > 50 ? `${value.substring(0, 50)}...` : value;
       }
     },
-    { header: 'Alterado Por', accessor: 'changed_by_name' },
+    { header: 'Alterado Por', accessor: (row: ChangeLog) => row.changed_by_name },
     { header: 'Data', accessor: (row: ChangeLog) => formatDate(row.changed_at) },
   ];
 

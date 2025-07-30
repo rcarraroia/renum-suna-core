@@ -49,7 +49,7 @@ export const WebSocketStatsChart: React.FC<WebSocketStatsChartProps> = ({
     // Auto-refresh a cada 30 segundos
     const interval = setInterval(loadStatsHistory, 30000);
     return () => clearInterval(interval);
-  }, [timeRange]);
+  }, [timeRange, loadStatsHistory]);
 
   const getChartData = () => {
     if (!statsHistory.length) return [];

@@ -20,8 +20,8 @@ export default function NewAgent() {
       // Converter strings para tipos apropriados
       const formattedData = {
         ...data,
-        is_active: data.is_active === 'true' || data.is_active === true,
-        is_public: data.is_public === 'true' || data.is_public === true,
+        is_active: Boolean(data.is_active),
+        is_public: Boolean(data.is_public),
         temperature: parseFloat(data.temperature.toString()),
         max_tokens: parseInt(data.max_tokens.toString(), 10),
       };

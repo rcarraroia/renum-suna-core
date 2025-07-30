@@ -132,7 +132,7 @@ const SettingForm: React.FC<SettingFormProps> = ({
                 { value: 'true', label: 'Verdadeiro' },
                 { value: 'false', label: 'Falso' },
               ]}
-              error={errors.value?.message}
+              error={errors.value?.message as string}
             />
           ) : watchValueType === 'object' || watchValueType === 'array' ? (
             <textarea
@@ -148,11 +148,11 @@ const SettingForm: React.FC<SettingFormProps> = ({
               id="value"
               type={watchIsSensitive ? 'password' : watchValueType === 'number' ? 'number' : 'text'}
               {...register('value', { required: 'Valor é obrigatório' })}
-              error={errors.value?.message}
+              error={errors.value?.message as string}
             />
           )}
           {errors.value && (
-            <p className="mt-1 text-sm text-red-600">{errors.value.message}</p>
+            <p className="mt-1 text-sm text-red-600">{errors.value.message as string}</p>
           )}
         </div>
 

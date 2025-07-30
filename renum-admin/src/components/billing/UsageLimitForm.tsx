@@ -21,7 +21,7 @@ const UsageLimitForm: React.FC<UsageLimitFormProps> = ({
   clientId,
 }) => {
   const [clients, setClients] = useState<Client[]>([]);
-  const { clients: clientsList, isLoadingClients } = useClients();
+  const { clients: clientsList, isLoading: isLoadingClients } = useClients();
 
   const {
     register,

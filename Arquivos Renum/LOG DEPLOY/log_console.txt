@@ -1,0 +1,512 @@
+WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+10622WebSocket connection to 'ws:<URL>/ws?token=' failed: WebSocket is closed before the connection is established.Entenda o aviso
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' failed: Insufficient resources
+connect @ _app-47cdae98498ce9a2.js:1Entenda o erro
+_app-47cdae98498ce9a2.js:1 WebSocket connection to 'ws://localhost:8000/ws?token=' 

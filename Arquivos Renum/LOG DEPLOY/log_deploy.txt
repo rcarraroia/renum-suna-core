@@ -1,0 +1,94 @@
+[08:53:37.208] Running build in Washington, D.C., USA (East) – iad1
+[08:53:37.208] Build machine configuration: 2 cores, 8 GB
+[08:53:37.248] Cloning github.com/rcarraroia/renum-suna-core (Branch: master, Commit: 956409e)
+[08:53:38.684] Cloning completed: 1.436s
+[08:53:39.360] Restored build cache from previous deployment (GS4nSjr3nFThTrSDi1QD12hunhec)
+[08:53:40.096] Running "vercel build"
+[08:53:41.638] Vercel CLI 44.5.0
+[08:53:42.299] Installing dependencies...
+[08:53:44.305] 
+[08:53:44.306] up to date in 2s
+[08:53:44.307] 
+[08:53:44.307] 202 packages are looking for funding
+[08:53:44.307]   run `npm fund` for details
+[08:53:44.336] Detected Next.js version: 14.2.30
+[08:53:44.336] Running "next build"
+[08:53:45.028]   ▲ Next.js 14.2.30
+[08:53:45.029] 
+[08:53:45.030]    Linting and checking validity of types ...
+[08:53:54.392] 
+[08:53:54.393] ./src/components/admin/WebSocketStatsChart.tsx
+[08:53:54.394] 52:6  Warning: React Hook useEffect has a missing dependency: 'loadStatsHistory'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+[08:53:54.394] 
+[08:53:54.394] ./src/components/executions/ExecutionErrorManager.tsx
+[08:53:54.395] 55:6  Warning: React Hook useEffect has a missing dependency: 'loadErrors'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+[08:53:54.395] 94:6  Warning: React Hook useEffect has a missing dependency: 'addOrUpdateError'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+[08:53:54.396] 
+[08:53:54.396] ./src/components/websocket/ConnectionLostBanner.tsx
+[08:53:54.396] 52:6  Warning: React Hook useEffect has a missing dependency: 'timer'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+[08:53:54.397] 
+[08:53:54.397] ./src/components/websocket/ConnectionLostOverlay.tsx
+[08:53:54.397] 62:6  Warning: React Hook useEffect has missing dependencies: 'disconnectedTime' and 'timer'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+[08:53:54.398] 
+[08:53:54.398] ./src/components/websocket/ReconnectionProgress.tsx
+[08:53:54.398] 68:6  Warning: React Hook useEffect has missing dependencies: 'intervalId' and 'visible'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+[08:53:54.399] 
+[08:53:54.399] ./src/contexts/WebSocketContext.tsx
+[08:53:54.399] 96:5  Warning: React Hook useMemo has unnecessary dependencies: 'publishToChannel' and 'subscribeToChannel'. Either exclude them or remove the dependency array.  react-hooks/exhaustive-deps
+[08:53:54.400] 
+[08:53:54.400] ./src/hooks/useWebSocket.ts
+[08:53:54.400] 29:9  Warning: The 'defaultOptions' object makes the dependencies of useEffect Hook (at line 79) change on every render. Move it inside the useEffect callback. Alternatively, wrap the initialization of 'defaultOptions' in its own useMemo() Hook.  react-hooks/exhaustive-deps
+[08:53:54.401] 
+[08:53:54.401] ./src/pages/agents/[id]/index.tsx
+[08:53:54.401] 67:6  Warning: React Hook useCallback has a missing dependency: 'setSelectedAgent'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+[08:53:54.401] 
+[08:53:54.402] ./src/pages/dashboard.tsx
+[08:53:54.402] 50:6  Warning: React Hook useCallback has missing dependencies: 'setAgents', 'setError', and 'setLoading'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+[08:53:54.404] 
+[08:53:54.405] info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+[08:54:00.026]    Creating an optimized production build ...
+[08:54:06.407] 
+[08:54:06.409] [1m[33mwarn[39m[22m - As of Tailwind CSS v3.3, the `@tailwindcss/line-clamp` plugin is now included by default.
+[08:54:06.410] [1m[33mwarn[39m[22m - Remove it from the `plugins` array in your configuration to eliminate this warning.
+[08:54:08.377]  ✓ Compiled successfully
+[08:54:08.378]    Collecting page data ...
+[08:54:09.563]    Generating static pages (0/15) ...
+[08:54:10.064]    Generating static pages (3/15) 
+[08:54:10.176]    Generating static pages (7/15) 
+[08:54:10.259]    Generating static pages (11/15) 
+[08:54:10.340]  ✓ Generating static pages (15/15)
+[08:54:12.046]    Finalizing page optimization ...
+[08:54:12.047]    Collecting build traces ...
+[08:54:18.581] 
+[08:54:18.592] Route (pages)                              Size     First Load JS
+[08:54:18.593] ┌ ○ /                                      2.33 kB         111 kB
+[08:54:18.593] ├   /_app                                  0 B            98.9 kB
+[08:54:18.594] ├ ○ /404                                   180 B            99 kB
+[08:54:18.594] ├ ○ /agents/[id]                           19.8 kB         141 kB
+[08:54:18.594] ├ ○ /agents/[id]/chat                      6.33 kB         114 kB
+[08:54:18.594] ├ ○ /agents/new                            9.12 kB         127 kB
+[08:54:18.595] ├ ○ /dashboard                             6.25 kB         117 kB
+[08:54:18.595] ├ ○ /examples/execution-demo               10.3 kB         111 kB
+[08:54:18.595] ├ ○ /examples/notifications-demo           8.62 kB         115 kB
+[08:54:18.595] ├ ○ /examples/websocket-demo               1.82 kB         108 kB
+[08:54:18.596] ├ ○ /login                                 4.35 kB         119 kB
+[08:54:18.596] ├ ○ /register                              3.92 kB         119 kB
+[08:54:18.596] ├ ○ /teams                                 3.69 kB         131 kB
+[08:54:18.596] ├ ○ /teams/[id]/members                    35.3 kB         163 kB
+[08:54:18.597] └ ○ /teams/new                             4.33 kB         132 kB
+[08:54:18.597] + First Load JS shared by all              107 kB
+[08:54:18.597]   ├ chunks/framework-64ad27b21261a9ce.js   44.8 kB
+[08:54:18.597]   ├ chunks/main-e140a4d51371dc61.js        38.6 kB
+[08:54:18.602]   ├ chunks/pages/_app-47cdae98498ce9a2.js  14.4 kB
+[08:54:18.602]   └ other shared chunks (total)            9.46 kB
+[08:54:18.602] 
+[08:54:18.602] ○  (Static)  prerendered as static content
+[08:54:18.602] 
+[08:54:18.654] Collected static files (public/, static/, .next/static): 5.059ms
+[08:54:18.707] Build Completed in /vercel/output [36s]
+[08:54:18.738] Deploying outputs...
+[08:54:20.099] 
+[08:54:20.231] Deployment completed
+[08:54:44.820] Uploading build cache [154.28 MB]...
+[08:54:47.030] Build cache uploaded: 2.210s
+[08:54:49.268] Exiting build container

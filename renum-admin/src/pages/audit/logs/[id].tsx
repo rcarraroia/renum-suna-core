@@ -134,7 +134,7 @@ export default function AuditLogDetails() {
                 <div>
                   <dt className="text-sm font-medium text-gray-500">Data e Hora</dt>
                   <dd className="mt-1 text-sm text-gray-900">
-                    {formatDate(auditLog?.created_at || '', true)}
+                    {formatDate(auditLog?.created_at || '')}
                   </dd>
                 </div>
               </dl>

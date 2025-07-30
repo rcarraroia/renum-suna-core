@@ -21,7 +21,7 @@ const UserForm: React.FC<UserFormProps> = ({
   isEditMode = false,
 }) => {
   const [clients, setClients] = useState<Client[]>([]);
-  const { clients: clientsList, isLoadingClients, error: clientsError } = useClients();
+  const { clients: clientsList, isLoading: isLoadingClients, error: clientsError } = useClients();
 
   const {
     register,

@@ -24,7 +24,7 @@ const AgentForm: React.FC<AgentFormProps> = ({
   const [clients, setClients] = useState<Client[]>([]);
   const [models, setModels] = useState<AgentModel[]>([]);
   
-  const { clients: clientsList, isLoadingClients } = useClients();
+  const { clients: clientsList, isLoading: isLoadingClients } = useClients();
   const { availableModels, isLoadingModels } = useAgents();
 
   const {

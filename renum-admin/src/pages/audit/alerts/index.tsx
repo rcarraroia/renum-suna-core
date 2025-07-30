@@ -13,6 +13,7 @@ import AlertRuleForm from '../../../components/audit/AlertRuleForm';
 import { formatDate } from '../../../lib/utils';
 import ProtectedRoute from '../../../components/layout/ProtectedRoute';
 
+
 export default function AlertRules() {
   const {
     alertRules,
@@ -88,8 +89,8 @@ export default function AlertRules() {
   };
 
   const columns = [
-    { header: 'Nome', accessor: 'name' },
-    { header: 'Descrição', accessor: 'description' },
+    { header: 'Nome', accessor: (row: AlertRule) => row.name },
+    { header: 'Descrição', accessor: (row: AlertRule) => row.description },
     { 
       header: 'Evento', 
       accessor: (row: AlertRule) => row.event_type || 'Todos'
@@ -194,7 +195,7 @@ export default function AlertRules() {
           isOpen={isFormModalOpen}
           onClose={() => setIsFormModalOpen(false)}
           title={isEditing ? 'Editar Regra de Alerta' : 'Nova Regra de Alerta'}
-          size="lg"
+
         >
           <AlertRuleForm
             defaultValues={

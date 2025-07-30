@@ -48,15 +48,16 @@ export default function EditCredential() {
       // Converter string para boolean (do select)
       const formattedData = {
         ...data,
-        is_active: data.is_active === 'true' || data.is_active === true,
+        is_active: Boolean(data.is_active),
       };
 
       // Se o valor estiver vazio, não o envie (para manter o valor atual)
       if (!formattedData.value) {
-        delete formattedData.value;
+        const { value, ...dataWithoutValue } = formattedData;
+        await updateCredential({ id: id as string, data: dataWithoutValue });
+      } else {
+        await updateCredential({ id: id as string, data: formattedData });
       }
-
-      await updateCredential({ id: id as string, data: formattedData });
       router.push('/credentials');
     } catch (error) {
       // Erro já tratado no hook

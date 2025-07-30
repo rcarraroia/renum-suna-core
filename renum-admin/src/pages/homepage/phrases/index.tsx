@@ -123,8 +123,8 @@ export default function HomepagePhrases() {
   };
 
   const columns = [
-    { header: 'Texto', accessor: 'text' },
-    { header: 'Ordem', accessor: 'display_order' },
+    { header: 'Texto', accessor: (row: TypewriterPhrase) => row.text },
+    { header: 'Ordem', accessor: (row: TypewriterPhrase) => row.display_order },
     {
       header: 'Status',
       accessor: (row: TypewriterPhrase) => (
@@ -139,7 +139,7 @@ export default function HomepagePhrases() {
     { header: 'Atualizado em', accessor: (row: TypewriterPhrase) => formatDate(row.updated_at) },
     {
       header: 'Ações',
-      accessor: (row: TypewriterPhrase, index: number) => {
+      accessor: (row: TypewriterPhrase) => {
         const sortedPhrases = phrases ? [...phrases].sort((a, b) => a.display_order - b.display_order) : [];
         const sortedIndex = sortedPhrases.findIndex(p => p.id === row.id);
 
@@ -300,7 +300,6 @@ export default function HomepagePhrases() {
           isOpen={isPreviewModalOpen}
           onClose={() => setIsPreviewModalOpen(false)}
           title="Visualização do Efeito de Máquina de Escrever"
-          size="lg"
         >
           <div className="p-4">
             <TypewriterPreview phrases={phrases || []} />

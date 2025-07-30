@@ -148,7 +148,7 @@ export const useCredentials = () => {
     deleteCredential: deleteCredentialMutation.mutate,
     isDeletingCredential: deleteCredentialMutation.isPending,
     getCredentialUsage,
-    revealCredential: revealCredentialMutation.mutate,
+    revealCredential: revealCredentialMutation.mutateAsync,
     isRevealingCredential: revealCredentialMutation.isPending,
   };
 };

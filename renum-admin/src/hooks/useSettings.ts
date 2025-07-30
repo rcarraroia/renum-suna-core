@@ -191,8 +191,8 @@ export const useSettings = () => {
     },
   });
 
-  // Buscar histórico de alterações
-  const getChangeLogs = (key?: string) => {
+  // Hook para buscar histórico de alterações
+  const useChangeLogs = (key?: string) => {
     return useQuery<ChangeLog[]>({
       queryKey: ['change-logs', key],
       queryFn: async () => {
@@ -230,7 +230,7 @@ export const useSettings = () => {
     isDeletingIntegration: deleteIntegrationMutation.isPending,
     testIntegration: testIntegrationMutation.mutate,
     isTestingIntegration: testIntegrationMutation.isPending,
-    getChangeLogs,
+    useChangeLogs,
     error,
     setError,
     refetchSettings,

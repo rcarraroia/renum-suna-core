@@ -5,8 +5,15 @@ import jwt
 from jwt.exceptions import PyJWTError
 from utils.logger import structlog
 from utils.config import config
+from utils.sentry_utils import (
+    capture_exception_with_context,
+    set_user_context,
+    add_breadcrumb,
+    monitor_performance
+)
 
 # This function extracts the user ID from Supabase JWT
+@monitor_performance("jwt_authentication")
 async def get_current_user_id_from_jwt(request: Request) -> str:
     """
     Extract and verify the user ID from the JWT in the Authorization header.
@@ -23,9 +30,12 @@ async def get_current_user_id_from_jwt(request: Request) -> str:
     Raises:
         HTTPException: If no valid token is found or if the token is invalid
     """
+    add_breadcrumb("Starting JWT authentication", category="auth")
+    
     auth_header = request.headers.get('Authorization')
     
     if not auth_header or not auth_header.startswith('Bearer '):
+        add_breadcrumb("No authorization header found", category="auth", level="warning")
         raise HTTPException(
             status_code=401,
             detail="No valid authentication credentials found",
@@ -35,23 +45,36 @@ async def get_current_user_id_from_jwt(request: Request) -> str:
     token = auth_header.split(' ')[1]
     
     try:
+        add_breadcrumb("Decoding JWT token", category="auth")
         payload = jwt.decode(token, options={"verify_signature": False})
         user_id = payload.get('sub')
         
         if not user_id:
+            add_breadcrumb("Invalid token payload - no user ID", category="auth", level="warning")
             raise HTTPException(
                 status_code=401,
                 detail="Invalid token payload",
                 headers={"WWW-Authenticate": "Bearer"}
             )
 
-        sentry.sentry.set_user({ "id": user_id })
-        structlog.contextvars.bind_contextvars(
-            user_id=user_id
-        )
+        # Set user context for Sentry
+        set_user_context(user_id)
+        
+        # Set structured logging context
+        structlog.contextvars.bind_contextvars(user_id=user_id)
+        
+        add_breadcrumb(f"User authenticated successfully", category="auth", 
+                      data={"user_id": user_id})
+        
         return user_id
         
-    except PyJWTError:
+    except PyJWTError as e:
+        capture_exception_with_context(
+            e,
+            context={"token_length": len(token), "auth_header_present": bool(auth_header)},
+            tags={"component": "auth", "operation": "jwt_decode"}
+        )
+        add_breadcrumb("JWT decode error", category="auth", level="error")
         raise HTTPException(
             status_code=401,
             detail="Invalid token",

@@ -87,7 +87,7 @@ export default function UsageLimits() {
   };
 
   const columns = [
-    { header: 'Cliente', accessor: 'client_name' },
+    { header: 'Cliente', accessor: (row: UsageLimit) => row.client_name },
     { header: 'Recurso', accessor: (row: UsageLimit) => getResourceTypeLabel(row.resource_type) },
     { header: 'Limite', accessor: (row: UsageLimit) => row.limit.toLocaleString() },
     { 
