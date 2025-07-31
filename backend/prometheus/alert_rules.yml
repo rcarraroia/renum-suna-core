@@ -1,0 +1,195 @@
+# Prometheus Alert Rules for Suna/Renum Backend
+# These rules define when alerts should be triggered based on metrics
+
+groups:
+  - name: suna_backend_alerts
+    rules:
+      # High error rate alert
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.1
+        for: 2m
+        labels:
+          severity: critical
+          service: fastapi
+        annotations:
+          summary: "High error rate detected"
+          description: "Error rate is {{ $value }} errors per second for the last 5 minutes"
+
+      # High response time alert
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 2
+        for: 3m
+        labels:
+          severity: warning
+          service: fastapi
+        annotations:
+          summary: "High response time detected"
+          description: "95th percentile response time is {{ $value }} seconds"
+
+      # Database connection issues
+      - alert: DatabaseConnectionFailure
+        expr: rate(database_errors_total[5m]) > 0.05
+        for: 1m
+        labels:
+          severity: critical
+          service: database
+        annotations:
+          summary: "Database connection failures detected"
+          description: "Database error rate is {{ $value }} errors per second"
+
+      # Redis connection issues
+      - alert: RedisConnectionFailure
+        expr: rate(redis_errors_total[5m]) > 0.05
+        for: 1m
+        labels:
+          severity: warning
+          service: redis
+        annotations:
+          summary: "Redis connection failures detected"
+          description: "Redis error rate is {{ $value }} errors per second"
+
+      # Worker task failures
+      - alert: WorkerTaskFailures
+        expr: rate(worker_tasks_total{status="failed"}[5m]) > 0.1
+        for: 2m
+        labels:
+          severity: warning
+          service: worker
+        annotations:
+          summary: "High worker task failure rate"
+          description: "Worker task failure rate is {{ $value }} failures per second"
+
+      # Agent execution failures
+      - alert: AgentExecutionFailures
+        expr: rate(agent_executions_total{status="failed"}[5m]) > 0.05
+        for: 2m
+        labels:
+          severity: warning
+          service: agent
+        annotations:
+          summary: "Agent execution failures detected"
+          description: "Agent execution failure rate is {{ $value }} failures per second"
+
+      # LLM request failures
+      - alert: LLMRequestFailures
+        expr: rate(llm_requests_total{status="failed"}[5m]) > 0.1
+        for: 1m
+        labels:
+          severity: warning
+          service: llm
+        annotations:
+          summary: "LLM request failures detected"
+          description: "LLM request failure rate is {{ $value }} failures per second"
+
+      # WebSocket connection issues
+      - alert: WebSocketConnectionDrop
+        expr: websocket_active_connections < 1 and websocket_total_connections > 0
+        for: 5m
+        labels:
+          severity: warning
+          service: websocket
+        annotations:
+          summary: "WebSocket connections dropped"
+          description: "No active WebSocket connections despite previous activity"
+
+      # Memory usage alert
+      - alert: HighMemoryUsage
+        expr: process_resident_memory_bytes / 1024 / 1024 > 1000  # 1GB
+        for: 5m
+        labels:
+          severity: warning
+          service: system
+        annotations:
+          summary: "High memory usage detected"
+          description: "Memory usage is {{ $value }}MB"
+
+      # CPU usage alert
+      - alert: HighCPUUsage
+        expr: rate(process_cpu_seconds_total[5m]) > 0.8
+        for: 5m
+        labels:
+          severity: warning
+          service: system
+        annotations:
+          summary: "High CPU usage detected"
+          description: "CPU usage is {{ $value }}%"
+
+  - name: suna_availability_alerts
+    rules:
+      # Service down alert
+      - alert: ServiceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Service is down"
+          description: "{{ $labels.job }} service is down"
+
+      # Health check failure
+      - alert: HealthCheckFailure
+        expr: health_check_status != 1
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Health check failing"
+          description: "Health check for {{ $labels.job }} is failing"
+
+  - name: suna_performance_alerts
+    rules:
+      # Request rate too low (might indicate issues)
+      - alert: LowRequestRate
+        expr: rate(http_requests_total[5m]) < 0.01
+        for: 10m
+        labels:
+          severity: info
+        annotations:
+          summary: "Low request rate detected"
+          description: "Request rate is {{ $value }} requests per second"
+
+      # Database query time too high
+      - alert: SlowDatabaseQueries
+        expr: histogram_quantile(0.95, rate(database_query_duration_seconds_bucket[5m])) > 5
+        for: 3m
+        labels:
+          severity: warning
+          service: database
+        annotations:
+          summary: "Slow database queries detected"
+          description: "95th percentile database query time is {{ $value }} seconds"
+
+      # Redis operation time too high
+      - alert: SlowRedisOperations
+        expr: histogram_quantile(0.95, rate(redis_operation_duration_seconds_bucket[5m])) > 1
+        for: 3m
+        labels:
+          severity: warning
+          service: redis
+        annotations:
+          summary: "Slow Redis operations detected"
+          description: "95th percentile Redis operation time is {{ $value }} seconds"
+
+  - name: suna_business_alerts
+    rules:
+      # Agent execution rate too low
+      - alert: LowAgentActivity
+        expr: rate(agent_executions_total[10m]) < 0.001
+        for: 15m
+        labels:
+          severity: info
+          service: agent
+        annotations:
+          summary: "Low agent activity detected"
+          description: "Agent execution rate is {{ $value }} executions per second"
+
+      # LLM request rate too high (cost concern)
+      - alert: HighLLMUsage
+        expr: rate(llm_requests_total[5m]) > 10
+        for: 5m
+        labels:
+          severity: info
+          service: llm
+        annotations:
+          summary: "High LLM usage detected"
+          description: "LLM request rate is {{ $value }} requests per second"

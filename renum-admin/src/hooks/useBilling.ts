@@ -38,8 +38,8 @@ export const useBilling = () => {
     },
   });
 
-  // Buscar visão geral de faturamento
-  const getBillingOverview = (period?: string) => {
+  // Hook para buscar visão geral de faturamento
+  const useBillingOverview = (period?: string) => {
     return useQuery<BillingOverview>({
       queryKey: ['billing-overview', period],
       queryFn: async () => {
@@ -57,8 +57,8 @@ export const useBilling = () => {
     });
   };
 
-  // Buscar faturamento por cliente
-  const getClientBilling = (period?: string) => {
+  // Hook para buscar faturamento por cliente
+  const useClientBilling = (period?: string) => {
     return useQuery<ClientBilling[]>({
       queryKey: ['client-billing', period],
       queryFn: async () => {
@@ -140,8 +140,8 @@ export const useBilling = () => {
     },
   });
 
-  // Buscar faturas
-  const getInvoices = (clientId?: string, status?: string, period?: string) => {
+  // Hook para buscar faturas
+  const useInvoices = (clientId?: string, status?: string, period?: string) => {
     return useQuery<Invoice[]>({
       queryKey: ['invoices', clientId, status, period],
       queryFn: async () => {
@@ -169,8 +169,8 @@ export const useBilling = () => {
     }
   };
 
-  // Gerar relatório de uso
-  const getUsageReport = (clientId?: string, period?: string) => {
+  // Hook para gerar relatório de uso
+  const useUsageReport = (clientId?: string, period?: string) => {
     return useQuery<UsageReport>({
       queryKey: ['usage-report', clientId, period],
       queryFn: async () => {
@@ -235,8 +235,8 @@ export const useBilling = () => {
     isLoadingPeriods,
     currentPeriod,
     setCurrentPeriod,
-    getBillingOverview,
-    getClientBilling,
+    useBillingOverview,
+    useClientBilling,
     usageLimits,
     isLoadingLimits,
     getClientLimits,
@@ -244,9 +244,9 @@ export const useBilling = () => {
     isUpdatingLimit: updateLimitMutation.isPending,
     deleteLimit: deleteLimitMutation.mutate,
     isDeletingLimit: deleteLimitMutation.isPending,
-    getInvoices,
+    useInvoices,
     getInvoice,
-    getUsageReport,
+    useUsageReport,
     exportReport: exportReportMutation.mutate,
     isExportingReport: exportReportMutation.isPending,
     error,

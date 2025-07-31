@@ -20,14 +20,14 @@ export default function Invoices() {
     isLoadingPeriods,
     currentPeriod,
     setCurrentPeriod,
-    getInvoices,
+    useInvoices,
     exportReport,
     isExportingReport,
     error,
     setError,
   } = useBilling();
 
-  const { clients, isLoadingClients } = useClients();
+  const { clients, isLoading: isLoadingClients } = useClients();
 
   const [selectedPeriod, setSelectedPeriod] = useState<BillingPeriod | null>(null);
   const [selectedClient, setSelectedClient] = useState<string>('');
@@ -47,7 +47,7 @@ export default function Invoices() {
   const {
     data: invoicesData,
     isLoading: isLoadingInvoices,
-  } = getInvoices(
+  } = useInvoices(
     selectedClient || undefined,
     selectedStatus || undefined,
     selectedPeriod?.label

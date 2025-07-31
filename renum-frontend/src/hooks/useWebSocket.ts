@@ -2,7 +2,7 @@
  * Hook para usar o serviço WebSocket
  */
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { WebSocketService, createWebSocketService } from '../services/websocket-service';
 import {
   WebSocketMessage,
@@ -25,8 +25,8 @@ export interface UseWebSocketOptions extends Omit<WebSocketConnectionOptions, 'o
  * @returns Objeto com o serviço WebSocket e funções auxiliares
  */
 export function useWebSocket(options: Partial<UseWebSocketOptions> = {}) {
-  // Valores padrão para as opções obrigatórias
-  const defaultOptions: UseWebSocketOptions = {
+  // Memoizar as opções para evitar recriação desnecessária
+  const defaultOptions: UseWebSocketOptions = useMemo(() => ({
     url: process.env.NEXT_PUBLIC_WEBSOCKET_URL || 'ws://localhost:8000/ws',
     token: '',
     autoConnect: true,
@@ -36,7 +36,7 @@ export function useWebSocket(options: Partial<UseWebSocketOptions> = {}) {
     heartbeatInterval: 30000,
     debug: false,
     ...options
-  };
+  }), [options]);
   const [status, setStatus] = useState<WebSocketConnectionStatus>(WebSocketConnectionStatus.DISCONNECTED);
   const [lastMessage, setLastMessage] = useState<WebSocketMessage | null>(null);
   const [error, setError] = useState<Error | null>(null);

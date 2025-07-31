@@ -12,6 +12,7 @@ import Alert from '../../../components/ui/Alert';
 import { Card, CardHeader, CardTitle, CardContent } from '../../../components/ui/Card';
 import Table from '../../../components/ui/Table';
 import ProtectedRoute from '../../../components/layout/ProtectedRoute';
+import { InvoiceItem } from '../../../types/billing';
 
 export default function InvoiceDetails() {
   const router = useRouter();
@@ -95,8 +96,8 @@ export default function InvoiceDetails() {
   };
 
   const columns = [
-    { header: 'Descrição', accessor: 'description' },
-    { header: 'Quantidade', accessor: 'quantity' },
+    { header: 'Descrição', accessor: (row: InvoiceItem) => row.description },
+    { header: 'Quantidade', accessor: (row: InvoiceItem) => row.quantity },
     { header: 'Preço Unitário', accessor: (row: any) => formatCurrency(row.unit_price) },
     { header: 'Total', accessor: (row: any) => formatCurrency(row.amount) },
   ];

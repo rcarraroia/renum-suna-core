@@ -48,7 +48,7 @@ export default function EditUser() {
       // Converter string para boolean (do select)
       const formattedData = {
         ...data,
-        is_active: data.is_active === 'true' || data.is_active === true,
+        is_active: Boolean(data.is_active),
       };
 
       await updateUser({ id: id as string, data: formattedData });

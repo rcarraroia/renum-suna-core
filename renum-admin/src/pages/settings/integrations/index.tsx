@@ -81,7 +81,7 @@ export default function Integrations() {
   };
 
   const columns = [
-    { header: 'Nome', accessor: 'name' },
+    { header: 'Nome', accessor: (row: IntegrationSetting) => row.name },
     { 
       header: 'Tipo', 
       accessor: (row: IntegrationSetting) => {
@@ -201,7 +201,6 @@ export default function Integrations() {
           isOpen={isFormModalOpen}
           onClose={() => setIsFormModalOpen(false)}
           title={isEditing ? 'Editar Integração' : 'Nova Integração'}
-          size="lg"
         >
           <IntegrationForm
             defaultValues={

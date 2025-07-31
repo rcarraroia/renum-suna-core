@@ -13,7 +13,7 @@ interface InvoicesListProps {
 
 const InvoicesList: React.FC<InvoicesListProps> = ({ data, isLoading, onDownload }) => {
   const columns = [
-    { header: 'Cliente', accessor: 'client_name' },
+    { header: 'Cliente', accessor: (row: Invoice) => row.client_name },
     { header: 'Valor', accessor: (row: Invoice) => formatCurrency(row.amount) },
     { 
       header: 'Status', 

@@ -10,6 +10,7 @@ import Modal from '../../components/ui/Modal';
 import Alert from '../../components/ui/Alert';
 import ResetPasswordForm from '../../components/users/ResetPasswordForm';
 import ProtectedRoute from '../../components/layout/ProtectedRoute';
+import { User } from '../../types/user';
 
 export default function UsersList() {
   const {
@@ -60,10 +61,10 @@ export default function UsersList() {
   };
 
   const columns = [
-    { header: 'Nome', accessor: 'name' },
-    { header: 'Email', accessor: 'email' },
-    { header: 'Cliente', accessor: 'client_name' },
-    { header: 'Papel', accessor: 'role' },
+    { header: 'Nome', accessor: (row: User) => row.name },
+    { header: 'Email', accessor: (row: User) => row.email },
+    { header: 'Cliente', accessor: (row: User) => row.client_name },
+    { header: 'Papel', accessor: (row: User) => row.role },
     {
       header: 'Status',
       accessor: (row: any) => (

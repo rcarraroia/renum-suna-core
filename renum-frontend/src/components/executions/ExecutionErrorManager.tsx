@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useWebSocket } from '../../hooks/useWebSocket';
 import { useWebSocketChannels } from '../../hooks/useWebSocketChannels';
 import { ExecutionErrorDisplay } from './ExecutionErrorDisplay';
@@ -49,10 +49,54 @@ export const ExecutionErrorManager: React.FC<ExecutionErrorManagerProps> = ({
   const [filter, setFilter] = useState<'all' | 'critical' | 'high' | 'medium' | 'low'>('all');
   const [retryingExecutions, setRetryingExecutions] = useState<Set<string>>(new Set());
 
+  const loadErrors = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const params = new URLSearchParams();
+      if (executionId) params.append('execution_id', executionId);
+      if (teamId) params.append('team_id', teamId);
+      if (userId) params.append('user_id', userId);
+      if (!showResolved) params.append('resolved', 'false');
+      params.append('limit', maxErrors.toString());
+
+      const response = await fetch(`/api/v1/execution-errors?${params.toString()}`);
+      
+      if (!response.ok) {
+        throw new Error(`Erro ao carregar erros: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      setErrors(data.errors || []);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erro desconhecido');
+    } finally {
+      setLoading(false);
+    }
+  }, [executionId, teamId, userId, showResolved, maxErrors]);
+
+  const addOrUpdateError = useCallback((newError: ExecutionError) => {
+    setErrors(prev => {
+      const existingIndex = prev.findIndex(e => e.id === newError.id);
+      
+      if (existingIndex >= 0) {
+        // Atualizar erro existente
+        const updated = [...prev];
+        updated[existingIndex] = newError;
+        return updated;
+      } else {
+        // Adicionar novo erro
+        const newErrors = [newError, ...prev];
+        return newErrors.slice(0, maxErrors);
+      }
+    });
+  }, [maxErrors]);
+
   // Carregar erros iniciais
   useEffect(() => {
     loadErrors();
-  }, [executionId, teamId, userId, showResolved]);
+  }, [loadErrors]);
 
   // Inscrever-se em atualizações via WebSocket
   useEffect(() => {
@@ -91,53 +135,11 @@ export const ExecutionErrorManager: React.FC<ExecutionErrorManagerProps> = ({
         unsubscribeFromChannel(channel);
       });
     };
-  }, [isConnected, executionId, teamId, userId, subscribeToChannel, unsubscribeFromChannel]);
+  }, [isConnected, executionId, teamId, userId, subscribeToChannel, unsubscribeFromChannel, addOrUpdateError]);
 
-  const loadErrors = async () => {
-    try {
-      setLoading(true);
-      setError(null);
 
-      const params = new URLSearchParams();
-      if (executionId) params.append('execution_id', executionId);
-      if (teamId) params.append('team_id', teamId);
-      if (userId) params.append('user_id', userId);
-      if (!showResolved) params.append('resolved', 'false');
-      params.append('limit', maxErrors.toString());
 
-      const response = await fetch(`/api/v1/execution-errors?${params.toString()}`);
-      
-      if (!response.ok) {
-        throw new Error(`Erro ao carregar erros: ${response.statusText}`);
-      }
 
-      const data = await response.json();
-      setErrors(data.errors || []);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Erro desconhecido';
-      setError(errorMessage);
-      console.error('Erro ao carregar erros de execução:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const addOrUpdateError = (newError: ExecutionError) => {
-    setErrors(prev => {
-      const existingIndex = prev.findIndex(e => e.id === newError.id);
-      
-      if (existingIndex >= 0) {
-        // Atualizar erro existente
-        const updated = [...prev];
-        updated[existingIndex] = newError;
-        return updated;
-      } else {
-        // Adicionar novo erro
-        const newErrors = [newError, ...prev];
-        return newErrors.slice(0, maxErrors);
-      }
-    });
-  };
 
   const handleRetryScheduled = (data: any) => {
     // Atualizar status de retry

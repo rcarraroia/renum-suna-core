@@ -7,6 +7,7 @@ import Button from '../../components/ui/Button';
 import Table from '../../components/ui/Table';
 import Modal from '../../components/ui/Modal';
 import { formatDate } from '../../lib/utils';
+import { Client } from '../../types/client';
 
 export default function ClientsPage() {
   const {
@@ -44,8 +45,8 @@ export default function ClientsPage() {
   };
 
   const columns = [
-    { header: 'Nome', accessor: 'name' },
-    { header: 'Email', accessor: 'email' },
+    { header: 'Nome', accessor: (row: Client) => row.name },
+    { header: 'Email', accessor: (row: Client) => row.email },
     { 
       header: 'Plano', 
       accessor: (client: any) => {

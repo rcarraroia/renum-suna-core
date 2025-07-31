@@ -1,0 +1,140 @@
+# Prometheus configuration for Suna/Renum backend monitoring
+# This configuration sets up Prometheus to scrape metrics from FastAPI applications
+
+global:
+  scrape_interval: 15s      # Set the scrape interval to every 15 seconds
+  evaluation_interval: 15s  # Evaluate rules every 15 seconds
+  external_labels:
+    monitor: 'suna-renum-monitor'
+    environment: 'production'
+
+# Alertmanager configuration (optional)
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'
+rule_files:
+  - "alert_rules.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape
+scrape_configs:
+  # Main FastAPI application metrics
+  - job_name: 'suna-backend'
+    static_configs:
+      - targets: ['localhost:8000']
+    metrics_path: '/api/metrics'
+    scrape_interval: 10s
+    scrape_timeout: 5s
+    honor_labels: true
+    params:
+      format: ['prometheus']
+    
+    # Add custom labels to all metrics from this job
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'suna-backend'
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'fastapi'
+    
+    # Health check configuration
+    sample_limit: 10000
+    
+    # Basic authentication (if needed)
+    # basic_auth:
+    #   username: 'prometheus'
+    #   password: 'secure_password'
+
+  # Health check endpoint monitoring
+  - job_name: 'suna-health'
+    static_configs:
+      - targets: ['localhost:8000']
+    metrics_path: '/api/health'
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    
+    # Custom metric transformation for health endpoint
+    metric_relabel_configs:
+      - source_labels: [__name__]
+        target_label: __name__
+        replacement: 'health_check_status'
+
+  # WebSocket metrics (if available)
+  - job_name: 'suna-websocket'
+    static_configs:
+      - targets: ['localhost:8000']
+    metrics_path: '/ws/stats'
+    scrape_interval: 20s
+    scrape_timeout: 8s
+    
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'websocket'
+
+  # Redis metrics (if Redis exporter is available)
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['localhost:9121']  # Redis exporter default port
+    scrape_interval: 15s
+    scrape_timeout: 5s
+    
+    # Only scrape if Redis exporter is available
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'redis'
+
+  # RabbitMQ metrics (if RabbitMQ management plugin is enabled)
+  - job_name: 'rabbitmq'
+    static_configs:
+      - targets: ['localhost:15692']  # RabbitMQ Prometheus plugin port
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'rabbitmq'
+
+  # Node exporter for system metrics (optional)
+  - job_name: 'node'
+    static_configs:
+      - targets: ['localhost:9100']
+    scrape_interval: 15s
+    scrape_timeout: 5s
+    
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'system'
+
+# Storage configuration
+storage:
+  tsdb:
+    path: /prometheus/data
+    retention.time: 30d      # Keep data for 30 days
+    retention.size: 10GB     # Maximum storage size
+    wal-compression: true    # Enable WAL compression
+    
+    # Compaction settings
+    min-block-duration: 2h
+    max-block-duration: 25h
+
+# Remote write configuration (for external storage)
+# remote_write:
+#   - url: "https://prometheus-remote-write-endpoint.com/api/v1/write"
+#     basic_auth:
+#       username: "user"
+#       password: "password"
+
+# Remote read configuration (for external storage)
+# remote_read:
+#   - url: "https://prometheus-remote-read-endpoint.com/api/v1/read"
+#     basic_auth:
+#       username: "user"
+#       password: "password"

@@ -251,22 +251,22 @@ export default function ClientDetailsPage() {
                           <div className="w-full bg-gray-200 rounded-full h-2.5 mr-2">
                             <div
                               className={`h-2.5 rounded-full ${
-                                (client.current_usage / client.usage_limit) * 100 > 90
+                                ((client.current_usage || 0) / (client.usage_limit || 1)) * 100 > 90
                                   ? 'bg-red-500'
-                                  : (client.current_usage / client.usage_limit) * 100 > 70
+                                  : ((client.current_usage || 0) / (client.usage_limit || 1)) * 100 > 70
                                   ? 'bg-yellow-500'
                                   : 'bg-green-500'
                               }`}
                               style={{
                                 width: `${Math.min(
-                                  (client.current_usage / client.usage_limit) * 100,
+                                  ((client.current_usage || 0) / (client.usage_limit || 1)) * 100,
                                   100
                                 )}%`,
                               }}
                             ></div>
                           </div>
                           <span className="text-sm font-medium">
-                            {Math.round((client.current_usage / client.usage_limit) * 100)}%
+                            {Math.round(((client.current_usage || 0) / (client.usage_limit || 1)) * 100)}%
                           </span>
                         </div>
                       </div>

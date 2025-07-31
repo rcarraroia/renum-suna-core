@@ -1,0 +1,113 @@
+_app-529fb85f0143725d.js:1 Mixed Content: The page at 'https://renum-frontend.vercel.app/agents' was loaded over HTTPS, but attempted to connect to the insecure WebSocket endpoint 'ws://157.180.39.41:9000/ws?token='. This request has been blocked; this endpoint must be available over WSS.
+connect @ _app-529fb85f0143725d.js:1Entenda o erro
+7Mixed Content: The page at '<URL>' was loaded over HTTPS, but attempted to connect to the insecure WebSocket endpoint 'ws:<URL>/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6IlVzdcOhcmlvIERlbW8iLCJpYXQiOjE2MTYxNjI4MDB9'. This request has been blocked; this endpoint must be available over WSS.Entenda o erro
+_app-529fb85f0143725d.js:1 Mixed Content: The page at 'https://renum-frontend.vercel.app/agents' was loaded over HTTPS, but attempted to connect to the insecure WebSocket endpoint 'ws://157.180.39.41:9000/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6IlVzdcOhcmlvIERlbW8iLCJpYXQiOjE2MTYxNjI4MDB9'. This request has been blocked; this endpoint must be available over WSS.
+connect @ _app-529fb85f0143725d.js:1Entenda o erro
+_app-529fb85f0143725d.js:1 Mixed Content: The page at 'https://renum-frontend.vercel.app/login' was loaded over HTTPS, but attempted to connect to the insecure WebSocket endpoint 'ws://157.180.39.41:9000/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6IlVzdcOhcmlvIERlbW8iLCJpYXQiOjE2MTYxNjI4MDB9'. This request has been blocked; this endpoint must be available over WSS.
+connect @ _app-529fb85f0143725d.js:1Entenda o erro
+_app-529fb85f0143725d.js:1 Mixed Content: The page at 'https://renum-frontend.vercel.app/dashboard' was loaded over HTTPS, but attempted to connect to the insecure WebSocket endpoint 'ws://157.180.39.41:9000/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6IlVzdcOhcmlvIERlbW8iLCJpYXQiOjE2MTYxNjI4MDB9'. This request has been blocked; this endpoint must be available over WSS.
+connect @ _app-529fb85f0143725d.js:1Entenda o erro
+_app-529fb85f0143725d.js:1 Mixed Content: The page at 'https://renum-frontend.vercel.app/dashboard' was loaded over HTTPS, but attempted to connect to the insecure WebSocket endpoint 'ws://157.180.39.41:9000/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6IlVzdcOhcmlvIERlbW8iLCJpYXQiOjE2MTYxNjI4MDB9'. This request has been blocked; this endpoint must be available over WSS.
+connect @ _app-529fb85f0143725d.js:1Entenda o erro
+_app-529fb85f0143725d.js:1 Mixed Content: The page at 'https://renum-frontend.vercel.app/dashboard' was loaded over HTTPS, but attempted to connect to the insecure WebSocket endpoint 'ws://157.180.39.41:9000/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6IlVzdcOhcmlvIERlbW8iLCJpYXQiOjE2MTYxNjI4MDB9'. This request has been blocked; this endpoint must be available over WSS.
+connect @ _app-529fb85f0143725d.js:1Entenda o erro
+_app-529fb85f0143725d.js:1 Mixed Content: The page at 'https://renum-frontend.vercel.app/dashboard' was loaded over HTTPS, but attempted to connect to the insecure WebSocket endpoint 'ws://157.180.39.41:9000/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6IlVzdcOhcmlvIERlbW8iLCJpYXQiOjE2MTYxNjI4MDB9'. This request has been blocked; this endpoint must be available over WSS.
+connect @ _app-529fb85f0143725d.js:1
+(anônimo) @ _app-529fb85f0143725d.js:1Entenda o erro
+_app-529fb85f0143725d.js:1 Mixed Content: The page at 'https://renum-frontend.vercel.app/dashboard' was loaded over HTTPS, but attempted to connect to the insecure WebSocket endpoint 'ws://157.180.39.41:9000/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6IlVzdcOhcmlvIERlbW8iLCJpYXQiOjE2MTYxNjI4MDB9'. This request has been blocked; this endpoint must be available over WSS.
+connect @ _app-529fb85f0143725d.js:1
+(anônimo) @ _app-529fb85f0143725d.js:1
+setTimeout
+scheduleReconnect @ _app-529fb85f0143725d.js:1
+connect @ _app-529fb85f0143725d.js:1
+(anônimo) @ _app-529fb85f0143725d.js:1Entenda o erro
+image:1  Failed to load resource: the server responded with a status of 422 ()Entenda o erro
+image:1  Failed to load resource: the server responded with a status of 422 ()Entenda o erro
+localhost:8000/api/v2/agents/shared-with-me:1  Failed to load resource: net::ERR_CONNECTION_REFUSEDEntenda o erro
+login-ec2d333c4087c1b7.js:1 Erro na requisição à API: TypeError: Failed to fetch
+    at c (login-ec2d333c4087c1b7.js:1:5702)
+    at queryFn (dashboard-cba32755e67d27c0.js:1:1659)
+    at Object.a [as fn] (_app-529fb85f0143725d.js:1:36972)
+    at v (_app-529fb85f0143725d.js:1:40533)
+    at Object.start (_app-529fb85f0143725d.js:1:41016)
+    at o.fetch (_app-529fb85f0143725d.js:1:38076)
+    at #y (934-64b50e42dbe1cfa7.js:1:2657)
+    at o.onSubscribe (934-64b50e42dbe1cfa7.js:1:688)
+    at o.subscribe (_app-529fb85f0143725d.js:1:41241)
+    at 934-64b50e42dbe1cfa7.js:1:8129
+c @ login-ec2d333c4087c1b7.js:1Entenda o erro
+localhost:8000/api/v2/agents/shared-with-me:1  Failed to load resource: net::ERR_CONNECTION_REFUSEDEntenda o erro
+login-ec2d333c4087c1b7.js:1 Erro na requisição à API: TypeError: Failed to fetch
+    at c (login-ec2d333c4087c1b7.js:1:5702)
+    at queryFn (dashboard-cba32755e67d27c0.js:1:1659)
+    at Object.a [as fn] (_app-529fb85f0143725d.js:1:36972)
+    at v (_app-529fb85f0143725d.js:1:40533)
+    at _app-529fb85f0143725d.js:1:40852
+c @ login-ec2d333c4087c1b7.js:1Entenda o erro
+localhost:8000/api/v2/agents/shared-with-me:1  Failed to load resource: net::ERR_CONNECTION_REFUSEDEntenda o erro
+login-ec2d333c4087c1b7.js:1 Erro na requisição à API: TypeError: Failed to fetch
+    at c (login-ec2d333c4087c1b7.js:1:5702)
+    at queryFn (dashboard-cba32755e67d27c0.js:1:1659)
+    at Object.a [as fn] (_app-529fb85f0143725d.js:1:36972)
+    at v (_app-529fb85f0143725d.js:1:40533)
+    at _app-529fb85f0143725d.js:1:40852
+c @ login-ec2d333c4087c1b7.js:1Entenda o erro
+login-ec2d333c4087c1b7.js:1  GET http://localhost:8000/api/v2/agents/shared-with-me net::ERR_CONNECTION_REFUSED
+c @ login-ec2d333c4087c1b7.js:1
+queryFn @ dashboard-cba32755e67d27c0.js:1
+a @ _app-529fb85f0143725d.js:1
+v @ _app-529fb85f0143725d.js:1
+(anônimo) @ _app-529fb85f0143725d.js:1
+Promise.then
+(anônimo) @ _app-529fb85f0143725d.js:1Entenda o erro
+login-ec2d333c4087c1b7.js:1 Erro na requisição à API: TypeError: Failed to fetch
+    at c (login-ec2d333c4087c1b7.js:1:5702)
+    at queryFn (dashboard-cba32755e67d27c0.js:1:1659)
+    at Object.a [as fn] (_app-529fb85f0143725d.js:1:36972)
+    at v (_app-529fb85f0143725d.js:1:40533)
+    at _app-529fb85f0143725d.js:1:40852
+c @ login-ec2d333c4087c1b7.js:1
+await in c
+queryFn @ dashboard-cba32755e67d27c0.js:1
+a @ _app-529fb85f0143725d.js:1
+v @ _app-529fb85f0143725d.js:1
+(anônimo) @ _app-529fb85f0143725d.js:1
+Promise.then
+(anônimo) @ _app-529fb85f0143725d.js:1Entenda o erro
+login-ec2d333c4087c1b7.js:1 Falha ao carregar Buscar: GET "http://localhost:8000/api/v2/agents/shared-with-me".
+
+Os logs que você compartilhou revelam dois problemas distintos e críticos:
+
+Erro de "Mixed Content" (para WebSocket):
+
+Mensagem: Mixed Content: The page at 'https://renum-frontend.vercel.app/' was loaded over HTTPS, but attempted to connect to the insecure WebSocket endpoint 'ws://157.180.39.41:9000/ws?token='. This request has been blocked; this endpoint must be available over WSS.
+
+Entendimento: Este erro é exatamente o que discutimos na última interação. Sua aplicação frontend está sendo servida com segurança via HTTPS (pelo Vercel), mas o WebSocket está tentando se conectar usando o protocolo não seguro (ws://). Navegadores bloqueiam isso por segurança.
+
+Solução: Seu backend (no IP 157.180.39.41 na porta 9000) precisa ser configurado para usar SSL/TLS (HTTPS) para conexões WebSocket. Uma vez que o backend suporte wss://, você deve atualizar a variável de ambiente NEXT_PUBLIC_WEBSOCKET_URL no Vercel para wss://157.180.39.41:9000/ws.
+
+ERR_CONNECTION_REFUSED e TypeError: Failed to fetch (para APIs REST, ainda em localhost):
+
+Mensagem: localhost:8000/api/v2/agents/shared-with-me:1 Failed to load resource: net::ERR_CONNECTION_REFUSED e Erro na requisição à API: TypeError: Failed to fetch.
+
+Entendimento: Este é um novo problema que indica que, apesar de ter configurado NEXT_PUBLIC_SUNA_API_URL e NEXT_PUBLIC_RENUM_API_URL no Vercel para o IP 157.180.39.41, o frontend ainda está tentando fazer requisições API para http://localhost:8000. Isso significa que as variáveis de ambiente para as URLs das APIs REST não estão sendo usadas corretamente pelo frontend em produção.
+
+Solução:
+
+Verifique onde as chamadas API estão sendo feitas no seu código frontend. É muito provável que haja uma URL base hardcoded para as APIs REST, semelhante ao problema que encontramos com o WebSocket DEFAULT_URL.
+
+Procure por arquivos como src/utils/api.ts, src/services/api.ts ou qualquer lugar onde as chamadas fetch ou axios são configuradas para garantir que a URL base esteja usando process.env.NEXT_PUBLIC_SUNA_API_URL (ou NEXT_PUBLIC_RENUM_API_URL, ou NEXT_PUBLIC_API_URL - verifique qual delas é a correta para suas chamadas de API genéricas) em vez de http://localhost:8000.
+
+Assim como fizemos para o WebSocket, a estrutura ideal para a URL base da API seria algo como: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api' (ajustando o nome da variável e o caminho da API conforme seu projeto).
+
+Certifique-se de que a variável de ambiente correta está sendo lida e aplicada.
+
+Próximos Passos Essenciais:
+
+Priorize a configuração do backend para WSS:// (SSL/TLS na porta 9000). Isso é fundamental para resolver o erro de "Mixed Content".
+
+Identifique e corrija as URLs hardcoded para as APIs REST no código frontend. Encontre onde http://localhost:8000 ainda está sendo usado para chamadas API e substitua-o pela variável de ambiente adequada (por exemplo, process.env.NEXT_PUBLIC_SUNA_API_URL).
+
+Após fazer essas correções no código, realize um novo deploy no Vercel.
+
+Esses dois problemas são independentes mas igualmente críticos para o funcionamento completo da sua aplicação em produção.

@@ -22,7 +22,7 @@ export default function Settings() {
     isUpdatingSetting,
     deleteSetting,
     isDeletingSetting,
-    getChangeLogs,
+    useChangeLogs,
     error,
     setError,
   } = useSettings();
@@ -37,7 +37,7 @@ export default function Settings() {
   const {
     data: changeLogs,
     isLoading: isLoadingChangeLogs,
-  } = getChangeLogs(selectedKey || undefined);
+  } = useChangeLogs(selectedKey || undefined);
 
   const handleOpenCreateModal = () => {
     setSelectedSetting(null);
@@ -97,7 +97,7 @@ export default function Settings() {
   };
 
   const columns = [
-    { header: 'Chave', accessor: 'key' },
+    { header: 'Chave', accessor: (row: SystemSetting) => row.key },
     { 
       header: 'Valor', 
       accessor: (row: SystemSetting) => {
@@ -105,7 +105,7 @@ export default function Settings() {
         return value.length > 50 ? `${value.substring(0, 50)}...` : value;
       }
     },
-    { header: 'Descrição', accessor: 'description' },
+    { header: 'Descrição', accessor: (row: SystemSetting) => row.description },
     { 
       header: 'Sensível', 
       accessor: (row: SystemSetting) => (
@@ -116,7 +116,7 @@ export default function Settings() {
         </span>
       )
     },
-    { header: 'Atualizado Por', accessor: 'updated_by_name' },
+    { header: 'Atualizado Por', accessor: (row: SystemSetting) => row.updated_by_name },
     { header: 'Atualizado Em', accessor: (row: SystemSetting) => formatDate(row.updated_at) },
     {
       header: 'Ações',
@@ -261,7 +261,6 @@ export default function Settings() {
           isOpen={isHistoryModalOpen}
           onClose={() => setIsHistoryModalOpen(false)}
           title={`Histórico de Alterações - ${selectedKey}`}
-          size="lg"
         >
           <ChangeLogList
             data={changeLogs || []}

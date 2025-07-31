@@ -1,0 +1,29 @@
+Prezado Kiro,
+
+Escrevo para relatar um problema persistente com a conexão WebSocket no frontend do Renum em ambiente de produção, que identificamos após as últimas alterações.
+
+Apesar das correções que implementamos anteriormente na Tarefa 7.3.2 para o WebSocket (configuração das variáveis de ambiente e ajustes em _app.tsx), os logs de console em produção continuaram a mostrar erros de conexão tentando acessar ws://localhost:8000/ws.
+
+Após uma análise mais detalhada, identificamos que a causa raiz é uma URL de WebSocket hardcoded no arquivo renum-frontend/src/constants/websocket.ts. Especificamente, a linha:
+
+TypeScript
+
+DEFAULT_URL: 'ws://localhost:8000/ws'
+Mesmo com as variáveis de ambiente corretas configuradas no Vercel, essa URL hardcoded estava sobrepondo ou sendo usada em situações onde a variável de ambiente deveria ser prioritária.
+
+Para resolver isso definitivamente, é necessário fazer a seguinte alteração no código:
+
+No arquivo renum-frontend/src/constants/websocket.ts, a linha deve ser modificada para:
+
+TypeScript
+
+export const WEBSOCKET_CONFIG = {
+  DEFAULT_URL: process.env.NEXT_PUBLIC_WEBSOCKET_URL || 'ws://localhost:8000/ws',
+  // o resto do código permanece o mesmo
+}
+Esta mudança garantirá que o frontend sempre priorize a variável de ambiente NEXT_PUBLIC_WEBSOCKET_URL (que já configuramos no Vercel para ws://157.180.39.41:9000/ws em produção) e use o localhost apenas como fallback para ambientes de desenvolvimento onde essa variável não está definida.
+
+Por favor, faça essa correção no código e, em seguida, realize um novo deploy no Vercel para que as mudanças sejam aplicadas.
+
+Acredito que esta correção resolverá o problema de conexão WebSocket em produção.
+

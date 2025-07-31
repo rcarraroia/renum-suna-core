@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { Plus, Edit, Eye, Power, PowerOff } from 'lucide-react';
 import { useAgents } from '../../hooks/useAgents';
+import { Agent } from '../../types/agent';
 import { formatDate } from '../../lib/utils';
 import Button from '../../components/ui/Button';
 import Table from '../../components/ui/Table';
@@ -42,9 +43,9 @@ export default function AgentsList() {
   };
 
   const columns = [
-    { header: 'Nome', accessor: 'name' },
-    { header: 'Cliente', accessor: 'client_name' },
-    { header: 'Modelo', accessor: 'model' },
+    { header: 'Nome', accessor: (row: Agent) => row.name },
+    { header: 'Cliente', accessor: (row: Agent) => row.client_name },
+    { header: 'Modelo', accessor: (row: Agent) => row.model },
     {
       header: 'Visibilidade',
       accessor: (row: any) => (

@@ -126,6 +126,7 @@ export const useClients = (options: UseClientsOptions = {}) => {
       const aValue = a[sortBy as keyof Client];
       const bValue = b[sortBy as keyof Client];
       
+      if (!aValue || !bValue) return 0;
       if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;
       if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
       return 0;

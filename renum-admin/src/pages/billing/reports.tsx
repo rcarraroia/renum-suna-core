@@ -20,14 +20,14 @@ export default function Reports() {
     isLoadingPeriods,
     currentPeriod,
     setCurrentPeriod,
-    getUsageReport,
+    useUsageReport,
     exportReport,
     isExportingReport,
     error,
     setError,
   } = useBilling();
 
-  const { clients, isLoadingClients } = useClients();
+  const { clients, isLoading: isLoadingClients } = useClients();
 
   const [selectedPeriod, setSelectedPeriod] = useState<BillingPeriod | null>(null);
   const [selectedClient, setSelectedClient] = useState<string>('');
@@ -49,7 +49,7 @@ export default function Reports() {
   const {
     data: usageReportData,
     isLoading: isLoadingUsageReport,
-  } = getUsageReport(
+  } = useUsageReport(
     selectedClient || undefined,
     selectedPeriod?.label
   );

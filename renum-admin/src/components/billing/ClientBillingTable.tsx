@@ -12,7 +12,7 @@ interface ClientBillingTableProps {
 
 const ClientBillingTable: React.FC<ClientBillingTableProps> = ({ data, isLoading }) => {
   const columns = [
-    { header: 'Cliente', accessor: 'client_name' },
+    { header: 'Cliente', accessor: (row: ClientBilling) => row.client_name },
     { header: 'Plano', accessor: (row: ClientBilling) => {
       const planLabels: Record<string, string> = {
         'basic': 'Básico',
