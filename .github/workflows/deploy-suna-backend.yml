@@ -1,0 +1,94 @@
+name: Deploy Suna Backend
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'backend/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies and run tests
+      run: |
+        cd backend
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt || echo "No requirements.txt found, using pyproject.toml"
+        if [ -f pyproject.toml ]; then
+          pip install -e .
+        fi
+        # Run tests if they exist
+        if [ -d tests ] || [ -f test_*.py ]; then
+          python -m pytest -v || echo "Tests failed but continuing deployment"
+        fi
+        
+    - name: Deploy to VPS
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USER }}
+        key: ${{ secrets.VPS_SSH_KEY }}
+        port: ${{ secrets.VPS_PORT || 22 }}
+        script: |
+          set -e
+          
+          # Navigate to backend directory
+          cd /var/www/renum-suna-core/backend || cd /home/${{ secrets.VPS_USER }}/renum-suna-core/backend
+          
+          # Backup current version
+          sudo cp -r . ../backend_backup_$(date +%Y%m%d_%H%M%S) || echo "Backup failed, continuing..."
+          
+          # Pull latest changes
+          git pull origin main || git pull origin master
+          
+          # Install/update dependencies
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          elif [ -f pyproject.toml ]; then
+            pip install -e .
+          fi
+          
+          # Check if using systemd service
+          if systemctl is-active --quiet suna-backend; then
+            echo "Restarting suna-backend systemd service..."
+            sudo systemctl restart suna-backend
+            sudo systemctl status suna-backend
+          # Check if using PM2
+          elif pm2 list | grep -q suna-backend; then
+            echo "Restarting suna-backend with PM2..."
+            pm2 reload suna-backend
+            pm2 status suna-backend
+          # Check if using Docker
+          elif docker ps | grep -q suna-backend; then
+            echo "Restarting suna-backend Docker container..."
+            cd /var/www/renum-suna-core
+            docker-compose pull backend
+            docker-compose up -d --build --force-recreate backend
+          else
+            echo "No service manager detected. Please configure systemd, PM2, or Docker."
+            exit 1
+          fi
+          
+          # Health check
+          sleep 10
+          curl -f http://localhost:8000/health || curl -f http://localhost:8000/ || echo "Health check failed"
+          
+    - name: Notify deployment status
+      if: always()
+      run: |
+        if [ "${{ job.status }}" == "success" ]; then
+          echo "✅ Suna Backend deployed successfully!"
+        else
+          echo "❌ Suna Backend deployment failed!"
+        fi

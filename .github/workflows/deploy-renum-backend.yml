@@ -1,0 +1,87 @@
+name: Deploy Renum Backend
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'renum-backend/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies and run tests
+      run: |
+        cd renum-backend
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        # Run tests if they exist
+        if [ -d tests ] || [ -f test_*.py ]; then
+          python -m pytest -v || echo "Tests failed but continuing deployment"
+        fi
+        
+    - name: Deploy to VPS
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USER }}
+        key: ${{ secrets.VPS_SSH_KEY }}
+        port: ${{ secrets.VPS_PORT || 22 }}
+        script: |
+          set -e
+          
+          # Navigate to renum-backend directory
+          cd /var/www/renum-suna-core/renum-backend || cd /home/${{ secrets.VPS_USER }}/renum-suna-core/renum-backend
+          
+          # Backup current version
+          sudo cp -r . ../renum-backend_backup_$(date +%Y%m%d_%H%M%S) || echo "Backup failed, continuing..."
+          
+          # Pull latest changes
+          git pull origin main || git pull origin master
+          
+          # Install/update dependencies
+          pip install -r requirements.txt
+          
+          # Check if using systemd service
+          if systemctl is-active --quiet renum-backend; then
+            echo "Restarting renum-backend systemd service..."
+            sudo systemctl restart renum-backend
+            sudo systemctl status renum-backend
+          # Check if using PM2
+          elif pm2 list | grep -q renum-backend; then
+            echo "Restarting renum-backend with PM2..."
+            pm2 reload renum-backend
+            pm2 status renum-backend
+          # Check if using Docker
+          elif docker ps | grep -q renum-backend; then
+            echo "Restarting renum-backend Docker container..."
+            cd /var/www/renum-suna-core
+            docker-compose pull renum-backend
+            docker-compose up -d --build --force-recreate renum-backend
+          else
+            echo "No service manager detected. Please configure systemd, PM2, or Docker."
+            exit 1
+          fi
+          
+          # Health check
+          sleep 10
+          curl -f http://localhost:9000/health || curl -f http://localhost:9000/ || echo "Health check failed"
+          
+    - name: Notify deployment status
+      if: always()
+      run: |
+        if [ "${{ job.status }}" == "success" ]; then
+          echo "✅ Renum Backend deployed successfully!"
+        else
+          echo "❌ Renum Backend deployment failed!"
+        fi

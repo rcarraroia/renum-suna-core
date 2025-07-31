@@ -25,7 +25,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus-uid"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -80,7 +80,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus-uid"
+            "uid": "prometheus"
           },
           "expr": "rate(http_requests_total{status=~\"5..\"}[5m]) / rate(http_requests_total[5m]) * 100",
           "interval": "",
@@ -94,7 +94,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus-uid"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -149,7 +149,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus-uid"
+            "uid": "prometheus"
           },
           "expr": "rate(database_errors_total[5m]) * 60",
           "interval": "",
@@ -163,7 +163,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus-uid"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -218,7 +218,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus-uid"
+            "uid": "prometheus"
           },
           "expr": "rate(redis_errors_total[5m]) * 60",
           "interval": "",
@@ -232,7 +232,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus-uid"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -287,7 +287,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus-uid"
+            "uid": "prometheus"
           },
           "expr": "ALERTS{alertstate=\"firing\"}",
           "interval": "",
@@ -301,7 +301,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus-uid"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -376,7 +376,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus-uid"
+            "uid": "prometheus"
           },
           "expr": "rate(errors_total[5m])",
           "interval": "",
@@ -390,7 +390,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus-uid"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -465,7 +465,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus-uid"
+            "uid": "prometheus"
           },
           "expr": "rate(worker_tasks_total{status=\"failed\"}[5m])",
           "interval": "",
@@ -475,7 +475,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus-uid"
+            "uid": "prometheus"
           },
           "expr": "rate(agent_executions_total{status=\"failed\"}[5m])",
           "interval": "",
@@ -489,7 +489,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus-uid"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -567,7 +567,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus-uid"
+            "uid": "prometheus"
           },
           "expr": "ALERTS",
           "format": "table",
